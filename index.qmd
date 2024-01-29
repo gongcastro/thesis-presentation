@@ -1,0 +1,240 @@
+---
+title: Bilingual Insights into the Initial Lexicon
+subtitle: The Role of Cognates in Word Acquisition
+format:
+  prezconf-revealjs:
+    include-in-header:
+    - file: mathjax-colors.html
+author:
+  - name: "Gonzalo Garcia-Castro"
+    affiliation: "Universitat Pompeu Fabra"
+    orcid: 0000-0002-8553-4209
+echo: false
+warning: false
+fig-dpi: 800
+affiliation-logo:
+  - logo-upf.png
+scrollable: true
+show-slide-number: all
+slide-number: c
+date: "March 11th, 2024"
+conference: PhD Defence / Departament de Medicina i Ciències de la Vida
+location: Barcelona (Spain)
+---
+
+# The initial lexicon
+
+## From sounds to lexical representations
+
+Word-learning is not trivial
+
+* Speech segmentation
+* Referential ambiguity
+
+Starts early in age: 6 months
+
+* Intermodal experimental paradigms
+* Parental reports
+
+
+## Vocabulary spurt
+
+Vocabulary size grows non-linearly during the second year of life
+
+## Early dynamics of lexical processing
+
+# The bilingual lexicon
+
+## Bilingualism
+
+## Bilingual word acquisition
+
+## Language non-selectivity
+
+# The present dissertation
+
+---
+
+# Study 1
+
+Cognate beginnings to lexical acquisition
+
+## Introduction
+
+Bilinguals keep up with monolinguals in vocabulary growth
+
+The presence of cognates seems to facilitate vocabulary acquisition
+
+Language co-activation has been suggested to underlie this phenomenon
+
+What mechanisms are support the role of co-activation in cognate acquisition?
+
+## The AMBLA model
+
+::: box
+**A**ccumulator **M**odel of **B**ilingual **L**exical **A**cquisition
+:::
+
+
+---
+
+::: box
+
+1) Infants accumulate information about word-forms until a **threshold** is reached and the word is acquired
+
+:::
+
+Information is provided in the form of word **effective learning instances (ELI)**.
+
+<br> 
+
+Effective learning instance
+: Exposure to a word-form that results in the accumulation of information about its meaning
+
+---
+
+
+$$
+\begin{aligned}
+\textbf{For participant } &i \textbf{ and word-form } j: \\
+\text{Age of}_{ij} &= \{\text{Age}_i \mid \text{ELI}_{ij} = c\}\\
+\text{ELI}_{ij} &= \text{Age}_i \cdot \text{Frequency}_j \\
+\textbf{where:} \\
+\text{Age}_i &\in (0, 42) \\
+\text{Frequency}_j &\sim \text{Poisson}(\lambda = 50) \\
+c &= 300
+\end{aligned} \\
+$$
+
+---
+
+$$
+\begin{aligned}
+\textbf{For participant } &i \textbf{ and word-form } j: \\
+\text{Age of}_{ij} &= \{\text{Age}_i \mid \text{ELI}_{ij} = c\}\\
+\text{ELI}_{ij} &= \text{Age}_i \cdot \text{Frequency}_j \cdot \color{wongGreen}{\text{Exposure}_{ij}} \\
+\textbf{where:} \\
+\text{Age}_i &\in (0, 42) \\
+\text{Frequency}_j &\sim \text{Poisson}(\lambda = 50) \\
+c &= 300 \\
+\color{wongGreen}{\text{Exposure}_{ij}} &\in [0, 100]
+\end{aligned} \\
+$$
+
+
+---
+
+::: .small
+
+$$
+\begin{aligned}
+\textbf{For participant } &i \textbf{ and word-form } j: \\
+\text{Age of}_{ij} &= \{\text{Age}_i \mid \text{ELI}_{ij} = c\}\\
+\text{ELI}_{ij} &= \text{Age}_i \cdot \text{Frequency}_j \cdot \color{wongGreen}{\text{Exposure}_{ij}} \cdot \color{IBMMagenta}{\text{Cognateness}_{j}}\\
+\textbf{where:} \\
+\text{Age}_i &\in (0, 42) \\
+\text{Frequency}_j &\sim \text{Poisson}(\lambda = 50) \\
+c &= 300 \\
+\color{wongGreen}{\text{Exposure}_{ij}} &\in [0, 1] \\
+\color{IBMMagenta}{\text{Cognateness}_{j}} &\in [0, 1]
+\end{aligned} \\
+$$
+:::
+
+---
+
+::: box
+
+2) Words accumulate additional information from the **co-activation** of their (phonologically similar) translation equivalent
+
+:::
+
+Learning instances for one word-form may result in the accumulation of information for its **translation equivalent**
+
+Degree of income additional information proportional to the **phonological similarity** between both translation equivalents 
+
+---
+
+$$
+\begin{aligned}
+\text{AoA}_{ij} &= \{\text{Age}_i \mid y_{ij} = c\}\\
+y_{ij} &= \text{Age}_i \cdot \text{Frequency}_j \cdot \text{Exposure}_{ij} \cdot \text{Cognateness}_j\\
+\text{Frequency}_j &\sim \text{Poisson}(\lambda) \\
+\text{Cognateness}_{j, j_{TE}} &= \text{Levenshtein}(j, j_{TE}) \\\\
+\text{Where:} \\
+i&: \text{ child} \\
+j&: \text{word} \\
+j_{TE}&: \text{Translation equivalent of } j\\
+\text{AoA}_{ij}&: \text{ Age-of-acquisition of word } j \text{ for child } i\\
+c&: \text{ Threshold number of learning instances for word acquisition} \\
+y_{ij}&: \text{ Learning instances with word } j \text{ accumulated by child } i\\\\
+\text{For simulations}&: c = 300 \text{, } \lambda_j = 50 \\
+\end{aligned}
+$${#eq-ambla}
+
+---
+
+<!-- Simulations -->
+
+
+## Methods
+
+### Barcelona Vocabulary Questionnaire (BVQ)
+
+---
+
+### Participants
+
+---
+
+### Data processing
+
+---
+
+### Modelling approach and statistical inference
+
+---
+
+## Results
+
+### Regression coefficients
+
+---
+
+### Marginal effects
+
+## Discussion
+
+# Study 2
+
+Developmental trajectories of bilingual spoken word recognition
+
+## Introduction
+
+## Methods
+
+### Participants
+
+---
+
+### Stimuli
+
+---
+
+### Design
+
+---
+
+### Procedure
+
+
+## Results
+
+## Discussion
+
+---
+
+::: thanks
+Thanks
+:::
+

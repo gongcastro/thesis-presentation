@@ -1,0 +1,63 @@
+<section id="$idprefix$title-slide"$for(title-slide-attributes/pairs)$ $it.key$="$it.value$"$endfor$ class="quarto-title-block">
+  <h1 class="title">$title$</h1>
+$if(subtitle)$
+  <p class="subtitle">$subtitle$</p>
+$endif$
+
+<div class="quarto-title-authors">
+$for(by-author)$
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+$if(by-author.url)$<a href="$by-author.url$">$endif$
+$if(by-author.name.literal)$$by-author.name.literal$$endif$
+$if(by-author.url)$</a>$endif$
+<br>
+</div>
+$if(by-author.affiliations)$
+    $for(by-author.affiliations)$
+    <p class="quarto-title-affiliation">
+      $if(it.url)$
+      <a href="$it.url$">
+      $endif$
+      $it.name$
+      $if(it.url)$
+      </a>
+      $endif$
+    </p>
+    $endfor$
+$endif$
+</div>
+$endfor$
+
+</div>
+
+<br>
+
+$if(affiliation-logo)$
+    <div class="affiliation-logo">
+    $for(affiliation-logo)$
+        <img src=$affiliation-logo$ >
+    $endfor$
+    </div>
+$endif$
+
+$if(conference)$
+<div class="conference">
+    <p>$conference$</p>$if(date)$<p>$date$</p>$endif$
+</div>
+$endif$
+
+<div class="media-icon" display="inline-block">
+$if(twitter)$
+<a href="https://twitter.com/$twitter$">
+  <img src="logo-twitter.png" bottom="5px" left="5px"><p>$twitter$</p>
+</a> 
+$endif$
+$if(github)$
+<a href="https://github.com/$github$">
+  <img src="logo-github.png"  bottom="5px" right="5px"><p>$github$</p>
+</a> 
+$endif$
+</div>
+
+</section>
