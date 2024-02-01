@@ -1,57 +1,386 @@
 ---
-title: Bilingual Insights into the Initial Lexicon
-subtitle: The Role of Cognates in Word Acquisition
-format:
-  prezconf-revealjs:
-    include-in-header:
-    - file: mathjax-colors.html
-author:
-  - name: "Gonzalo Garcia-Castro"
-    affiliation: "Universitat Pompeu Fabra"
-    orcid: 0000-0002-8553-4209
-echo: false
-warning: false
-fig-dpi: 800
-affiliation-logo:
-  - logo-upf.png
-scrollable: true
-show-slide-number: all
-slide-number: c
-date: "March 11th, 2024"
-conference: PhD Defence / Departament de Medicina i Ciències de la Vida
-location: Barcelona (Spain)
 ---
 
-# The initial lexicon
+
+```{r}
+#| label: setup
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(stringdist)
+library(ggdist)
+library(patchwork)
+
+# set ggplot theme and colour palette
+my_theme <- theme_minimal() +
+	theme(panel.grid = element_blank(),
+		  axis.line = element_line(colour = "black"),
+		  text = element_text(size = 12, colour = "black"),
+		  axis.text = element_text(colour = "black"))
+
+theme_set(my_theme)
+
+clrs <- c("#AA0E28", "#ED1D3F", "#F47B8F", "#70B3FF", "#004CA3", "#002147")
+
+options(
+	ggplot2.ordinal.fill = clrs[c(1, 4, 5)],
+	ggplot2.ordinal.colour = clrs[c(1, 4, 5)],
+	ggplot2.discrete.fill = clrs[c(1, 4, 5)],
+	ggplot2.discrete.colour = clrs[c(1, 4, 5)],
+	ggplot2.continuous.fill = ggplot2::scale_color_gradient,
+	ggplot2.continuous.colour = ggplot2::scale_color_gradient
+)
+
+set.seed(1234)
+```
+
+
+Average English-native 20-year-old knows ~42,000 words: **mental lexicon**
+
+::: box
+
+Lexical representations
+: Phonological, conceptual, grammatical information of known words
+:::
+
+
+::: {.notes}
+
+* The average English 20-year-old knows around 42,000 words
+* The collection of words that an adult knows is known as the *mental lexicon*
+* The *mental lexicon* is formed by *lexical representations*, each embedding phonological, conceptual, and grammatical information about words
+* Building a lexicon is not a trivial task, as we will see now
+* Yet, the foundations of a lexicon are laid very early in age
+* In internal workings of this initial lexicon are still unclear
+
+:::
+
+---
+
+## Overview
+
+* **Introduction**:
+    - From speech sounds to words
+    - Bilingualism and its challenges
+    - The role of phonology (cognateness)
+* **Study 1**: AMBLA model, acquisition of cognates, role of language exposure
+* **Study 2**: language non-selectivity in the initial bilingual lexicon
+* **Discussion**
+
+::: notes
+
+* In the last five years, we have explored the initial lexicon through the lens of a particular case of language learning: bilingual infants
+* In this presentation, I will first provide an overview of how words become relevant linguistic units to infants
+* Second, I will elaborate on the specific challenges that bilinguals face in their vocabulary acquisition journey. In particular, how bilinguals manage to keep up with monolinguals in their vocabulary acquisition trajectories, despite facing a more complex linguistic environment.
+* Third, I will describe some recent insights into how phonology (and in particular, the lexical similarity between the two languages),
+and on some unresolved issues that we have addressed in the present dissertation
+* Fourth, I will formally present a model that proposes a candidate mechanism to explain how cognateness boosts lexical acquisition in bilinguals
+* I will then present the first empirical study of the dissertation, in which we generate and test the central predictions of the model
+* In the second empirical study, we test one of the central assumption of the model
+* Finally, I summarise the main insights of our work, and discuss its implications for current understanding of the initial bilingual lexicon, limitations, and future steps.
+
+:::
+
+# The initial lexicon {.inverse}
+
+1. From sounds to lexical representations
+2. Vocabulary spurt
+3. Early dynamics of lexical processing
+
 
 ## From sounds to lexical representations
 
-Word-learning is not trivial
+::: notes
 
-* Speech segmentation
-* Referential ambiguity
+* Before birth: auditory system developed, identification of familiar melodies
+* At birth: language discrimination based on prosodic cues (e.g., rhythm)
+* Universal discrimination of phonemes
+* Perceptual skills tuned to native language from ~4-6 mo until 12 mo
+* First word-form representations
+    - Familiar word-form recognition: phonologically detailed
+    - Speech segmentation: syllable co-occurrence, stress patterns, phonotactics, etc.
 
-Starts early in age: 6 months
-
-* Intermodal experimental paradigms
-* Parental reports
+:::
 
 
-## Vocabulary spurt
+## From sounds to lexical representations
+
+Lexical representation: (not only) form-meaning association
+
+<br>
+
+::: columns
+
+:::: {.column width="50%}
+
+**Inter-modal paradigms**
+
+[@bergelson2012months; @bergelson2015early; @tincoff1999beginnings; @tincoff2012sixmontholds]
+
+::::
+
+:::: {.column width="50%}
+
+**Parental reports**
+
+e.g., MacArthur-Bates Communicative Development Inventory (CDI) [@fenson1994variability]
+
+::::
+
+:::
+
+
+::: notes
+
+* The foundations of a lexicon are laid by the first form-meaning mappings at 6 months
+* Two sources of evidence: inter-modal experimental paradigms and parental reports
+
+:::
+
+## Vocabulary growth
 
 Vocabulary size grows non-linearly during the second year of life
 
+```{r wordbank}
+wb <- here::here("data", "01-introduction", "wordbank_administration_data.csv") |> 
+	arrow::read_csv_arrow() |>
+	add_count(language) |>
+	filter(typically_developing,
+		   monolingual,
+		   language!="English (British)",
+		   between(age, 10, 30))
+```
+
+```{r fig-wordbank}
+#| label: fig-wordbank
+#| fig-width: 10
+#| fig-height: 4
+#| fig-cap: "Vocabulary size norms for 51,800 monolingual children learning 35 distinct languages (wordbank)"
+wb_fig <- wb |>
+	pivot_longer(c(comprehension, production),
+				 names_to = "type",
+				 values_to = "size",
+				 names_transform = tools::toTitleCase)
+
+wb_summary <- wb_fig |>
+	summarise(size = median(size),
+			  .by = c(type, age))
+
+plot_comp <- wb_fig |>
+	filter(type=="Comprehension") |>
+	ggplot(aes(age, size)) +
+	facet_wrap(~type) +
+	stat_interval(.width = c(0.95, 0.89, 0.75, 0.67, 0.50),
+				  size = 7.5,
+				  position = "dodge") +
+	geom_line(data = filter(wb_summary, type=="Comprehension"),
+			  colour = "white",
+			  linewidth = 1) +
+	geom_point(data = filter(wb_summary, type=="Comprehension"),
+			   colour = "white",
+			   size = 2.25) +
+	scale_colour_manual(values = colorRampPalette(c("grey95", clrs[6]))(5)) +
+    theme(legend.position = "left",
+		  legend.justification = c(0, 1))
+
+
+plot_prod <- wb_fig |>
+	filter(type=="Production") |>
+	ggplot(aes(age, size)) +
+	facet_wrap(~type) +
+	stat_interval(.width = c(0.95, 0.89, 0.75, 0.67, 0.50),
+				  size = 7.5,
+				  position = "dodge") +
+	geom_line(data = filter(wb_summary, type=="Production"),
+			  colour = "white",
+			  linewidth = 1) +
+	geom_point(data = filter(wb_summary, type=="Production"),
+			   colour = "white",
+			   size = 2.25) +
+	scale_colour_manual(values = colorRampPalette(c("grey95", clrs[1]))(5)) +
+    theme(legend.position = "none")
+
+
+plot_comp + plot_prod +
+	plot_layout(nrow = 1) &
+	plot_annotation(tag_levels = "A") &
+	labs(x = "Age (months)",
+		 y = "Vocabulary size",
+		 colour = "% sample",
+		 colour_ramp = "% sample") &
+	scale_x_continuous(breaks = seq(0, 30, 2)) &
+	scale_y_continuous(breaks = seq(0, 1000, 100)) &
+	theme(panel.grid.major.y = element_line(
+		  	colour = "grey",
+		  	linetype = "dotted"))
+```
+::: notes
+
+Vocabulary size grows non-linearly during the second year of life
+
+:::
+
+
 ## Early dynamics of lexical processing
 
-# The bilingual lexicon
+Cascaded activation: activation spreads across non-selected lexical representations [@allopenna1998tracking]
 
-## Bilingualism
+::: columns
+
+:::: {.column width="80%}
+
+![](assets/img/allopenna-1.png){width=70%}
+
+::::
+
+:::: {.column width="60%}
+
+![](assets/img/allopenna-2.png)
+
+::::
+
+:::
+
+## Early dynamics of lexical processing
+
+In children [@chow2017spokenword]
+
+- Semantic priming [@styles2009how]
+- Phonological priming [@avila-varela2021longitudinal; @mani2010infant]
+
+
+# The bilingual lexicon {.inverse}
+
+Challenges a bilingual environment
+
+Bilingual words acquisition
+
+Lexical distance: a facilitatory mechanism?
+
+Language non-selectivity
+
+## Challenges a bilingual environment
+
+Increased complexity in linguistic context:
+
+> Two grammatical systems, two phoneme inventories, two sets of word-forms
+
+Reduced linguistic input
+
+![](assets/img/bilingualism.png)
+
+Increase referential ambiguity
 
 ## Bilingual word acquisition
 
+Bilinguals acquire words at similar rates as monolinguals
+[@hoff2012dual]
+
+::: columns
+
+:::: {.column width="80%}
+
+![](assets/img/hoff-1.png)
+
+::::
+
+:::: {.column width="60%}
+
+![](assets/img/hoff-2.png)
+
+::::
+
+:::
+
+## Lexical distance: a facilitatory mechanism?
+
+::: columns
+
+:::: {.column width="20%}
+
+Lexically closer languages -> Larger vocabulary size [@floccia2018introduction]
+
+English-Dutch > English-Mandarin
+
+::::
+
+:::: {.column width="80%"}
+
+
+```{r fig-cat-spa-distance}
+#| label: fig-cat-spa-distance
+#| fig-cap: "Pairwise lexical similarity"
+#| fig-height: 5
+#| fig-width: 6
+#| out-width: 50%
+bvq_data <- readRDS(here::here("data", "01-introduction", "bvq.rds"))
+
+flatten_xsampa <- function(x) {
+	str_rm <- c("\\.", "\\\\", ",", "/", "?", "'", '"')
+	str <- gsub(paste0(str_rm, collapse = "|"), "", x)
+	str <- gsub("\\{", "\\\\{", str)
+	return(str)
+}
+
+dist <- bvq_data$pool |>
+	mutate(phon = flatten_xsampa(xsampa)) |>
+	filter(!(semantic_category %in% c("Interjections"))) |>
+	distinct(te, language, .keep_all = TRUE) |>
+	pivot_wider(id_cols = c(te),
+				names_from = language,
+				values_from = phon,
+				names_repair = janitor::make_clean_names) |>
+	mutate(distance = stringdist::stringsim(catalan, spanish)) |>
+	pull(distance) |>
+	mean(na.rm = TRUE)
+
+tibble::tribble(~language, ~dist,
+				"Dutch", 0.2214,
+				"Welsh", 0.2163,
+				"German", 0.1975,
+				"Italian", 0.1076,
+				"French", 0.1034,
+				"Bengali", 0.0941,
+				"Hindi", 0.0899,
+				"Spanish", 0.0874,
+				"Polish", 0.0828,
+				"Greek", 0.0807,
+				"Portuguese", 0.0801,
+				"Cantonese", 0.0422,
+				"Mandarin", 0.0197) |>
+	mutate(language = paste0("English-", language)) |>
+	add_row(language = "Catalan-Spanish", dist = dist) |>
+	mutate(study = if_else(grepl("English", language),
+						   "Floccia et al. (2018)", "BVQ")) |>
+	ggplot(aes(dist, reorder(language, dist),
+			   fill = study)) +
+	geom_col(colour = "white") +
+	geom_text(aes(label = scales::percent(dist, accuracy = 0.01)),
+			  size = 3,
+			  hjust = 0,
+			  position = position_nudge(x = 0.005)) +
+	labs(x = "Lexical similarity",
+		 y = "Language pair") +
+	scale_fill_manual(values = clrs[c(2, 5)]) +
+	scale_x_continuous(limits = c(0, 0.50),
+		labels = scales::percent,
+		breaks = seq(0, 1, 0.1)) +
+	theme(legend.position = "none",
+		  axis.title.y = element_blank(),
+		  panel.grid.major.x = element_line(
+		  	linetype = "dotted",
+		  	colour = "grey"))
+
+```
+
+::::
+
+:::
+
 ## Language non-selectivity
 
-# The present dissertation
+[@costa2000cognate]
+
 
 ---
 
