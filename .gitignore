@@ -2,3 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+
+/.quarto/
+data/
+index_files/
+template_files/
