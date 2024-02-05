@@ -10,28 +10,34 @@ library(ggplot2)
 library(stringdist)
 library(ggdist)
 library(patchwork)
+library(here)
+library(tidybayes)
+
+# source("R/ambla.R")
 
 # set ggplot theme and colour palette
 my_theme <- theme_minimal() +
-	theme(panel.grid = element_blank(),
-		  axis.line = element_line(colour = "black"),
-		  text = element_text(size = 12, colour = "black"),
-		  axis.text = element_text(colour = "black"))
+    theme(panel.grid = element_blank(),
+          axis.line = element_line(colour = "black"),
+          text = element_text(size = 12, colour = "black"),
+          axis.text = element_text(colour = "black"))
 
 theme_set(my_theme)
 
 clrs <- c("#AA0E28", "#ED1D3F", "#F47B8F", "#70B3FF", "#004CA3", "#002147")
 
 options(
-	ggplot2.ordinal.fill = clrs[c(1, 4, 5)],
-	ggplot2.ordinal.colour = clrs[c(1, 4, 5)],
-	ggplot2.discrete.fill = clrs[c(1, 4, 5)],
-	ggplot2.discrete.colour = clrs[c(1, 4, 5)],
-	ggplot2.continuous.fill = ggplot2::scale_color_gradient,
-	ggplot2.continuous.colour = ggplot2::scale_color_gradient
+    ggplot2.ordinal.fill = clrs[c(1, 4, 5)],
+    ggplot2.ordinal.colour = clrs[c(1, 4, 5)],
+    ggplot2.discrete.fill = clrs[c(1, 4, 5)],
+    ggplot2.discrete.colour = clrs[c(1, 4, 5)],
+    ggplot2.continuous.fill = ggplot2::scale_color_gradient,
+    ggplot2.continuous.colour = ggplot2::scale_color_gradient
 )
 
 set.seed(1234)
+
+source("R/utils.R")
 ```
 
 
@@ -60,9 +66,9 @@ Lexical representations
 ## Overview
 
 * **Introduction**:
-    - From speech sounds to words
-    - Bilingualism and its challenges
-    - The role of phonology (cognateness)
+- From speech sounds to words
+- Bilingualism and its challenges
+- The role of phonology (cognateness)
 * **Study 1**: AMBLA model, acquisition of cognates, role of language exposure
 * **Study 2**: language non-selectivity in the initial bilingual lexicon
 * **Discussion**
@@ -97,15 +103,15 @@ and on some unresolved issues that we have addressed in the present dissertation
 * Universal discrimination of phonemes
 * Perceptual skills tuned to native language from ~4-6 mo until 12 mo
 * First word-form representations
-    - Familiar word-form recognition: phonologically detailed
-    - Speech segmentation: syllable co-occurrence, stress patterns, phonotactics, etc.
+- Familiar word-form recognition: phonologically detailed
+- Speech segmentation: syllable co-occurrence, stress patterns, phonotactics, etc.
 
 :::
 
 
 ## From sounds to lexical representations
 
-Lexical representation: (not only) form-meaning association
+Lexical representation: (at least) form-meaning association
 
 <br>
 
@@ -143,12 +149,12 @@ Vocabulary size grows non-linearly during the second year of life
 
 ```{r wordbank}
 wb <- here::here("data", "01-introduction", "wordbank_administration_data.csv") |> 
-	arrow::read_csv_arrow() |>
-	add_count(language) |>
-	filter(typically_developing,
-		   monolingual,
-		   language!="English (British)",
-		   between(age, 10, 30))
+    arrow::read_csv_arrow() |>
+    add_count(language) |>
+    filter(typically_developing,
+           monolingual,
+           language!="English (British)",
+           between(age, 10, 30))
 ```
 
 ```{r fig-wordbank}
@@ -157,62 +163,62 @@ wb <- here::here("data", "01-introduction", "wordbank_administration_data.csv") 
 #| fig-height: 4
 #| fig-cap: "Vocabulary size norms for 51,800 monolingual children learning 35 distinct languages (wordbank)"
 wb_fig <- wb |>
-	pivot_longer(c(comprehension, production),
-				 names_to = "type",
-				 values_to = "size",
-				 names_transform = tools::toTitleCase)
+    pivot_longer(c(comprehension, production),
+                 names_to = "type",
+                 values_to = "size",
+                 names_transform = tools::toTitleCase)
 
 wb_summary <- wb_fig |>
-	summarise(size = median(size),
-			  .by = c(type, age))
+    summarise(size = median(size),
+              .by = c(type, age))
 
 plot_comp <- wb_fig |>
-	filter(type=="Comprehension") |>
-	ggplot(aes(age, size)) +
-	facet_wrap(~type) +
-	stat_interval(.width = c(0.95, 0.89, 0.75, 0.67, 0.50),
-				  size = 7.5,
-				  position = "dodge") +
-	geom_line(data = filter(wb_summary, type=="Comprehension"),
-			  colour = "white",
-			  linewidth = 1) +
-	geom_point(data = filter(wb_summary, type=="Comprehension"),
-			   colour = "white",
-			   size = 2.25) +
-	scale_colour_manual(values = colorRampPalette(c("grey95", clrs[6]))(5)) +
+    filter(type=="Comprehension") |>
+    ggplot(aes(age, size)) +
+    facet_wrap(~type) +
+    stat_interval(.width = c(0.95, 0.89, 0.75, 0.67, 0.50),
+                  size = 6,
+                  position = "dodge") +
+    geom_line(data = filter(wb_summary, type=="Comprehension"),
+              colour = "white",
+              linewidth = 1) +
+    geom_point(data = filter(wb_summary, type=="Comprehension"),
+               colour = "white",
+               size = 2.25) +
+    scale_colour_manual(values = colorRampPalette(c("grey95", clrs[6]))(5)) +
     theme(legend.position = "left",
-		  legend.justification = c(0, 1))
+          legend.justification = c(0, 1))
 
 
 plot_prod <- wb_fig |>
-	filter(type=="Production") |>
-	ggplot(aes(age, size)) +
-	facet_wrap(~type) +
-	stat_interval(.width = c(0.95, 0.89, 0.75, 0.67, 0.50),
-				  size = 7.5,
-				  position = "dodge") +
-	geom_line(data = filter(wb_summary, type=="Production"),
-			  colour = "white",
-			  linewidth = 1) +
-	geom_point(data = filter(wb_summary, type=="Production"),
-			   colour = "white",
-			   size = 2.25) +
-	scale_colour_manual(values = colorRampPalette(c("grey95", clrs[1]))(5)) +
+    filter(type=="Production") |>
+    ggplot(aes(age, size)) +
+    facet_wrap(~type) +
+    stat_interval(.width = c(0.95, 0.89, 0.75, 0.67, 0.50),
+                  size = 7.5,
+                  position = "dodge") +
+    geom_line(data = filter(wb_summary, type=="Production"),
+              colour = "white",
+              linewidth = 1) +
+    geom_point(data = filter(wb_summary, type=="Production"),
+               colour = "white",
+               size = 2.25) +
+    scale_colour_manual(values = colorRampPalette(c("grey95", clrs[1]))(5)) +
     theme(legend.position = "none")
 
 
 plot_comp + plot_prod +
-	plot_layout(nrow = 1) &
-	plot_annotation(tag_levels = "A") &
-	labs(x = "Age (months)",
-		 y = "Vocabulary size",
-		 colour = "% sample",
-		 colour_ramp = "% sample") &
-	scale_x_continuous(breaks = seq(0, 30, 2)) &
-	scale_y_continuous(breaks = seq(0, 1000, 100)) &
-	theme(panel.grid.major.y = element_line(
-		  	colour = "grey",
-		  	linetype = "dotted"))
+    plot_layout(nrow = 1) &
+    plot_annotation(tag_levels = "A") &
+    labs(x = "Age (months)",
+         y = "Vocabulary size",
+         colour = "% sample",
+         colour_ramp = "% sample") &
+    scale_x_continuous(breaks = seq(0, 30, 2)) &
+    scale_y_continuous(breaks = seq(0, 1000, 100)) &
+    theme(panel.grid.major.y = element_line(
+        colour = "grey",
+        linetype = "dotted"))
 ```
 ::: notes
 
@@ -255,7 +261,7 @@ Challenges a bilingual environment
 
 Bilingual words acquisition
 
-Lexical distance: a facilitatory mechanism?
+Cognateness
 
 Language non-selectivity
 
@@ -267,9 +273,11 @@ Increased complexity in linguistic context:
 
 Reduced linguistic input
 
-![](assets/img/bilingualism.png)
+> Split into two languages
 
-Increase referential ambiguity
+Increased referential ambiguity
+
+> 2 labels, 1 referent
 
 ## Bilingual word acquisition
 
@@ -292,86 +300,149 @@ Bilinguals acquire words at similar rates as monolinguals
 
 :::
 
-## Lexical distance: a facilitatory mechanism?
+## A cognate facilitation in lexical acquisition?
 
-::: columns
+Lexically closer languages :arrow_right: Larger vocabulary size [@floccia2018introduction]
 
-:::: {.column width="20%}
+> English-Dutch > English-Mandarin
 
-Lexically closer languages -> Larger vocabulary size [@floccia2018introduction]
+::: box
 
-English-Dutch > English-Mandarin
+**Cognate**: form-similar translation equivalents (TEs)
 
-::::
+| *Cognate*           | *Non-cognate*       |
+|:-------------------:|:-------------------:|
+| [cat] /ˈgat-ˈgato/  | [dog] /ˈgos-ˈpe.ro/ |
 
-:::: {.column width="80%"}
+:::
 
+Cognates acquired earlier than non-cognates [@mitchell2023cognates; @bosch2014first]
+
+
+## A cognate facilitation in lexical acquisition?
 
 ```{r fig-cat-spa-distance}
 #| label: fig-cat-spa-distance
 #| fig-cap: "Pairwise lexical similarity"
 #| fig-height: 5
-#| fig-width: 6
+#| fig-width: 10
 #| out-width: 50%
 bvq_data <- readRDS(here::here("data", "01-introduction", "bvq.rds"))
 
 flatten_xsampa <- function(x) {
-	str_rm <- c("\\.", "\\\\", ",", "/", "?", "'", '"')
-	str <- gsub(paste0(str_rm, collapse = "|"), "", x)
-	str <- gsub("\\{", "\\\\{", str)
-	return(str)
+    str_rm <- c("\\.", "\\\\", ",", "/", "?", "'", '"')
+    str <- gsub(paste0(str_rm, collapse = "|"), "", x)
+    str <- gsub("\\{", "\\\\{", str)
+    return(str)
 }
 
 dist <- bvq_data$pool |>
-	mutate(phon = flatten_xsampa(xsampa)) |>
-	filter(!(semantic_category %in% c("Interjections"))) |>
-	distinct(te, language, .keep_all = TRUE) |>
-	pivot_wider(id_cols = c(te),
-				names_from = language,
-				values_from = phon,
-				names_repair = janitor::make_clean_names) |>
-	mutate(distance = stringdist::stringsim(catalan, spanish)) |>
-	pull(distance) |>
-	mean(na.rm = TRUE)
+    mutate(phon = flatten_xsampa(xsampa)) |>
+    filter(!(semantic_category %in% c("Interjections"))) |>
+    distinct(te, language, .keep_all = TRUE) |>
+    pivot_wider(id_cols = c(te),
+                names_from = language,
+                values_from = phon,
+                names_repair = janitor::make_clean_names) |>
+    mutate(distance = stringdist::stringsim(catalan, spanish)) |>
+    pull(distance) |>
+    mean(na.rm = TRUE)
 
 tibble::tribble(~language, ~dist,
-				"Dutch", 0.2214,
-				"Welsh", 0.2163,
-				"German", 0.1975,
-				"Italian", 0.1076,
-				"French", 0.1034,
-				"Bengali", 0.0941,
-				"Hindi", 0.0899,
-				"Spanish", 0.0874,
-				"Polish", 0.0828,
-				"Greek", 0.0807,
-				"Portuguese", 0.0801,
-				"Cantonese", 0.0422,
-				"Mandarin", 0.0197) |>
-	mutate(language = paste0("English-", language)) |>
-	add_row(language = "Catalan-Spanish", dist = dist) |>
-	mutate(study = if_else(grepl("English", language),
-						   "Floccia et al. (2018)", "BVQ")) |>
-	ggplot(aes(dist, reorder(language, dist),
-			   fill = study)) +
-	geom_col(colour = "white") +
-	geom_text(aes(label = scales::percent(dist, accuracy = 0.01)),
-			  size = 3,
-			  hjust = 0,
-			  position = position_nudge(x = 0.005)) +
-	labs(x = "Lexical similarity",
-		 y = "Language pair") +
-	scale_fill_manual(values = clrs[c(2, 5)]) +
-	scale_x_continuous(limits = c(0, 0.50),
-		labels = scales::percent,
-		breaks = seq(0, 1, 0.1)) +
-	theme(legend.position = "none",
-		  axis.title.y = element_blank(),
-		  panel.grid.major.x = element_line(
-		  	linetype = "dotted",
-		  	colour = "grey"))
+                "Dutch", 0.2214,
+                "Welsh", 0.2163,
+                "German", 0.1975,
+                "Italian", 0.1076,
+                "French", 0.1034,
+                "Bengali", 0.0941,
+                "Hindi", 0.0899,
+                "Spanish", 0.0874,
+                "Polish", 0.0828,
+                "Greek", 0.0807,
+                "Portuguese", 0.0801,
+                "Cantonese", 0.0422,
+                "Mandarin", 0.0197) |>
+    mutate(language = paste0("English-", language)) |>
+    add_row(language = "Catalan-Spanish", dist = dist) |>
+    mutate(study = if_else(grepl("English", language),
+                           "Floccia et al. (2018)", "BVQ")) |>
+    ggplot(aes(dist, reorder(language, dist),
+               fill = study)) +
+    geom_col(colour = "white") +
+    geom_text(aes(label = scales::percent(dist, accuracy = 0.01)),
+              size = 3,
+              hjust = 0,
+              position = position_nudge(x = 0.005)) +
+    labs(x = "Lexical similarity",
+         y = "Language pair") +
+    scale_fill_manual(values = clrs[c(2, 5)]) +
+    scale_x_continuous(limits = c(0, 0.50),
+                       labels = scales::percent,
+                       breaks = seq(0, 1, 0.1)) +
+    theme(legend.position = "none",
+          axis.title.y = element_blank(),
+          panel.grid.major.x = element_line(
+              linetype = "dotted",
+              colour = "grey"))
 
 ```
+
+## A cognate facilitation in lexical acquisition?
+
+::: columns
+
+:::: {.column width="50%"}
+
+```{r}
+#| label: fig-prop
+#| fig-height: 4
+#| fig-width: 4
+#| fig-cap: "Aggregated vocabularies might conceal facilitation effects"
+#| fig-cap-location: margin
+tibble::tribble(
+    ~type, ~l_cog, ~l_noncog, ~v_cog, ~v_noncog,
+    "No cognate facilitation", 50, 50, 50, 50,
+    "Cognate facilitation", 50, 50, 20, 80,
+) |> 
+    tidyr::pivot_longer(-c(type),
+                        names_to = c("measure", "cognate"),
+                        names_sep = "_") |> 
+    mutate(cognate = factor(cognate, levels = c("cog", "noncog"),
+                            labels = c("Cognates", "Non-cognates")),
+           measure = factor(measure, levels = c("l", "v"),
+                            labels = c("Language", "Vocabulary")),
+           type = factor(type, levels = c("No cognate facilitation",
+                                          "Cognate facilitation"))) |> 
+    ggplot(aes(value, reorder(measure, desc(measure)), 
+               fill = type, 
+               colour = type,
+               alpha = cognate)) +
+    facet_wrap(~type, ncol = 1) +
+    geom_col(position = position_fill(),
+             colour = "white") +
+    geom_vline(xintercept = 0.5, colour = "grey", linewidth = 1) +
+    guides(fill = guide_none()) +
+    labs(x = "Proportion of cognates") +
+    scale_fill_manual(values = clrs[c(1, 5)]) +
+    scale_colour_manual(values = clrs[c(1, 5)]) +
+    scale_alpha_manual(values = c(0.5, 1)) + 
+    scale_x_continuous(labels = scales::percent) +
+    theme(legend.position = "top",
+          axis.title.x = element_blank(),
+          axis.line = element_blank(),
+          axis.text.x = element_blank(),
+          legend.title = element_blank(),
+          axis.title.y = element_blank())
+
+```
+
+::::
+
+:::: {.column width="50%"}
+
+What **mechanisms** support a cognate facilitation during word acquisition?
+
+> Language non-selective lexical access
 
 ::::
 
@@ -379,12 +450,15 @@ tibble::tribble(~language, ~dist,
 
 ## Language non-selectivity
 
-[@costa2000cognate]
+Activation spreads across **non-selected representations** in both languages, through **phonological** and **conceptual** links. [e.g., @costa2000cognate]
+
+![](assets/img/lexicon.png)
+
+### Language non-selectiviy
 
 
----
 
-# Study 1
+# Study 1 {.inverse}
 
 Cognate beginnings to lexical acquisition
 
@@ -422,53 +496,53 @@ Effective learning instance
 
 ---
 
+::: .smaller
 
 $$
 \begin{aligned}
-\textbf{For participant } &i \textbf{ and word-form } j: \\
-\text{Age of}_{ij} &= \{\text{Age}_i \mid \text{ELI}_{ij} = c\}\\
-\text{ELI}_{ij} &= \text{Age}_i \cdot \text{Frequency}_j \\
+\textbf{For participant } &i \textbf{ and word-form } j \text{ (translation of } j'): \\
+\text{Age of Acquisition}_{ij} &= \{\text{Age}_i \mid \text{Learning instances}_{ij} = c\}\\
+\text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \\
 \textbf{where:} \\
-\text{Age}_i &\in (0, 42) \\
-\text{Frequency}_j &\sim \text{Poisson}(\lambda = 50) \\
+\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) \\
 c &= 300
 \end{aligned} \\
 $$
 
----
-
-$$
-\begin{aligned}
-\textbf{For participant } &i \textbf{ and word-form } j: \\
-\text{Age of}_{ij} &= \{\text{Age}_i \mid \text{ELI}_{ij} = c\}\\
-\text{ELI}_{ij} &= \text{Age}_i \cdot \text{Frequency}_j \cdot \color{wongGreen}{\text{Exposure}_{ij}} \\
-\textbf{where:} \\
-\text{Age}_i &\in (0, 42) \\
-\text{Frequency}_j &\sim \text{Poisson}(\lambda = 50) \\
-c &= 300 \\
-\color{wongGreen}{\text{Exposure}_{ij}} &\in [0, 100]
-\end{aligned} \\
-$$
-
-
----
-
-::: .small
-
-$$
-\begin{aligned}
-\textbf{For participant } &i \textbf{ and word-form } j: \\
-\text{Age of}_{ij} &= \{\text{Age}_i \mid \text{ELI}_{ij} = c\}\\
-\text{ELI}_{ij} &= \text{Age}_i \cdot \text{Frequency}_j \cdot \color{wongGreen}{\text{Exposure}_{ij}} \cdot \color{IBMMagenta}{\text{Cognateness}_{j}}\\
-\textbf{where:} \\
-\text{Age}_i &\in (0, 42) \\
-\text{Frequency}_j &\sim \text{Poisson}(\lambda = 50) \\
-c &= 300 \\
-\color{wongGreen}{\text{Exposure}_{ij}} &\in [0, 1] \\
-\color{IBMMagenta}{\text{Cognateness}_{j}} &\in [0, 1]
-\end{aligned} \\
-$$
 :::
+
+---
+
+![](assets/img/ambla-single-nc-mon.png){width="80%"}
+
+---
+
+![](assets/img/ambla-all-nc-mon.png){width="80%"}
+
+---
+
+::: .smaller
+
+$$
+\begin{aligned}
+\textbf{For participant } &i \textbf{ and word-form } j \text{ (translation of } j'): \\
+\text{Age of Acquisition}_{ij} &= \{\text{Age}_i \mid \text{Learning instances}_{ij} = c\}\\
+\text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \cdot \color{IBMMagenta}{\text{Exposure}_{ij}} \\
+\textbf{where:} \\
+\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) \\
+c &= 300 \\
+\end{aligned}
+$$
+
+:::
+
+---
+
+![](assets/img/ambla-eli-single.gif){width="80%"}
+
+---
+
+![](assets/img/ambla-all-nc.png)
 
 ---
 
@@ -484,26 +558,26 @@ Degree of income additional information proportional to the **phonological simil
 
 ---
 
+::: .smaller
+
 $$
 \begin{aligned}
-\text{AoA}_{ij} &= \{\text{Age}_i \mid y_{ij} = c\}\\
-y_{ij} &= \text{Age}_i \cdot \text{Frequency}_j \cdot \text{Exposure}_{ij} \cdot \text{Cognateness}_j\\
-\text{Frequency}_j &\sim \text{Poisson}(\lambda) \\
-\text{Cognateness}_{j, j_{TE}} &= \text{Levenshtein}(j, j_{TE}) \\\\
-\text{Where:} \\
-i&: \text{ child} \\
-j&: \text{word} \\
-j_{TE}&: \text{Translation equivalent of } j\\
-\text{AoA}_{ij}&: \text{ Age-of-acquisition of word } j \text{ for child } i\\
-c&: \text{ Threshold number of learning instances for word acquisition} \\
-y_{ij}&: \text{ Learning instances with word } j \text{ accumulated by child } i\\\\
-\text{For simulations}&: c = 300 \text{, } \lambda_j = 50 \\
-\end{aligned}
-$${#eq-ambla}
+\textbf{For participant } &i \textbf{ and word-form } j \text{ (translation of } j'): \\
+\text{Age of Acquisition}_{ij} &= \{\text{Age}_i \mid \text{Learning instances}_{ij} = c\}\\
+\text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \cdot \color{IBMMagenta}{\text{Exposure}_{ij}} \cdot \color{IBMMagenta}{\text{Cognateness}_{j}}\\
+\textbf{where:} \\
+\text{Frequency}_j &\sim \text{Poisson}(\lambda = 50) \\
+c &= 300 \\
+\color{IBMMagenta}{\text{Cognateness}_{j}} = &\color{IBMMagenta}{\text{Levenshtein}(j, j')}
+\end{aligned} \\
+$$
+:::
 
 ---
 
-<!-- Simulations -->
+
+![](assets/img/ambla-all-c.png)
+
 
 
 ## Methods
@@ -528,17 +602,260 @@ $${#eq-ambla}
 
 ### Regression coefficients
 
+```{r fig-coefs}
+#| label: fig-coefs
+#| fig-cap: "Posterior distribution of fixed regression coefficients"
+#| echo: false
+#| message: false
+#| warning: false
+#| out-width: 80%
+#| fig-width: 9
+#| fig-height: 4
+# summarise posterior draws
+responses <- arrow::read_csv_arrow(here("data", "02-chapter-2",
+                                        "data", "responses.csv"))
+
+model_summary <- arrow::read_csv_arrow(here("data", "02-chapter-2",
+                                            "results", "posterior", "model_summary.csv"))
+
+model_draws <- arrow::read_csv_arrow(here("data", "02-chapter-2",
+                                          "results", "posterior", "posterior_draws.csv"))
+
+intercept_label <- glue::glue("Intercepts (at average{round(mean(responses$age), 2)} months)")
+
+rope_interval <- c(lower = -0.1, upper = 0.1)/4
+
+model_vars_dict <- get_vars_dict(responses)
+
+sum_data <- model_summary |> 
+    mutate(across(.value:.upper, 
+                  \(x) ifelse(.type == intercept_label, plogis(x), x / 4)),
+           .variable_name = factor(.variable_name,
+                                   levels = unique(model_vars_dict),
+                                   ordered = TRUE),
+           .variable_name = gsub("Comprehension and Production", "Production",
+                                 .variable_name))
+
+draws_data <- model_draws |> 
+    mutate(across(.value, 
+                  \(x) ifelse(.type == intercept_label, plogis(x), x / 4)),
+           .variable_name = factor(.variable_name,
+                                   levels = unique(model_vars_dict),
+                                   ordered = TRUE)) 
+
+
+draws_data |> 
+    filter(.type=="Slopes") |> 
+    ggplot(aes(.value,
+               factor(.variable_name, levels = unique(model_vars_dict)),
+               fill = after_stat(abs(x) < rope_interval["upper"]))) +
+    facet_wrap(vars(.type), ncol = 1, scales = "free") +
+    annotate(geom = "rect",
+             colour = NA,
+             fill = "grey",
+             alpha = 1/4,
+             ymin = -Inf,
+             ymax = Inf,
+             xmin = rope_interval["lower"],
+             xmax = rope_interval["upper"]) +
+    annotate(geom = "text",
+             label = "ROPE",
+             colour = "grey",
+             angle = 90,
+             x = rope_interval["upper"],
+             y = 10,
+             size = 3,
+             hjust = 1.1,
+             vjust = 1.5) +
+    geom_vline(xintercept = 0,
+               colour = "grey") +
+    stat_slab() +
+    geom_errorbar(data = filter(sum_data, .type=="Slopes"),
+                  aes(xmin = .lower, xmax = .upper),
+                  width = 0.2, position = position_nudge(y = -0.2)) +
+    geom_point(data = filter(sum_data, .type=="Slopes"),
+               position = position_nudge(y = -0.2),
+               size = 1.5, show.legend = FALSE) +
+    scale_fill_manual(values = c(clrs[2], "grey80"),
+                      labels = c("Inside ROPE",
+                                 "Outside ROPE")) +
+    scale_y_discrete(limits = rev) +
+    labs(x = "Change in acquisition probability",
+         y = "Predictor",
+         fill = "Inside ROPE") +
+    theme_ambla() +
+    scale_x_continuous(limits = c(-0.2, 1)) +
+    theme(legend.position = c(1, 1),
+          legend.justification = c(1, 1),
+          legend.text.align = 0,
+          legend.title = element_blank(),
+          panel.grid.major.y = element_blank(),
+          panel.grid.minor.y = element_blank(),
+          panel.grid.minor.x = element_blank(),
+          # axis.text.y = element_text(angle = 30),
+          axis.title.y = element_blank()) 
+
+```
+
 ---
 
 ### Marginal effects
 
+```{r}
+#| label: fig-marginal-1
+#| fig-cap: "Posterior marginal effects"
+model_epreds <- arrow::read_csv_arrow(here("data", "02-chapter-2",
+                                           "results", "predictions",
+                                           "predictions.csv"))
+
+
+fig_data <- model_epreds |>
+    ungroup() |>
+    reframe(.median = mean(.value),
+            .lower = tidybayes::qi(.value, .width = 0.95)[, 1],
+            .upper = tidybayes::qi(.value, .width = 0.95)[, 2],
+            .by = c(ends_with("_std"), .category)) |>
+    mutate(age = (age_std * sd(responses$age)) + mean(responses$age),
+           exposure = factor(exposure_std,
+                             levels = unique(exposure_std),
+                             labels = c("Low exposure (-1 SD)",
+                                        "Mean exposure (0 SD)",
+                                        "High exposure (+1 SD)"),
+                             ordered = TRUE),
+           lv = factor(lv_std,
+                       levels = unique(lv_std),
+                       labels = paste0(c(0, 50, 100), "%"),
+                       ordered = TRUE),
+           .category = ifelse(.category == "Understands",
+                              "Comprehension",
+                              "Production"))
+
+clrs_1 <- colorRampPalette(c("#F2F2F2", "#C8102E"))(4)
+clrs_2 <- colorRampPalette(c("#F2F2F2", "#004CA3"))(4) 
+
+fig_data |>
+    filter(.category=="Comprehension") |> 
+    ggplot(aes(age, .median,
+               ymin = .lower,
+               ymax = .upper,
+               colour = lv,
+               fill = lv,
+               linetype = lv)) +
+    facet_wrap( ~ exposure) +
+    annotate(geom = "rect",
+             xmin = min(responses$age),
+             xmax = max(responses$age),
+             ymin = -Inf,
+             ymax = Inf,
+             fill = "grey",
+             alpha = 1 / 4,
+             linetype = "dotted") +
+    annotate(geom = "text",
+             x = min(responses$age),
+             y = 1,
+             hjust = 0,
+             vjust = 0.9,
+             label = "Observed\nage range",
+             size = 2) +
+    geom_vline(xintercept = mean(responses$age),
+               linewidth = 2 / 4,
+               alpha = 0.5,
+               colour = "grey") +
+    geom_hline(yintercept = 0.5,
+               linewidth = 2 / 4,
+               alpha = 0.5,
+               colour = "grey") +
+    geom_ribbon(linewidth = 0,
+                colour = NA,
+                alpha = 1) +
+    geom_line(linewidth = 2/4,
+              colour = "black") +
+    scale_fill_manual(values = clrs_1[2:4],
+                      guide = guide_legend(
+                          override.aes = list(fill = c("#333333",
+                                                       "#505050",
+                                                       "#9D9D9D")))) +
+    theme(axis.title.x = element_blank(),
+          axis.text.x = element_blank(),
+          legend.position = "top",
+          legend.box = "horizontal",
+          legend.title.align = 1,
+          legend.justification = "right",
+          legend.direction = "horizontal",
+          legend.key.size = unit(1, "cm"),
+          legend.key.height = unit(0.5, "cm")) +
+    
+    fig_data |>
+    filter(.category=="Production") |> 
+    ggplot(aes(age, .median,
+               ymin = .lower,
+               ymax = .upper,
+               colour = lv,
+               fill = lv,
+               linetype = lv)) +
+    facet_wrap( ~ exposure) +
+    annotate(geom = "rect",
+             xmin = min(responses$age),
+             xmax = max(responses$age),
+             ymin = -Inf,
+             ymax = Inf,
+             fill = "grey",
+             alpha = 1 / 4,
+             linetype = "dotted") +
+    annotate(geom = "text",
+             x = min(responses$age),
+             y = 1,
+             hjust = 0,
+             vjust = 0.9,
+             label = "Observed\nage range",
+             size = 2) +
+    geom_vline(xintercept = mean(responses$age),
+               linewidth = 2 / 4,
+               alpha = 0.5,
+               colour = "grey") +
+    geom_hline(yintercept = 0.5,
+               linewidth = 2 / 4,
+               alpha = 0.5,
+               colour = "grey") +
+    geom_ribbon(linewidth = 0,
+                colour = NA,
+                alpha = 1) +
+    geom_line(linewidth = 2/4,
+              colour = "black") +
+    scale_fill_manual(values = clrs_2[2:4]) +
+    theme(legend.position = "none",
+          axis.text.x = element_text(size = 9),
+          strip.text = element_blank()) +
+    
+    plot_layout(ncol = 1) &
+    plot_annotation(tag_levels = "A") &
+    
+    labs(x = "Age (months)",
+         y = "p(acquisition)",
+         colour = "Cognateness (phonological similarity)",
+         fill = "Cognateness (phonological similarity)",
+         linetype = "Cognateness (phonological similarity)") &
+    scale_linetype_manual(values = rev(c("solid", "dashed", "dotdash"))) &
+    scale_y_continuous(breaks = seq(0, 1, 0.25),
+                       limits = c(0, 1)) &
+    scale_x_continuous(breaks = seq(0, 50, 5)) &
+    theme_ambla() +
+    theme(panel.grid = element_blank(),
+          panel.border = element_rect(fill = NA,
+                                      colour = "black",
+                                      linewidth = 0.75)) 
+```
+
+
 ## Discussion
 
-# Study 2
+# Study 2 {.inverse}
 
 Developmental trajectories of bilingual spoken word recognition
 
 ## Introduction
+
+![](assets/img/hypotheses.png)
 
 ## Methods
 
@@ -551,6 +868,8 @@ Developmental trajectories of bilingual spoken word recognition
 ---
 
 ### Design
+
+![](assets/img/design.png)
 
 ---
 

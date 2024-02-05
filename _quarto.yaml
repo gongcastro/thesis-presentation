@@ -5,21 +5,19 @@ format:
     include-in-header:
     - file: mathjax-colors.html
     self-contained: true
+    from: markdown+emoji
 author:
   - name: "Gonzalo Garcia-Castro"
-    affiliation: "Universitat Pompeu Fabra"
     orcid: 0000-0002-8553-4209
 echo: false
 warning: false
 fig-dpi: 800
-affiliation-logo:
-  - logo-upf.png
   
 bibliography: assets/references.bib
 cls: assets/apa7.csl
 scrollable: true
 show-slide-number: all
 slide-number: c
-date: "March 11th, 2024"
+date: "11/03/2024"
 conference: PhD Defence / Departament de Medicina i Ciències de la Vida
 location: Barcelona (Spain)
