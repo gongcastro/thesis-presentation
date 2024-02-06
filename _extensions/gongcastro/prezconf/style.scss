@@ -139,12 +139,19 @@ $h1-font-size: 40px;
 }
 
 .inverse {
-    .slide-background-content {
-        background-color: $red;
-    }
-    h1, h2, h3, p, a, li, ul {
-        color: white;
-    }
+  .slide-background-content {
+    background-color: $red;
+  }
+
+  h1,
+  h2,
+  h3,
+  p,
+  a,
+  li,
+  ul {
+    color: white;
+  }
 }
 
 .citation {
@@ -182,13 +189,13 @@ $h1-font-size: 40px;
     padding-left: 1.5em;
     font-size: 25px;
   }
-  
+
   .smaller {
     font-size: 20px;
   }
 
   a {
-    color: blue
+    color: grey
   }
 
   .box {
@@ -198,6 +205,7 @@ $h1-font-size: 40px;
     padding-bottom: 0.5em;
     padding-left: 1em;
     background: $lightgrey;
+    font-size: 25px;
   }
 
   h1,
@@ -214,14 +222,27 @@ $h1-font-size: 40px;
     margin-right: 5%;
     color: grey;
   }
-  
+
   h2 {
     font-size: 40px;
   }
-  
+
+  p,
+  li,
+  ul,
+  dl,
   h3 {
-      font-size: 30px;
+    font-size: 25px;
   }
+
+  .math.display .MathJax {
+    font-size: 20% !important;
+  }
+
+  .magenta {
+    color: $red
+  }
+
 }
 
 aside p,

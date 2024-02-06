@@ -66,9 +66,9 @@ Lexical representations
 ## Overview
 
 * **Introduction**:
-- From speech sounds to words
-- Bilingualism and its challenges
-- The role of phonology (cognateness)
+    - From speech sounds to words
+    - Bilingualism and its challenges
+    - The role of phonology (cognateness)
 * **Study 1**: AMBLA model, acquisition of cognates, role of language exposure
 * **Study 2**: language non-selectivity in the initial bilingual lexicon
 * **Discussion**
@@ -103,8 +103,8 @@ and on some unresolved issues that we have addressed in the present dissertation
 * Universal discrimination of phonemes
 * Perceptual skills tuned to native language from ~4-6 mo until 12 mo
 * First word-form representations
-- Familiar word-form recognition: phonologically detailed
-- Speech segmentation: syllable co-occurrence, stress patterns, phonotactics, etc.
+    - Familiar word-form recognition: phonologically detailed
+    - Speech segmentation: syllable co-occurrence, stress patterns, phonotactics, etc.
 
 :::
 
@@ -257,29 +257,28 @@ In children [@chow2017spokenword]
 
 # The bilingual lexicon {.inverse}
 
-Challenges a bilingual environment
-
-Bilingual words acquisition
-
-Cognateness
-
-Language non-selectivity
+* Challenges a bilingual environment
+* Bilingual words acquisition
+* Cognateness
+* Language non-selectivity
 
 ## Challenges a bilingual environment
 
-Increased complexity in linguistic context:
+* Increased complexity in linguistic context (learning two codes)
+* Reduced linguistic input (split into two languages)
+* Increased referential ambiguity
+* Bilinguals keep up with monolinguals [@sebastian-galles2020bilingual]
 
-> Two grammatical systems, two phoneme inventories, two sets of word-forms
+::: notes
 
-Reduced linguistic input
+1. Two grammatical systems, two phoneme inventories, two sets of word-forms
+2. Lower quantitative, relative to monolinguals
+3. Two sets of words for the same referents
+4. Bilinguals keep up with monolinguals (language discrimination, grammar, lexicon)
 
-> Split into two languages
+:::
 
-Increased referential ambiguity
-
-> 2 labels, 1 referent
-
-## Bilingual word acquisition
+--- 
 
 Bilinguals acquire words at similar rates as monolinguals
 [@hoff2012dual]
@@ -448,68 +447,82 @@ What **mechanisms** support a cognate facilitation during word acquisition?
 
 :::
 
-## Language non-selectivity
-
-Activation spreads across **non-selected representations** in both languages, through **phonological** and **conceptual** links. [e.g., @costa2000cognate]
-
-![](assets/img/lexicon.png)
-
-### Language non-selectiviy
-
-
 
 # Study 1 {.inverse}
 
-Cognate beginnings to lexical acquisition
+Cognate beginnings to lexical acquisition (under review)
 
 ## Introduction
 
-Bilinguals keep up with monolinguals in vocabulary growth
+* Bilinguals keep up with monolinguals in vocabulary growth
+* The presence of cognates seems to facilitate vocabulary acquisition
+* Language co-activation has been suggested to underlie this phenomenon
+* Mechanisms supporting the role of co-activation in cognate acquisition are unclear
 
-The presence of cognates seems to facilitate vocabulary acquisition
+## Language non-selectivity
 
-Language co-activation has been suggested to underlie this phenomenon
+::: {.columns}
 
-What mechanisms are support the role of co-activation in cognate acquisition?
+:::: {.column width="40%"}
+
+Activation spreads across **non-selected representations** in both languages, through **phonological** and **conceptual** links. [e.g., @costa2000cognate]
+
+Evidence in children [@bosma2020cognate; @dehouwer2014bilingual] and infants [@vonholzen2012language; @jardak2019labels; @singh2014one].
+
+::::
+
+:::: {.column width="60%"}
+
+![](assets/img/lexicon-mon.png){width="80%"}
+
+::::
+
+::: 
+
+
+## Language non-selectivity
+
+![](assets/img/lexicon.png)
+
+## Language non-selectivity
+
+
 
 ## The AMBLA model
 
 ::: box
-**A**ccumulator **M**odel of **B**ilingual **L**exical **A**cquisition
+**A**ccumulator **M**odel of **B**ilingual **L**exical **A**cquisition (**AMBLA**)
 :::
-
 
 ---
 
 ::: box
 
-1) Infants accumulate information about word-forms until a **threshold** is reached and the word is acquired
+1. Information about form-meaning mappings is provided by <span style="color:#a80035;">**learning instances**</span>.
+    - Exposure to a word-form that results in the accumulation of information about its meaning
+2. <span style="color:#0040a8;">**Age of acquisition**</span>: the infant accumulates a <span style="color:#00a857;">**threshold ($c$)**</span> amount of learning instances for a word-form
 
 :::
-
-Information is provided in the form of word **effective learning instances (ELI)**.
-
-<br> 
-
-Effective learning instance
-: Exposure to a word-form that results in the accumulation of information about its meaning
-
----
-
-::: .smaller
 
 $$
 \begin{aligned}
+\definecolor{myred}{RGB}{ 168, 0, 53 }
+\definecolor{myblue}{RGB}{ 0, 64, 168 }
+\definecolor{mygreen}{RGB}{0, 168, 87}
+\definecolor{grey}{RGB}{128, 128, 128}
 \textbf{For participant } &i \textbf{ and word-form } j \text{ (translation of } j'): \\
-\text{Age of Acquisition}_{ij} &= \{\text{Age}_i \mid \text{Learning instances}_{ij} = c\}\\
-\text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \\
+{\color{mygreen}\text{Age of Acquisition}_{ij}} &= \{\text{Age}_i \mid {\color{myred}\text{Learning instances}_{ij}} = {\color{myblue}c} \}\\
+\color{myred}{\text{Learning instances}_{ij}} &= \text{Age}_i \cdot \text{Freq}_j \\
 \textbf{where:} \\
-\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) \\
-c &= 300
-\end{aligned} \\
+{\color{myblue}c} &= 300 \\
+\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) 
+\end{aligned}
 $$
 
-:::
+
+---
+
+![](assets/img/ambla-eli-single-mon.gif){width="80%"}
 
 ---
 
@@ -521,24 +534,30 @@ $$
 
 ---
 
-::: .smaller
+<span style="color:#a80035;">**Exposure**</span>
+
 
 $$
 \begin{aligned}
+\definecolor{myred}{RGB}{ 168, 0, 53 }
+\definecolor{myblue}{RGB}{ 0, 64, 168 }
+\definecolor{mygreen}{RGB}{0, 168, 87}
+\definecolor{myorange}{RGB}{ 235, 127, 26 }
 \textbf{For participant } &i \textbf{ and word-form } j \text{ (translation of } j'): \\
-\text{Age of Acquisition}_{ij} &= \{\text{Age}_i \mid \text{Learning instances}_{ij} = c\}\\
-\text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \cdot \color{IBMMagenta}{\text{Exposure}_{ij}} \\
+\text{Age of Acquisition}_{ij} &= \{\text{Age}_i \mid \text{Learning instances}_{ij} = c \}\\
+\text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \cdot {\color{myred}\text{Exposure}_{ij}}\\
 \textbf{where:} \\
-\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) \\
 c &= 300 \\
+\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) 
 \end{aligned}
 $$
 
-:::
 
 ---
 
-![](assets/img/ambla-eli-single.gif){width="80%"}
+![](assets/img/ambla-eli-single.gif)
+
+---
 
 ---
 
@@ -548,33 +567,41 @@ $$
 
 ::: box
 
-2) Words accumulate additional information from the **co-activation** of their (phonologically similar) translation equivalent
+3. Words accumulate additional information from the **co-activation** of their (phonologically similar) translation equivalent
 
 :::
+
+<span style="color:#a80035;">**Cognateness**</span>
+
+
 
 Learning instances for one word-form may result in the accumulation of information for its **translation equivalent**
 
-Degree of income additional information proportional to the **phonological similarity** between both translation equivalents 
+Degree of income additional information proportional to the **phonological similarity** between both translation equivalents (Levenshtein distance)
 
 ---
 
-::: .smaller
+
 
 $$
 \begin{aligned}
+\definecolor{myred}{RGB}{ 168, 0, 53 }
+\definecolor{myblue}{RGB}{ 0, 64, 168 }
+\definecolor{mygreen}{RGB}{0, 168, 87}
+\definecolor{myorange}{RGB}{ 235, 127, 26 }
 \textbf{For participant } &i \textbf{ and word-form } j \text{ (translation of } j'): \\
-\text{Age of Acquisition}_{ij} &= \{\text{Age}_i \mid \text{Learning instances}_{ij} = c\}\\
-\text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \cdot \color{IBMMagenta}{\text{Exposure}_{ij}} \cdot \color{IBMMagenta}{\text{Cognateness}_{j}}\\
+\text{Age of Acquisition}_{ij} &= \{\text{Age}_i \mid \text{Learning instances}_{ij} = c \}\\
+\text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \cdot \text{Exposure}_{ij} \cdot {\color{myred}\text{Cognateness}_{j}}\\
 \textbf{where:} \\
-\text{Frequency}_j &\sim \text{Poisson}(\lambda = 50) \\
 c &= 300 \\
-\color{IBMMagenta}{\text{Cognateness}_{j}} = &\color{IBMMagenta}{\text{Levenshtein}(j, j')}
-\end{aligned} \\
+\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) \\
+{\color{myred}\text{Cognateness}}&{\color{myred}=\text{Levenshtein}(j, j')}
+\end{aligned}
 $$
-:::
 
 ---
 
+![](assets/img/ambla-single-c.gif)
 
 ![](assets/img/ambla-all-c.png)
 

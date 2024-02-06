@@ -731,10 +731,12 @@ ggsave("assets/img/ambla-all-c.png",
 
 # animations -------------------------------------------------------------------
 
+# single, mon
 iter_id <- 1
 
 eli_plot <- eli_df |> 
     filter(hypothesis=="H0",
+           id=="Monolingual, Catalan form",
            iteration==iter_id,
            te==te_labels[1]) |> 
     mutate(n_cum = cumsum(n_month),
@@ -761,6 +763,7 @@ eli_plot <- eli_df |>
              hjust = 0) +
     geom_label(data = filter(logistic_df,
                              hypothesis=="H0",
+                             id=="Monolingual, Catalan form",
                              iteration==iter_id,
                              te==te_labels[1]) |> 
                    mutate(aoa = ifelse(age < aoa, NA, aoa)),
@@ -805,6 +808,7 @@ eli_plot <- eli_df |>
 aoa_plot <- logistic_df |>
     mutate(aoa = ifelse(age < aoa, NA, aoa)) |> 
     filter(hypothesis=="H0",
+           id=="Monolingual, Catalan form",
            iteration==iter_id,
            te==te_labels[1]) |> 
     ggplot(aes(aoa, 0.5, 
@@ -818,6 +822,7 @@ aoa_plot <- logistic_df |>
     geom_line(data = filter(logistic_df,
                             iteration==iter_id,
                             hypothesis=="H0",
+                            id=="Monolingual, Catalan form",
                             te==te_labels[1]),
               aes(x = age, y = prob),
               linewidth = 3/4,
@@ -843,6 +848,7 @@ aoa_plot <- logistic_df |>
 
 n_frames <- nrow(eli_df |> 
                      filter(hypothesis=="H0",
+                            id=="Monolingual, Catalan form",
                             iteration==iter_id,
                             te==te_labels[1]))/length(levels(eli_df$id))
 
@@ -854,7 +860,7 @@ eli_gif <- animate(eli_plot,
                    renderer = gifski_renderer(),
                    res = 200)
 
-anim_save("assets/img/ambla-eli-single.gif", eli_gif)
+anim_save("assets/img/ambla-eli-single-mon.gif", eli_gif)
 
 aoa_gif <- animate(aoa_plot, 
                    width = 8,
@@ -864,10 +870,10 @@ aoa_gif <- animate(aoa_plot,
                    renderer = gifski_renderer(),
                    res = 200)
 
-anim_save("assets/img/ambla-aoa-single.gif", aoa_gif)
+anim_save("assets/img/ambla-aoa-single-mon.gif", aoa_gif)
 
 
-# simulations
+# simulations all (no facilitation)
 iter_id <- 1
 
 eli_plot <- eli_df |> 
@@ -1006,4 +1012,145 @@ aoa_gif <- animate(aoa_plot,
                    res = 200)
 
 anim_save("assets/img/ambla-aoa-all.gif", aoa_gif)
+
+# animations (all, facilitation) -----------
+
+iter_id <- 1
+
+eli_plot <- eli_df |> 
+    filter(hypothesis=="H1",
+           te==te_labels[2]) |> 
+    mutate(n_cum = cumsum(n_month),
+           y_pos = max(eli),
+           .by = c(te, id)) |> 
+    ggplot(aes(age, eli,
+               colour = id, 
+               fill = id,
+               shape = id)) +
+    facet_grid(~ te) +
+    geom_hline(yintercept = threshold,
+               linewidth = 3/4,
+               colour = "grey80") +
+    geom_line(aes(group = interaction(id, iteration, language)),
+              linewidth = 3/4,
+              alpha = 1/10) +
+    annotate(geom = "label",
+             label = glue::glue("Acquisition threshold: {threshold}"),
+             label.r = unit(0, "lines"),
+             label.size = 0,
+             fill = "grey80",
+             x = 0,
+             y = threshold,
+             size = 2,
+             hjust = 0) +
+    geom_line(data = filter(eli_df_summary,
+                            hypothesis=="H1",
+                            te==te_labels[2]),
+              aes(group = interaction(id)),
+              linewidth = 3/4) +
+    geom_label(data = filter(logistic_df_summary,
+                             hypothesis=="H1",
+                             te==te_labels[2]) |>
+                   mutate(aoa = ifelse(age < aoa, NA, aoa)),
+               aes(label = round(aoa, 2),
+                   x = aoa,
+                   y = threshold),
+               colour = "white",
+               show.legend = FALSE,
+               size = 4,
+               label.r = unit(0, "lines")) +
+    labs(x = "Age (months)",
+         y = "Cumulative\nlearning instances",
+         colour = "Language",
+         shape = "Language profile",
+         fill = "Language",
+         linetype = "Language profile") +
+    scale_y_continuous(labels = function(x) format(x, big.mark = ",")) +
+    theme(legend.position = "top", 
+          legend.text = element_text(size = 8),
+          legend.key.width = unit(1, "cm"),
+          legend.key.height = unit(0.5, "cm"),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          legend.box.background = element_rect(fill = "white",
+                                               colour = NA),
+          legend.background = element_rect(fill = "white",
+                                           colour = NA)) +
+    guides(colour = guide_legend(override.aes = list(linewidth = 2))) +
+    scale_colour_manual(values = clrs) +
+    scale_fill_manual(values = clrs) +
+    scale_x_continuous(labels = function(x) format(x, big.mark = ","),
+                       limits = c(0, age_max)) +
+    theme_ambla() +
+    transition_reveal(age)
+
+
+aoa_plot <- logistic_df |> 
+    filter(hypothesis=="H1",
+           te==te_labels[2]) |>
+    mutate(aoa = ifelse(age < aoa, NA, aoa)) |> 
+    ggplot(aes(aoa, 0.5, 
+               colour = id, 
+               fill = id,
+               shape = id)) +
+    geom_hline(yintercept = 0.5,
+               linewidth = 3/4,
+               colour = "grey80") +
+    geom_ribbon(data = filter(logistic_df_summary,
+                              hypothesis=="H1",
+                              te==te_labels[2]),
+                aes(x = age, y = prob,
+                    ymin = .lower,
+                    ymax = .upper,
+                    fill = id),
+                linewidth = NA,
+                alpha = 0.5) +
+    geom_line(data = filter(logistic_df_summary,
+                            hypothesis=="H1",
+                            te==te_labels[2]),
+              aes(x = age, y = prob,
+                  group = interaction(id)),
+              linewidth = 3/4,
+              na.rm = TRUE) +
+    geom_point(data = filter(logistic_df_summary,
+                             hypothesis=="H1",
+                             te==te_labels[2]) |> 
+                   mutate(aoa = ifelse(age < aoa, NA, aoa)),
+               size = 3, 
+               na.rm = TRUE) +
+    labs(x = "Age (months)",
+         y = "*p*(Acquisition)",
+         colour = "Language",
+         shape = "Language profile",
+         fill = "Language",
+         linetype = "Language profile") +
+    theme(legend.position = "none",
+          axis.title.y = element_markdown()) +
+    transition_reveal(age) +
+    guides(colour = guide_legend(override.aes = list(linewidth = 2))) +
+    scale_colour_manual(values = clrs) +
+    scale_fill_manual(values = clrs) +
+    scale_x_continuous(labels = function(x) format(x, big.mark = ","),
+                       limits = c(0, age_max)) +
+    theme_ambla()
+
+eli_gif <- animate(eli_plot,
+                   width = 6,
+                   height = 3.5,
+                   units = "in",
+                   renderer = gifski_renderer(),
+                   duration = 10,
+                   res = 200)
+
+anim_save("assets/img/ambla-single-c.gif", eli_gif)
+
+aoa_gif <- animate(aoa_plot, 
+                   width = 6,
+                   height = 1.5,
+                   units = "in",
+                   renderer = gifski_renderer(),
+                   duration = 10,
+                   res = 200)
+
+anim_save("assets/img/ambla-aoa-c.gif", aoa_gif)
 

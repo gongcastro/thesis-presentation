@@ -6,6 +6,10 @@ format:
     - file: mathjax-colors.html
     self-contained: true
     from: markdown+emoji
+    transition: fade
+    progress: true
+    preload-iframes: true
+    link-external-newwindow: true
 author:
   - name: "Gonzalo Garcia-Castro"
     orcid: 0000-0002-8553-4209
