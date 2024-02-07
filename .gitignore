@@ -8,3 +8,5 @@ data/
 index_files/
 template_files/
 renv/
+assets/img/*.gif
+assets/img/*.mp4
