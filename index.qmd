@@ -38,6 +38,31 @@ options(
 set.seed(1234)
 
 source("R/utils.R")
+
+# load data
+wb <- here::here("data", "01-introduction", "wordbank_administration_data.csv") |> 
+    arrow::read_csv_arrow() |>
+    add_count(language) |>
+    filter(typically_developing,
+           monolingual,
+           language!="English (British)",
+           between(age, 10, 30))
+responses <- arrow::read_csv_arrow(here("data", "02-chapter-2",
+                                        "data", "responses.csv"))
+
+model_summary <- arrow::read_csv_arrow(here("data", "02-chapter-2",
+                                            "results", "posterior", "model_summary.csv"))
+
+model_draws <- arrow::read_csv_arrow(here("data", "02-chapter-2",
+                                          "results", "posterior", "posterior_draws.csv"))
+
+bvq_data <- readRDS(here::here("data", "01-introduction", "bvq.rds"))
+
+data_oxf <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "data_oxf.csv"))
+model_fits_oxf <- readRDS(here("data", "03-chapter-3", "results", "fit_list_oxf.rds"))
+model_loos_oxf <- readRDS(here("data", "03-chapter-3", "results", "loos_oxf.rds"))
+attrition_trials <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "attrition_trials.csv"))
+attrition_participants <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "attrition_participants.csv"))
 ```
 
 
@@ -66,9 +91,9 @@ Lexical representations
 ## Overview
 
 * **Introduction**:
-    - From speech sounds to words
-    - Bilingualism and its challenges
-    - The role of phonology (cognateness)
+- From speech sounds to words
+- Bilingualism and its challenges
+- The role of phonology (cognateness)
 * **Study 1**: AMBLA model, acquisition of cognates, role of language exposure
 * **Study 2**: language non-selectivity in the initial bilingual lexicon
 * **Discussion**
@@ -103,8 +128,8 @@ and on some unresolved issues that we have addressed in the present dissertation
 * Universal discrimination of phonemes
 * Perceptual skills tuned to native language from ~4-6 mo until 12 mo
 * First word-form representations
-    - Familiar word-form recognition: phonologically detailed
-    - Speech segmentation: syllable co-occurrence, stress patterns, phonotactics, etc.
+- Familiar word-form recognition: phonologically detailed
+- Speech segmentation: syllable co-occurrence, stress patterns, phonotactics, etc.
 
 :::
 
@@ -146,16 +171,6 @@ e.g., MacArthur-Bates Communicative Development Inventory (CDI) [@fenson1994vari
 ## Vocabulary growth
 
 Vocabulary size grows non-linearly during the second year of life
-
-```{r wordbank}
-wb <- here::here("data", "01-introduction", "wordbank_administration_data.csv") |> 
-    arrow::read_csv_arrow() |>
-    add_count(language) |>
-    filter(typically_developing,
-           monolingual,
-           language!="English (British)",
-           between(age, 10, 30))
-```
 
 ```{r fig-wordbank}
 #| label: fig-wordbank
@@ -326,7 +341,6 @@ Cognates acquired earlier than non-cognates [@mitchell2023cognates; @bosch2014fi
 #| fig-height: 5
 #| fig-width: 10
 #| out-width: 50%
-bvq_data <- readRDS(here::here("data", "01-introduction", "bvq.rds"))
 
 flatten_xsampa <- function(x) {
     str_rm <- c("\\.", "\\\\", ",", "/", "?", "'", '"')
@@ -499,7 +513,7 @@ Evidence in children [@bosma2020cognate; @dehouwer2014bilingual] and infants [@v
 ::: box
 
 1. Information about form-meaning mappings is provided by <span style="color:#a80035;">**learning instances**</span>.
-    - Exposure to a word-form that results in the accumulation of information about its meaning
+- Exposure to a word-form that results in the accumulation of information about its meaning
 2. <span style="color:#0040a8;">**Age of acquisition**</span>: the infant accumulates a <span style="color:#00a857;">**threshold ($c$)**</span> amount of learning instances for a word-form
 
 :::
@@ -603,6 +617,8 @@ $$
 
 ![](assets/img/ambla-single-c.gif)
 
+---
+
 ![](assets/img/ambla-all-c.png)
 
 
@@ -639,15 +655,6 @@ $$
 #| fig-width: 9
 #| fig-height: 4
 # summarise posterior draws
-responses <- arrow::read_csv_arrow(here("data", "02-chapter-2",
-                                        "data", "responses.csv"))
-
-model_summary <- arrow::read_csv_arrow(here("data", "02-chapter-2",
-                                            "results", "posterior", "model_summary.csv"))
-
-model_draws <- arrow::read_csv_arrow(here("data", "02-chapter-2",
-                                          "results", "posterior", "posterior_draws.csv"))
-
 intercept_label <- glue::glue("Intercepts (at average{round(mean(responses$age), 2)} months)")
 
 rope_interval <- c(lower = -0.1, upper = 0.1)/4
@@ -884,13 +891,110 @@ Developmental trajectories of bilingual spoken word recognition
 
 ![](assets/img/hypotheses.png)
 
-## Methods
+## Experiment 1
 
-### Participants
+*N* = 112 children (15 longitudinal)
 
----
+Average age 26.36 months (*SD* = 4.01, *Range* = 20.03–32.5)
 
-### Stimuli
+English monolinguals, Oxford (United Kindgom)
+
+```{r}
+#| label: fig-vocabulary-oxf
+#| fig-cap: "Participant receptive vocabulary sizes across ages and language profiles."
+#| fig-width: 5
+#| fig-height: 4
+#| out-width: 70%
+participants <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "participants.csv"))
+participants_oxf <- dplyr::filter(participants, location == "Oxford")
+
+vocabulary <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "vocabulary.csv"))
+vocabulary_oxf <- inner_join(vocabulary,
+							 select(participants_oxf, session_id),
+							 by = join_by(session_id))
+
+vocabulary_oxf_exc <- nrow(participants_oxf) - nrow(vocabulary_oxf)
+
+vocab_plot_data <- vocabulary |>
+	inner_join(dplyr::filter(attrition_participants, is_valid_participant),
+			   by = join_by(session_id)) |>
+	inner_join(
+		select(
+			participants, location, lp, age,
+			child_id, session_id, age_group
+		),
+		by = join_by(child_id, session_id)
+	) |>
+	dplyr::filter(is_valid_participant) |>
+	select(
+		child_id, session_id, vocab_id, is_imputed, l1_count,
+		lp, location, age_group, age
+	) |>
+	mutate(
+		location = factor(location,
+						  levels = c("Oxford", "Barcelona")
+		),
+		lp = gsub(" \\(English\\)", "", lp),
+		side = case_when(
+			location == "Oxford" ~ "both",
+			lp == "Monolingual" ~ "left",
+			lp == "Bilingual" ~ "right"
+		),
+		study = if_else(location == "Oxford",
+						"Study 1 (English)", "Study 2 (Catalan/Spanish)"
+		)
+	)
+
+vocab_plot_means <- vocab_plot_data |>
+	summarise(
+		l1_count_sd = sd(l1_count, na.rm = TRUE),
+		l1_count = mean(l1_count, na.rm = TRUE),
+		n = n(),
+		.by = c(age, side, lp, study)
+	) |>
+	mutate(
+		.lower = l1_count - (l1_count_sd / sqrt(n)),
+		.upper = l1_count + (l1_count_sd / sqrt(n))
+	)
+
+vocab_plot_data |>
+	dplyr::filter(study == "Study 1 (English)") |>
+	ggplot(aes(age, l1_count,
+			   side = side
+	)) +
+	geom_point(
+		size = 2,
+		shape = 1,
+		colour = "grey",
+		alpha = 3 / 4,
+		stroke = 1
+	) +
+	geom_smooth(
+		method = "lm",
+		formula = "y ~ x",
+		colour = "black",
+		fill = "black"
+	) +
+	labs(
+		x = "Age (months)",
+		y = "Vocabulary size",
+		colour = "Group",
+		fill = "Group"
+	) +
+	scale_y_continuous(
+		limits = c(0, 575),
+		breaks = seq(0, 1e3, 100)
+	) +
+	scale_x_continuous(breaks = seq(0, 50, 2)) +
+	theme(
+		panel.grid.major.y = element_line(
+			linetype = "dotted",
+			colour = "grey"
+		),
+		legend.position = "top",
+		legend.title = element_blank()
+	)
+```
 
 ---
 
@@ -900,10 +1004,430 @@ Developmental trajectories of bilingual spoken word recognition
 
 ---
 
+### Results
+
+```{r fig-epreds-oxf}
+#| label: fig-epreds-oxf
+#| fig-cap: "Time course of target fixations in Experiment 1."
+#| fig-width: 6
+#| fig-height: 4
+clrs <- c("#004AAD", "#C8102E", "#FF9E1F")
+
+rope_interval <- c(lower = -0.1, upper = 0.1)
+
+make_std <- function(x, mean, sd) (x - mean) / sd
+
+timebin_values <- make_std(
+    seq(0, 16, length.out = 100),
+    mean(data_oxf$timebin),
+    sd(data_oxf$timebin))
+
+nd <- expand_grid(distinct(data_oxf, condition),
+                  timebin_std = timebin_values,
+                  age_std = 0)
+
+epreds <- tidybayes::add_epred_draws(nd, model_fits_oxf$fit_oxf_1,
+                                     re_formula = NA,
+                                     ndraws = NULL,
+                                     value = ".epred")
+
+obs_time <- data_oxf |> 
+    summarise(.sd = sd(.elog),
+              .elog = mean(.elog),
+              .n = n(),
+              .by = c(condition, timebin)) |> 
+    mutate(.lower = .elog-(.sd/sqrt(.n)),
+           .upper = .elog+(.sd/sqrt(.n)),
+           timebin = make_std(timebin,
+                              mean = mean(data_oxf$timebin),
+                              sd = sd(data_oxf$timebin))) 
+
+obs_summary <- data_oxf |> 
+    summarise(.sd = sd(.elog),
+              .elog = mean(.elog),
+              .n = n(),
+              .by = c(condition, child_id)) |>
+    mutate(.lower = .elog-(.sd/sqrt(.n)),
+           .upper = .elog+(.sd/sqrt(.n))) 
+
+epreds_summary <- epreds |>
+    ungroup() |>
+    summarise(.value = tidybayes::mean_qi(.epred)[[1]],
+              .lower = tidybayes::mean_qi(.epred)[[2]],
+              .upper = tidybayes::mean_qi(.epred)[[3]],
+              .by = c(condition, timebin_std))
+
+plot_summary <- obs_summary |> 
+    pivot_wider(names_from = condition,
+                values_from = .elog,
+                id_cols = child_id) |> 
+    mutate(diff = Related - Unrelated) |> 
+    pivot_longer(c(Related, Unrelated),
+                 names_to = "condition",
+                 values_to = ".elog") |> 
+    summarise(.elog = mean(.elog),
+              .by = c(child_id, condition)) |> 
+    ggplot(aes(condition, .elog, 
+               colour = condition,
+               fill = condition)) +
+    geom_hline(yintercept = 0,
+               colour = "grey") +
+    geom_line(aes(group = child_id),
+              alpha = 1/2,
+              colour = "grey",
+              linewidth = 3/4) +
+    geom_dots(side = "both",
+              layout = "swarm",
+              alpha = 1/2) +
+    geom_errorbar(data = summarise(obs_summary,
+                                   across(c(.elog, .upper, .lower), mean),
+                                   .by = c(condition)),
+                  aes(ymin = .lower,
+                      ymax = .upper),
+                  width = 0.1,
+                  colour = "black",
+                  linewidth = 3/4,
+                  show.legend = FALSE) +
+    geom_point(data = summarise(obs_summary, 
+                                across(c(.elog, .lower, .upper),
+                                       mean),
+                                .by = condition),
+               size = 2, colour = "black",
+               show.legend = FALSE) +
+    labs(x = "Condition",
+         y = "Logit PTLT",
+         colour = "Condition",
+         fill = "Condition") +
+    theme(axis.title = element_blank(),
+          legend.position = "none",
+          axis.text = element_blank(),
+          axis.line.y = element_blank())
+
+plot_time <- epreds |>
+    ggplot(aes(timebin_std, .epred,
+               colour = condition,
+               fill = condition,
+               linetype = condition,
+               shape = condition)) +
+    geom_hline(yintercept = 0,
+               colour = "grey") +
+    stat_summary(fun.data = tidybayes::mean_qi,
+                 geom = "ribbon",
+                 alpha = 1 / 4,
+                 linewidth = NA) +
+    stat_summary(fun = "mean",
+                 geom = "line",
+                 linewidth = 3 / 4) +
+    # geom_errorbar(
+    #     data = obs,
+    #     aes(y = .elog, ymin = .lower, ymax = .upper),
+    #     linewidth = 3/4,
+    #     linetype = "solid",
+    #     width = 0.1) +
+    geom_point(
+        data = obs_time,
+        aes(y = .elog, x = timebin),
+        stroke = 1,
+        size = 2) +
+    labs(x = "Time (ms)",
+         y = "Logit PTLT",
+         colour = "Condition",
+         fill = "Condition",
+         linetype = "Condition",
+         shape = "Condition") +
+    scale_x_continuous(
+        breaks = make_std(seq(0, 17, 3),
+                          mean(data_oxf$timebin),
+                          sd(data_oxf$timebin)),
+        labels = \(x) format(seq(3e2, 2e3, 3e2),
+                             big.mark = ",")) +
+    theme(legend.position = "top")
+
+plot_time + plot_summary +
+    plot_layout(nrow = 1, widths = c(0.7, 0.3)) &
+    scale_y_continuous(limits = c(-1, 1.4)) &
+    scale_shape_manual(values = c(1, 2)) &
+    scale_linetype_manual(values = c("solid", "dashed", "dotdash")) &
+    scale_colour_manual(values = clrs[c(1, 2)]) &
+    scale_fill_manual(values = clrs[c(1, 2)]) &
+    theme(panel.grid.major.y = element_line(colour = "grey", linetype = "dotted"),
+          legend.title = element_blank())
+```
+
+## Experiment 2
+
+
+### Participants
+
+---
+
+### Stimuli
+
+---
+
 ### Procedure
 
+---
 
-## Results
+### Results (monolinguals)
+
+```{r fig-epreds-bcn-mon}
+#| label: fig-epreds-bcn-mon
+#| fig-cap: "Time course of target fixations in Experiment 1."
+#| fig-width: 6
+#| fig-height: 4
+clrs <- c("#004AAD", "#C8102E", "#FF9E1F")
+data_bcn <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "data_bcn.csv"))
+model_fits_bcn <- readRDS(here("data", "03-chapter-3", "results", "fit_list_bcn.rds"))
+model_loos_bcn <- readRDS(here("data", "03-chapter-3", "results", "loos_bcn.rds"))
+
+rope_interval <- c(lower = -0.1, upper = 0.1)
+
+make_std <- function(x, mean, sd) (x - mean) / sd
+
+timebin_values <- make_std(
+    seq(0, 16, length.out = 100),
+    mean(data_bcn$timebin),
+    sd(data_bcn$timebin))
+
+nd <- expand_grid(distinct(data_bcn, condition, lp),
+                  age_std = 0, 
+                  timebin_std = timebin_values)
+
+epreds <- tidybayes::add_epred_draws(nd,
+                                     model_fits_bcn$fit_0,
+                                     ndraws = NULL,
+                                     re_formula = NA) |> 
+    mutate(lp = factor(lp, levels = c("Monolingual", "Bilingual")))
+
+obs_time <- data_bcn |> 
+    summarise(.sd = sd(.elog),
+              .elog = mean(.elog),
+              .n = n(),
+              .by = c(condition, lp, timebin)) |> 
+    mutate(.lower = .elog-(.sd/sqrt(.n)),
+           .upper = .elog+(.sd/sqrt(.n)),
+           timebin = make_std(timebin,
+                              mean = mean(data_bcn$timebin),
+                              sd = sd(data_bcn$timebin))) 
+
+obs_summary <- data_bcn |> 
+    summarise(.sd = sd(.elog),
+              .elog = mean(.elog),
+              .n = n(),
+              .by = c(condition, lp, child_id)) |>
+    mutate(.lower = .elog-(.sd/sqrt(.n)),
+           .upper = .elog+(.sd/sqrt(.n))) 
+
+epreds_summary <- epreds |>
+    ungroup() |>
+    summarise(.value = tidybayes::mean_qi(.epred)[[1]],
+              .lower = tidybayes::mean_qi(.epred)[[2]],
+              .upper = tidybayes::mean_qi(.epred)[[3]],
+              .by = c(condition, lp, timebin_std))
+
+plot_summary <- obs_summary |> 
+    filter(lp=="Monolingual") |>
+    summarise(.elog = mean(.elog),
+              .by = c(child_id, lp, condition)) |> 
+    ggplot(aes(condition, .elog, 
+               colour = condition,
+               fill = condition)) +
+    geom_hline(yintercept = 0,
+               colour = "grey") +
+    geom_line(aes(group = child_id),
+              alpha = 1/2,
+              colour = "grey",
+              linewidth = 3/4) +
+    geom_dots(side = "both",
+              layout = "swarm",
+              alpha = 1/2) +
+    geom_errorbar(data = obs_summary |>
+                filter(lp=="Monolingual") |>
+                summarise(across(c(.elog, .upper, .lower), mean),
+                                   .by = c(condition)),
+                  aes(ymin = .lower,
+                      ymax = .upper),
+                  width = 0.1,
+                  colour = "black",
+                  linewidth = 3/4,
+                  show.legend = FALSE) +
+    geom_point(data = obs_summary |>
+    filter(lp=="Monolingual") |> 
+    summarise(obs_summary, 
+                                across(c(.elog, .lower, .upper),
+                                       mean),
+                                .by = condition),
+               size = 2, colour = "black",
+               show.legend = FALSE) +
+    labs(x = "Condition",
+         y = "Logit PTLT",
+         colour = "Condition",
+         fill = "Condition") +
+    theme(axis.title = element_blank(),
+          legend.position = "none",
+          axis.text = element_blank(),
+          axis.line.y = element_blank())
+
+plot_time <- epreds |>
+    filter(lp=="Monolingual") |>
+    ggplot(aes(timebin_std, .epred,
+               colour = condition,
+               fill = condition,
+               linetype = condition,
+               shape = condition)) +
+    facet_wrap(~lp, ncol = 1) +
+    geom_hline(yintercept = 0,
+               colour = "grey") +
+    stat_summary(fun.data = tidybayes::mean_qi,
+                 geom = "ribbon",
+                 alpha = 1 / 4,
+                 linewidth = NA) +
+    stat_summary(fun = "mean",
+                 geom = "line",
+                 linewidth = 3 / 4) +
+    # geom_errorbar(
+    #     data = obs,
+    #     aes(y = .elog, ymin = .lower, ymax = .upper),
+    #     linewidth = 3/4,
+    #     linetype = "solid",
+    #     width = 0.1) +
+    geom_point(
+        data = obs_time |>
+        filter(lp=="Monolingual"),
+        aes(y = .elog, x = timebin),
+        stroke = 1,
+        size = 2) +
+    labs(x = "Time (ms)",
+         y = "Logit PTLT",
+         colour = "Condition",
+         fill = "Condition",
+         linetype = "Condition",
+         shape = "Condition") +
+    scale_x_continuous(
+        breaks = make_std(seq(0, 17, 3),
+                          mean(data_bcn$timebin),
+                          sd(data_bcn$timebin)),
+        labels = \(x) format(seq(3e2, 2e3, 3e2),
+                             big.mark = ",")) +
+    theme(legend.position = "top")
+
+plot_time + plot_summary +
+    plot_layout(nrow = 1, widths = c(0.7, 0.3)) &
+    scale_y_continuous(limits = c(-1, 1.4)) &
+    #scale_shape_manual(values = c(1, 2, 3)) &
+    #scale_linetype_manual(values = c("solid", "dashed", "dotdash")) &
+    scale_colour_manual(values = clrs) &
+    scale_fill_manual(values = clrs) &
+    theme(panel.grid.major.y = element_line(colour = "grey", linetype = "dotted"),
+          legend.title = element_blank())
+```
+
+
+---
+
+### Results (bilinguals)
+
+```{r fig-epreds-bcn-bil}
+#| label: fig-epreds-bcn-bil
+#| fig-cap: "Time course of target fixations in Experiment 1."
+#| fig-width: 6
+#| fig-height: 4
+plot_summary <- obs_summary |> 
+    filter(lp=="Bilingual") |>
+    summarise(.elog = mean(.elog),
+              .by = c(child_id, lp, condition)) |> 
+    ggplot(aes(condition, .elog, 
+               colour = condition,
+               fill = condition)) +
+    geom_hline(yintercept = 0,
+               colour = "grey") +
+    geom_line(aes(group = child_id),
+              alpha = 1/2,
+              colour = "grey",
+              linewidth = 3/4) +
+    geom_dots(side = "both",
+              layout = "swarm",
+              alpha = 1/2) +
+    geom_errorbar(data = obs_summary |>
+    filter(lp=="Bilingual") |>
+    summarise(across(c(.elog, .upper, .lower), mean),
+                                   .by = c(condition)),
+                  aes(ymin = .lower,
+                      ymax = .upper),
+                  width = 0.1,
+                  colour = "black",
+                  linewidth = 3/4,
+                  show.legend = FALSE) +
+    geom_point(data = obs_summary |>
+    filter(lp=="Bilingual") |>
+    summarise(across(c(.elog, .lower, .upper), mean),
+                                .by = condition),
+               size = 2, colour = "black",
+               show.legend = FALSE) +
+    labs(x = "Condition",
+         y = "Logit PTLT",
+         colour = "Condition",
+         fill = "Condition") +
+    theme(axis.title = element_blank(),
+          legend.position = "none",
+          axis.text = element_blank(),
+          axis.line.y = element_blank())
+
+plot_time <- epreds |>
+    filter(lp=="Bilingual") |>
+    ggplot(aes(timebin_std, .epred,
+               colour = condition,
+               fill = condition,
+               linetype = condition,
+               shape = condition)) +
+    facet_wrap(~lp, ncol = 1) +
+    geom_hline(yintercept = 0,
+               colour = "grey") +
+    stat_summary(fun.data = tidybayes::mean_qi,
+                 geom = "ribbon",
+                 alpha = 1 / 4,
+                 linewidth = NA) +
+    stat_summary(fun = "mean",
+                 geom = "line",
+                 linewidth = 3 / 4) +
+    # geom_errorbar(
+    #     data = obs,
+    #     aes(y = .elog, ymin = .lower, ymax = .upper),
+    #     linewidth = 3/4,
+    #     linetype = "solid",
+    #     width = 0.1) +
+    geom_point(
+        data = obs_time |> 
+        filter(lp=="Bilingual"),
+        aes(y = .elog, x = timebin),
+        stroke = 1,
+        size = 2) +
+    labs(x = "Time (ms)",
+         y = "Logit PTLT",
+         colour = "Condition",
+         fill = "Condition",
+         linetype = "Condition",
+         shape = "Condition") +
+    scale_x_continuous(
+        breaks = make_std(seq(0, 17, 3),
+                          mean(data_bcn$timebin),
+                          sd(data_bcn$timebin)),
+        labels = \(x) format(seq(3e2, 2e3, 3e2),
+                             big.mark = ",")) +
+    theme(legend.position = "top")
+
+plot_time + plot_summary +
+    plot_layout(nrow = 1, widths = c(0.7, 0.3)) &
+    scale_y_continuous(limits = c(-1, 1.4)) &
+    #scale_shape_manual(values = c(1, 2, 3)) &
+    #scale_linetype_manual(values = c("solid", "dashed", "dotdash")) &
+    scale_colour_manual(values = clrs) &
+    scale_fill_manual(values = clrs) &
+    theme(panel.grid.major.y = element_line(colour = "grey", linetype = "dotted"),
+          legend.title = element_blank())
+```
+
 
 ## Discussion
 

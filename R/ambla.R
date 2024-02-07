@@ -734,15 +734,17 @@ ggsave("assets/img/ambla-all-c.png",
 # single, mon
 iter_id <- 1
 
-eli_plot <- eli_df |> 
+eli_data_plot <- eli_df |> 
     filter(hypothesis=="H0",
            id=="Monolingual, Catalan form",
            iteration==iter_id,
            te==te_labels[1]) |> 
     mutate(n_cum = cumsum(n_month),
            y_pos = max(eli),
-           .by = c(te, id)) |> 
-    ggplot(aes(age, eli,
+           .by = c(te, id))
+
+eli_plot <- ggplot(eli_data_plot,
+            aes(age, eli,
                colour = id, 
                fill = id,
                shape = id)) +
@@ -774,11 +776,12 @@ eli_plot <- eli_df |>
                show.legend = FALSE,
                size = 4,
                label.r = unit(0, "lines")) + 
-    geom_text(aes(label = glue::glue("ELI: {round(n_cum)}"),
-                  x = max(age), y = eli),
-              colour = "grey",
+    geom_text(data = eli_data_plot |>
+            mutate(x = max(age), .by = id),
+            aes(label = glue::glue("ELI: {round(n_cum)}"),
+                  x = x, y = eli),
               hjust = 1,
-              show.legend = FALSE,) +
+              show.legend = FALSE) +
     labs(x = "Age (months)",
          y = "Cumulative\nlearning instances",
          colour = "Language",
@@ -846,12 +849,6 @@ aoa_plot <- logistic_df |>
                        limits = c(0, age_max)) +
     theme_ambla()
 
-n_frames <- nrow(eli_df |> 
-                     filter(hypothesis=="H0",
-                            id=="Monolingual, Catalan form",
-                            iteration==iter_id,
-                            te==te_labels[1]))/length(levels(eli_df$id))
-
 eli_gif <- animate(eli_plot,
                    width = 8,
                    height = 6,
@@ -861,6 +858,12 @@ eli_gif <- animate(eli_plot,
                    res = 200)
 
 anim_save("assets/img/ambla-eli-single-mon.gif", eli_gif)
+
+eli_mp4 <- animate(eli_plot,
+                   duration = 10,
+                   renderer = ffmpeg_renderer())
+
+anim_save("assets/img/ambla-eli-single-mon.mp4", eli_mp4)
 
 aoa_gif <- animate(aoa_plot, 
                    width = 8,
@@ -872,16 +875,23 @@ aoa_gif <- animate(aoa_plot,
 
 anim_save("assets/img/ambla-aoa-single-mon.gif", aoa_gif)
 
+aoa_mp4 <- animate(aoa_plot, 
+                   renderer = ffmpeg_renderer())
+
+anim_save("assets/img/ambla-aoa-single-mon.mp4", aoa_mp4)
+
 
 # simulations all (no facilitation)
 iter_id <- 1
 
-eli_plot <- eli_df |> 
+eli_data_plot <- eli_df |> 
     filter(hypothesis=="H0",
            te==te_labels[1]) |> 
     mutate(n_cum = cumsum(n_month),
            y_pos = max(eli),
-           .by = c(te, id)) |> 
+           .by = c(te, id))
+
+eli_plot <- eli_data_plot |>
     ggplot(aes(age, eli,
                colour = id, 
                fill = id,
@@ -918,6 +928,12 @@ eli_plot <- eli_df |>
                show.legend = FALSE,
                size = 4,
                label.r = unit(0, "lines")) +
+    geom_text(data = eli_data_plot |>
+            mutate(x = max(age), .by = id),
+            aes(label = glue::glue("ELI: {round(n_cum)}"),
+                  x = x, y = eli),
+              hjust = 1,
+              show.legend = FALSE) +
     labs(x = "Age (months)",
          y = "Cumulative\nlearning instances",
          colour = "Language",
@@ -1003,6 +1019,11 @@ eli_gif <- animate(eli_plot,
 
 anim_save("assets/img/ambla-eli-all.gif", eli_gif)
 
+eli_mp4 <- animate(eli_plot,
+                   renderer = ffmpeg_renderer())
+
+anim_save("assets/img/ambla-eli-all.mp4", eli_mp4)
+
 aoa_gif <- animate(aoa_plot, 
                    width = 6,
                    height = 1.5,
@@ -1013,16 +1034,23 @@ aoa_gif <- animate(aoa_plot,
 
 anim_save("assets/img/ambla-aoa-all.gif", aoa_gif)
 
+aoa_mp4 <- animate(aoa_plot,
+                   renderer = ffmpeg_renderer())
+
+anim_save("assets/img/ambla-aoa-all.mp4", aoa_mp4)
+
 # animations (all, facilitation) -----------
 
 iter_id <- 1
 
-eli_plot <- eli_df |> 
+eli_data_plot <- eli_df |> 
     filter(hypothesis=="H1",
            te==te_labels[2]) |> 
     mutate(n_cum = cumsum(n_month),
            y_pos = max(eli),
-           .by = c(te, id)) |> 
+           .by = c(te, id))
+
+eli_plot <- eli_data_plot |>
     ggplot(aes(age, eli,
                colour = id, 
                fill = id,
@@ -1059,6 +1087,12 @@ eli_plot <- eli_df |>
                show.legend = FALSE,
                size = 4,
                label.r = unit(0, "lines")) +
+        geom_text(data = eli_data_plot |>
+            mutate(x = max(age), .by = id),
+            aes(label = glue::glue("ELI: {round(n_cum)}"),
+                  x = x, y = eli),
+              hjust = 1,
+              show.legend = FALSE) +
     labs(x = "Age (months)",
          y = "Cumulative\nlearning instances",
          colour = "Language",
@@ -1144,6 +1178,16 @@ eli_gif <- animate(eli_plot,
 
 anim_save("assets/img/ambla-single-c.gif", eli_gif)
 
+eli_mp4 <- animate(eli_plot,
+                   width = 6,
+                   height = 3.5,
+                   units = "in",
+                   renderer = ffmpeg_renderer(),
+                   duration = 10,
+                   res = 200)
+
+anim_save("assets/img/ambla-single-c.mp4", eli_mp4)
+
 aoa_gif <- animate(aoa_plot, 
                    width = 6,
                    height = 1.5,
@@ -1153,4 +1197,9 @@ aoa_gif <- animate(aoa_plot,
                    res = 200)
 
 anim_save("assets/img/ambla-aoa-c.gif", aoa_gif)
+
+aoa_mp4 <- animate(aoa_plot, 
+                   renderer = ffmpeg_renderer())
+
+anim_save("assets/img/ambla-aoa-c.mp4", aoa_mp4)
 
