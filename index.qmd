@@ -1,7 +1,3 @@
----
----
-
-
 ```{r}
 #| label: setup
 library(dplyr)
@@ -14,9 +10,10 @@ library(here)
 library(tidybayes)
 
 # source("R/ambla.R")
+source("R/utils.R")
 
 # set ggplot theme and colour palette
-my_theme <- theme_minimal() +
+my_theme <- theme_ambla() +
     theme(panel.grid = element_blank(),
           axis.line = element_line(colour = "black"),
           text = element_text(size = 12, colour = "black"),
@@ -37,7 +34,6 @@ options(
 
 set.seed(1234)
 
-source("R/utils.R")
 
 # load data
 wb <- here::here("data", "01-introduction", "wordbank_administration_data.csv") |> 
@@ -66,37 +62,17 @@ attrition_participants <- arrow::read_csv_arrow(here("data", "03-chapter-3", "da
 ```
 
 
-Average English-native 20-year-old knows ~42,000 words: **mental lexicon**
+# Overview {.inverse}
 
-::: box
-
-Lexical representations
-: Phonological, conceptual, grammatical information of known words
-:::
-
-
-::: {.notes}
-
-* The average English 20-year-old knows around 42,000 words
-* The collection of words that an adult knows is known as the *mental lexicon*
-* The *mental lexicon* is formed by *lexical representations*, each embedding phonological, conceptual, and grammatical information about words
-* Building a lexicon is not a trivial task, as we will see now
-* Yet, the foundations of a lexicon are laid very early in age
-* In internal workings of this initial lexicon are still unclear
-
-:::
-
----
-
-## Overview
-
-* **Introduction**:
-- From speech sounds to words
-- Bilingualism and its challenges
-- The role of phonology (cognateness)
-* **Study 1**: AMBLA model, acquisition of cognates, role of language exposure
-* **Study 2**: language non-selectivity in the initial bilingual lexicon
-* **Discussion**
+0. **Introduction**
+    - From sounds to lexical representations
+    - Vocabulary spurt
+    - Early dynamics of lexical processing
+    - Challenges of a bilingual environment
+    - A cognate facilitation in lexical acquisition?
+1. **Study 1**: AMBLA model, acquisition of cognates, role of language exposure3
+2. **Study 2**: language non-selectivity in the initial bilingual lexicon
+3. **Discussion**
 
 ::: notes
 
@@ -112,14 +88,37 @@ and on some unresolved issues that we have addressed in the present dissertation
 
 :::
 
-# The initial lexicon {.inverse}
+## From sounds to lexical representations
 
-1. From sounds to lexical representations
-2. Vocabulary spurt
-3. Early dynamics of lexical processing
+Average English-native 20-year-old knows ~42,000 words: **mental lexicon**
 
+::: box
+
+Lexical representations
+: Phonological, conceptual, grammatical information of known words
+: Form-meaning association
+
+:::
+
+**Lexical development**:
+
+- Vocabulary size [@braginsky2019consistency]
+- Semantic and phonological associations [@fourtassi2020growth]
+- Efficiency in lexical access [@marchman2008speed]
+
+![](assets/img/development.jpg)
+
+::: {.notes}
+
+* The average English 20-year-old knows around 42,000 words
+* The collection of words that an adult knows is known as the *mental lexicon*
+* The *mental lexicon* is formed by *lexical representations*, each embedding phonological, conceptual, and grammatical information about words
+* Building a lexicon is not a trivial task, as we will see now
+
+:::
 
 ## From sounds to lexical representations
+
 
 ::: notes
 
@@ -133,29 +132,27 @@ and on some unresolved issues that we have addressed in the present dissertation
 
 :::
 
-
 ## From sounds to lexical representations
-
-Lexical representation: (at least) form-meaning association
-
-<br>
 
 ::: columns
 
 :::: {.column width="50%}
 
-**Inter-modal paradigms**
+**Inter-modal experimental paradigms**
 
 [@bergelson2012months; @bergelson2015early; @tincoff1999beginnings; @tincoff2012sixmontholds]
+
+![@bergelson2012months, *Science News*](assets/img/bergelson.jpg){width="80%"}
 
 ::::
 
 :::: {.column width="50%}
 
-**Parental reports**
+**Parental reports and surveys**
 
 e.g., MacArthur-Bates Communicative Development Inventory (CDI) [@fenson1994variability]
 
+![@fenson1994variability](assets/img/macarthur.jpg){width="80%"}
 ::::
 
 :::
@@ -165,8 +162,11 @@ e.g., MacArthur-Bates Communicative Development Inventory (CDI) [@fenson1994vari
 
 * The foundations of a lexicon are laid by the first form-meaning mappings at 6 months
 * Two sources of evidence: inter-modal experimental paradigms and parental reports
+* The internal workings of this initial lexicon are still unclear
 
 :::
+
+
 
 ## Vocabulary growth
 
@@ -244,40 +244,33 @@ Vocabulary size grows non-linearly during the second year of life
 
 ## Early dynamics of lexical processing
 
-Cascaded activation: activation spreads across non-selected lexical representations [@allopenna1998tracking]
 
 ::: columns
 
-:::: {.column width="80%}
+:::: {.column width="50%}
 
-![](assets/img/allopenna-1.png){width=70%}
+Cascaded activation: activation spreads across non-selected lexical representations [@allopenna1998tracking]
 
-::::
-
-:::: {.column width="60%}
-
-![](assets/img/allopenna-2.png)
-
-::::
-
-:::
-
-## Early dynamics of lexical processing
-
+<br> 
 In children [@chow2017spokenword]
 
 - Semantic priming [@styles2009how]
 - Phonological priming [@avila-varela2021longitudinal; @mani2010infant]
 
+::::
 
-# The bilingual lexicon {.inverse}
+:::: {.column width="50%}
 
-* Challenges a bilingual environment
-* Bilingual words acquisition
-* Cognateness
-* Language non-selectivity
+![](assets/img/allopenna-1.png){width="50%"}
 
-## Challenges a bilingual environment
+![](assets/img/allopenna-2.png){width="50%"}
+
+
+::::
+
+:::
+
+## Challenges of a bilingual environment
 
 * Increased complexity in linguistic context (learning two codes)
 * Reduced linguistic input (split into two languages)
@@ -293,14 +286,15 @@ In children [@chow2017spokenword]
 
 :::
 
---- 
+
+## Challenges of a bilingual environment
 
 Bilinguals acquire words at similar rates as monolinguals
 [@hoff2012dual]
 
 ::: columns
 
-:::: {.column width="80%}
+:::: {.column width="40%}
 
 ![](assets/img/hoff-1.png)
 
@@ -337,7 +331,7 @@ Cognates acquired earlier than non-cognates [@mitchell2023cognates; @bosch2014fi
 
 ```{r fig-cat-spa-distance}
 #| label: fig-cat-spa-distance
-#| fig-cap: "Pairwise lexical similarity"
+#| fig-cap: "Pairwise lexical similarity (average Levensthein similarity across translations)."
 #| fig-height: 5
 #| fig-width: 10
 #| out-width: 50%
@@ -394,6 +388,7 @@ tibble::tribble(~language, ~dist,
                        breaks = seq(0, 1, 0.1)) +
     theme(legend.position = "none",
           axis.title.y = element_blank(),
+          panel.grid.major.y = element_blank(),
           panel.grid.major.x = element_line(
               linetype = "dotted",
               colour = "grey"))
@@ -415,13 +410,13 @@ tibble::tribble(~language, ~dist,
 tibble::tribble(
     ~type, ~l_cog, ~l_noncog, ~v_cog, ~v_noncog,
     "No cognate facilitation", 50, 50, 50, 50,
-    "Cognate facilitation", 50, 50, 20, 80,
+    "Cognate facilitation", 50, 50, 80, 20,
 ) |> 
     tidyr::pivot_longer(-c(type),
                         names_to = c("measure", "cognate"),
                         names_sep = "_") |> 
-    mutate(cognate = factor(cognate, levels = c("cog", "noncog"),
-                            labels = c("Cognates", "Non-cognates")),
+    mutate(cognate = factor(cognate, levels = c("noncog", "cog"),
+                            labels = c("Non-cognates", "Cognates")),
            measure = factor(measure, levels = c("l", "v"),
                             labels = c("Language", "Vocabulary")),
            type = factor(type, levels = c("No cognate facilitation",
@@ -443,6 +438,8 @@ tibble::tribble(
     theme(legend.position = "top",
           axis.title.x = element_blank(),
           axis.line = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid = element_blank(),
           axis.text.x = element_blank(),
           legend.title = element_blank(),
           axis.title.y = element_blank())
@@ -464,7 +461,7 @@ What **mechanisms** support a cognate facilitation during word acquisition?
 
 # Study 1 {.inverse}
 
-Cognate beginnings to lexical acquisition (under review)
+*Cognate beginnings to lexical acquisition*
 
 ## Introduction
 
@@ -536,7 +533,7 @@ $$
 
 ---
 
-![](assets/img/ambla-eli-single-mon.gif){width="80%"}
+![](assets/gif/ambla-eli-single-mon.gif){width="80%"}
 
 ---
 
@@ -548,7 +545,18 @@ $$
 
 ---
 
-<span style="color:#a80035;">**Exposure**</span>
+Extended to the bilingual case:
+
+::: box
+
+3. Linguistic input divided into two languages
+
+<span style="color:#a80035;">**Exposure**</span>: proportion of time exposed to the language of $j$ word
+
+:::
+
+Accumulation of learning instances, a function of <span style="color:#a80035;">**Exposure**</span> and *Frequency*.
+
 
 
 $$
@@ -569,7 +577,7 @@ $$
 
 ---
 
-![](assets/img/ambla-eli-single.gif)
+![](assets/gif/ambla-eli-single.gif)
 
 ---
 
@@ -579,22 +587,14 @@ $$
 
 ---
 
+Implementing a cognateness facilitation mechanism:
+
 ::: box
 
-3. Words accumulate additional information from the **co-activation** of their (phonologically similar) translation equivalent
+4. Words may accumulate additional learning instances from the **co-activation** of their (phonologically similar) **translation equivalent**
 
+Degree proportional to their phonological similarity (<span style="color:#a80035;">**Cognateness**</span>)
 :::
-
-<span style="color:#a80035;">**Cognateness**</span>
-
-
-
-Learning instances for one word-form may result in the accumulation of information for its **translation equivalent**
-
-Degree of income additional information proportional to the **phonological similarity** between both translation equivalents (Levenshtein distance)
-
----
-
 
 
 $$
@@ -615,7 +615,7 @@ $$
 
 ---
 
-![](assets/img/ambla-single-c.gif)
+![](assets/gif/ambla-single-c.gif)
 
 ---
 

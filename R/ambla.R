@@ -857,13 +857,13 @@ eli_gif <- animate(eli_plot,
                    renderer = gifski_renderer(),
                    res = 200)
 
-anim_save("assets/img/ambla-eli-single-mon.gif", eli_gif)
+anim_save("assets/gif/ambla-eli-single-mon.gif", eli_gif)
 
 eli_mp4 <- animate(eli_plot,
                    duration = 10,
                    renderer = ffmpeg_renderer())
 
-anim_save("assets/img/ambla-eli-single-mon.mp4", eli_mp4)
+anim_save("assets/videos/ambla-eli-single-mon.mp4", eli_mp4)
 
 aoa_gif <- animate(aoa_plot, 
                    width = 8,
@@ -873,12 +873,12 @@ aoa_gif <- animate(aoa_plot,
                    renderer = gifski_renderer(),
                    res = 200)
 
-anim_save("assets/img/ambla-aoa-single-mon.gif", aoa_gif)
+anim_save("assets/gif/ambla-aoa-single-mon.gif", aoa_gif)
 
 aoa_mp4 <- animate(aoa_plot, 
                    renderer = ffmpeg_renderer())
 
-anim_save("assets/img/ambla-aoa-single-mon.mp4", aoa_mp4)
+anim_save("assets/videos/ambla-aoa-single-mon.mp4", aoa_mp4)
 
 
 # simulations all (no facilitation)
@@ -1017,12 +1017,12 @@ eli_gif <- animate(eli_plot,
                    duration = 10,
                    res = 200)
 
-anim_save("assets/img/ambla-eli-all.gif", eli_gif)
+anim_save("assets/gif/ambla-eli-all.gif", eli_gif)
 
 eli_mp4 <- animate(eli_plot,
                    renderer = ffmpeg_renderer())
 
-anim_save("assets/img/ambla-eli-all.mp4", eli_mp4)
+anim_save("assets/videos/ambla-eli-all.mp4", eli_mp4)
 
 aoa_gif <- animate(aoa_plot, 
                    width = 6,
@@ -1032,12 +1032,12 @@ aoa_gif <- animate(aoa_plot,
                    duration = 10,
                    res = 200)
 
-anim_save("assets/img/ambla-aoa-all.gif", aoa_gif)
+anim_save("assets/gif/ambla-aoa-all.gif", aoa_gif)
 
 aoa_mp4 <- animate(aoa_plot,
                    renderer = ffmpeg_renderer())
 
-anim_save("assets/img/ambla-aoa-all.mp4", aoa_mp4)
+anim_save("assets/videos/ambla-aoa-all.mp4", aoa_mp4)
 
 # animations (all, facilitation) -----------
 
@@ -1176,7 +1176,7 @@ eli_gif <- animate(eli_plot,
                    duration = 10,
                    res = 200)
 
-anim_save("assets/img/ambla-single-c.gif", eli_gif)
+anim_save("assets/gif/ambla-single-c.gif", eli_gif)
 
 eli_mp4 <- animate(eli_plot,
                    width = 6,
@@ -1186,7 +1186,7 @@ eli_mp4 <- animate(eli_plot,
                    duration = 10,
                    res = 200)
 
-anim_save("assets/img/ambla-single-c.mp4", eli_mp4)
+anim_save("assets/videos/ambla-single-c.mp4", eli_mp4)
 
 aoa_gif <- animate(aoa_plot, 
                    width = 6,
@@ -1196,10 +1196,10 @@ aoa_gif <- animate(aoa_plot,
                    duration = 10,
                    res = 200)
 
-anim_save("assets/img/ambla-aoa-c.gif", aoa_gif)
+anim_save("assets/gif/ambla-aoa-c.gif", aoa_gif)
 
 aoa_mp4 <- animate(aoa_plot, 
                    renderer = ffmpeg_renderer())
 
-anim_save("assets/img/ambla-aoa-c.mp4", aoa_mp4)
+anim_save("assets/videos/ambla-aoa-c.mp4", aoa_mp4)
 

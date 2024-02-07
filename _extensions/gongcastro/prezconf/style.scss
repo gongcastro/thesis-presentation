@@ -140,7 +140,7 @@ $h1-font-size: 40px;
 
 .inverse {
   .slide-background-content {
-    background-color: $red;
+    background-color: #fff0ab;
   }
 
   h1,
@@ -150,11 +150,12 @@ $h1-font-size: 40px;
   a,
   li,
   ul {
-    color: white;
+    color: black;
   }
 }
 
-.citation {
+.citation,
+em {
   font-size: 20px;
   line-height: 25%;
   color: grey;
