@@ -9,7 +9,7 @@ contributes:
       slide-number: true
       template-partials:
       - title-slide.html
-      format-resources:
+      resources:
       - logo-github.png
       - logo-twitter.png
       - logo-orcid.png
