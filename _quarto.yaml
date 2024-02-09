@@ -2,8 +2,6 @@ title: Bilingual Insights into the Initial Lexicon
 subtitle: The Role of Cognates in Word Acquisition
 format:
   prezconf-revealjs:
-    include-in-header:
-    - file: mathjax-colors.html
     self-contained: true
     from: markdown+emoji
     transition: fade

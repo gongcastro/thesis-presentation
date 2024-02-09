@@ -9,6 +9,8 @@ contributes:
       slide-number: true
       template-partials:
       - title-slide.html
+      include-in-header:
+      - file: mathjax-colors.html
       resources:
       - logo-github.png
       - logo-twitter.png

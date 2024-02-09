@@ -1,3 +1,4 @@
+
 ```{r}
 #| label: setup
 library(dplyr)
@@ -246,44 +247,46 @@ Vocabulary size grows non-linearly during the second year of life
 
 ## Early dynamics of lexical processing
 
-
 ::: columns
 
-:::: {.column width="70%}
+:::: {.column width="40%}
 
-**Cascaded activation**: activation spreads across non-selected lexical representations [@allopenna1998tracking]
+**Cascaded activation**: activation spreads across non-selected lexical representations
 
 ::::
 
-:::: {.column width="30%}
+:::: {.column width="60%}
 
-![](assets/img/allopenna-1.png){width="30%"}
+![](assets/img/lexicon-mon.png){width="80%"}
 
 ::::
 
 :::
+
+## Early dynamics of lexical processing
+
+::: columns
+
+:::: {.column width="50%}
+
+Adults
+
+![@allopenna1998tracking](assets/img/allopenna-2.png){width="30%"}
+
+::::
+
+:::: {.column width="50%}
 
 In children [@chow2017spokenword]
 
 - Semantic priming [@styles2009how; @arias-trejo2009lexical]
 - Phonological priming [@mani2010infant; @avila-varela2021longitudinal]
 
-::: columns
-
-:::: {.column width="50%}
-
-![](assets/img/allopenna-2.png){width="50%"}
-
-::::
-
-:::: {.column width="50%}
-
 ![](assets/img/chow.jpg){width="80%"}
 
 ::::
 
 :::
-
 
 
 ## Challenges of a bilingual environment
@@ -294,7 +297,7 @@ In children [@chow2017spokenword]
 
 ::: box
 
-Yet, bilinguals keep up with monolinguals [@sebastian-galles2020bilingual]
+Yet, **bilinguals keep up with monolinguals** [@sebastian-galles2020bilingual]
 
 :::
 
@@ -312,6 +315,8 @@ Yet, bilinguals keep up with monolinguals [@sebastian-galles2020bilingual]
 
 Bilinguals acquire words at similar rates as monolinguals
 [@hoff2012dual]
+
+English-Spanish bilinguals in Florida
 
 ::: columns
 
@@ -334,19 +339,6 @@ Bilinguals acquire words at similar rates as monolinguals
 Lexically closer languages :arrow_right: Larger vocabulary size [@floccia2018introduction]
 
 > English-Dutch > English-Mandarin
-
-::: box
-
-**Cognate**: form-similar translation equivalents (TEs)
-
-| *Cognate*           | *Non-cognate*       |
-|:-------------------:|:-------------------:|
-| [cat] /ˈgat-ˈgato/  | [dog] /ˈgos-ˈpe.ro/ |
-
-:::
-
-Cognates acquired earlier than non-cognates [@mitchell2023cognates; @bosch2014first]
-
 
 ## A cognate facilitation in lexical acquisition?
 
@@ -415,6 +407,26 @@ tibble::tribble(~language, ~dist,
               colour = "grey"))
 
 ```
+
+## A cognate facilitation in lexical acquisition?
+
+Lexical similarity: average Levenshtein similarity between translations equivalents (TE)
+
+::: box
+
+**Cognate**: form-similar TE
+
+| *Cognate*           | *Non-cognate*       |
+|:-------------------:|:-------------------:|
+| [cat] /ˈgat-ˈgato/  | [dog] /ˈgos-ˈpe.ro/ |
+
+:::
+
+Cognates **acquired earlier** than non-cognates [@mitchell2023cognates; @bosch2014first]
+
+
+## A cognate facilitation in lexical acquisition?
+
 
 ## A cognate facilitation in lexical acquisition?
 
@@ -493,29 +505,11 @@ What **mechanisms** support a cognate facilitation during word acquisition?
 
 ## Language non-selectivity
 
-::: {.columns}
-
-:::: {.column width="40%"}
-
 Activation spreads across **non-selected representations** in both languages, through **phonological** and **conceptual** links. [e.g., @costa2000cognate]
 
 Evidence in children [@bosma2020cognate; @dehouwer2014bilingual] and infants [@vonholzen2012language; @jardak2019labels; @singh2014one].
 
-::::
-
-:::: {.column width="60%"}
-
-![](assets/img/lexicon-mon.png){width="80%"}
-
-::::
-
-::: 
-
-
-## Language non-selectivity
-
 ![](assets/img/lexicon.png)
-
 
 ## The AMBLA model
 
