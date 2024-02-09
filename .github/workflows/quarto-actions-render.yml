@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+        RENV_PATHS_ROOT: ~/.local/share/renv
     steps:
       - name: Cache packages
         uses: actions/cache@v1
@@ -20,7 +22,7 @@ jobs:
         run: |
           if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
           renv::restore()
-          
+
       - name: Check out repository
         uses: actions/checkout@v4
 
