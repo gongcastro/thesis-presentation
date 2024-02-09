@@ -4,6 +4,8 @@
 .Ruserdata
 
 /.quarto/
+/_site/
+/.vscode/
 data/
 index_files/
 template_files/
