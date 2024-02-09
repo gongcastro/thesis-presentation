@@ -7,6 +7,7 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: r-lib/actions/setup-r-dependencies@v2
       - name: Set RENV_PATHS_ROOT
         shell: bash
         run: |
@@ -18,7 +19,6 @@ jobs:
           key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
           restore-keys: |
             ${{ runner.os }}-renv-
-
       - name: Restore packages
         shell: Rscript {0}
         run: |
