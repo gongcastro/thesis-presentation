@@ -14,7 +14,7 @@ $lightgrey: #e3e1e1;
 
 
 // font families
-$font-family-serif: 'Lora';
+$font-family-serif: 'DM Sans';
 $font-family-sans-serif: 'DM Sans';
 $font-family-monospace: 'Fira Code';
 
@@ -154,18 +154,6 @@ $h1-font-size: 40px;
   }
 }
 
-.citation,
-em {
-  font-size: 20px;
-  line-height: 25%;
-  color: grey;
-  text-align: right;
-
-  a {
-    color: blue;
-    text-align: right;
-  }
-}
 
 .aside {
   color: $lightgrey;
@@ -195,8 +183,20 @@ em {
     font-size: 20px;
   }
 
-  a {
-    color: grey
+  .citation {
+
+    p,
+    em {
+      font-size: 12px;
+      line-height: 25%;
+      color: grey;
+      text-align: right;
+    }
+
+    a {
+      color: grey;
+      text-align: right;
+    }
   }
 
   .box {
@@ -217,15 +217,9 @@ em {
     font-family: $font-family-serif;
   }
 
-  figcaption {
-    margin-top: -3%;
-    text-align: right;
-    margin-right: 5%;
-    color: grey;
-  }
-
   h2 {
-    font-size: 40px;
+    font-size: 30px;
+    color: black;
   }
 
   p,
@@ -251,9 +245,17 @@ aside p,
   color: $body-color;
 }
 
+figcaption {
+  margin-top: -3%;
+  text-align: right;
+  margin-right: 5%;
+  color: grey;
+  font-size: 12px;
+}
+
 
 .highlight {
-  background-color: white;
+  background-color: grey;
   color: black;
   font-size: 55px;
   opacity: 1;

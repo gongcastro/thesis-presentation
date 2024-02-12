@@ -64,33 +64,8 @@ attrition_participants <- arrow::read_csv_arrow(here("data", "03-chapter-3", "da
 ```
 
 
-# Overview {.inverse}
 
-0. **Introduction**
-    - From sounds to lexical representations
-    - Vocabulary spurt
-    - Early dynamics of lexical processing
-    - Challenges of a bilingual environment
-    - A cognate facilitation in lexical acquisition?
-1. **Study 1**: AMBLA model, acquisition of cognates, role of language exposure3
-2. **Study 2**: language non-selectivity in the initial bilingual lexicon
-3. **Discussion**
-
-::: notes
-
-* In the last five years, we have explored the initial lexicon through the lens of a particular case of language learning: bilingual infants
-* In this presentation, I will first provide an overview of how words become relevant linguistic units to infants
-* Second, I will elaborate on the specific challenges that bilinguals face in their vocabulary acquisition journey. In particular, how bilinguals manage to keep up with monolinguals in their vocabulary acquisition trajectories, despite facing a more complex linguistic environment.
-* Third, I will describe some recent insights into how phonology (and in particular, the lexical similarity between the two languages),
-and on some unresolved issues that we have addressed in the present dissertation
-* Fourth, I will formally present a model that proposes a candidate mechanism to explain how cognateness boosts lexical acquisition in bilinguals
-* I will then present the first empirical study of the dissertation, in which we generate and test the central predictions of the model
-* In the second empirical study, we test one of the central assumption of the model
-* Finally, I summarise the main insights of our work, and discuss its implications for current understanding of the initial bilingual lexicon, limitations, and future steps.
-
-:::
-
-## From sounds to lexical representations
+## The initial lexicon
 
 Average English-native 20-year-old knows ~42,000 words: **mental lexicon**
 
@@ -102,78 +77,37 @@ Lexical representations
 
 :::
 
-**Lexical development**:
+**First lexical representations at 6-9 months**
 
-- Vocabulary size [@braginsky2019consistency]
-- Semantic and phonological associations [@fourtassi2020growth]
-- Efficiency in lexical access [@marchman2008speed]
+::: columns
 
-![](assets/img/development.jpg)
+:::: {.column width="50%}
+
+![Inter-modal experimental paradigms. @bergelson2012months, *Science News*](assets/img/bergelson.jpg){width="60%"}
+
+::::
+
+:::: {.column width="50%}
+
+![Parental reports and surveys, @fenson1994variability](assets/img/macarthur.jpg){width="55%"}
+
+::::
+
+:::
 
 ::: {.notes}
 
 * The average English 20-year-old knows around 42,000 words
 * The collection of words that an adult knows is known as the *mental lexicon*
 * The *mental lexicon* is formed by *lexical representations*, each embedding phonological, conceptual, and grammatical information about words
-* Building a lexicon is not a trivial task, as we will see now
-
-:::
-
-## From sounds to lexical representations
-
-
-::: notes
-
-* Before birth: auditory system developed, identification of familiar melodies
-* At birth: language discrimination based on prosodic cues (e.g., rhythm)
-* Universal discrimination of phonemes
-* Perceptual skills tuned to native language from ~4-6 mo until 12 mo
-* First word-form representations
-- Familiar word-form recognition: phonologically detailed
-- Speech segmentation: syllable co-occurrence, stress patterns, phonotactics, etc.
-
-:::
-
-## From sounds to lexical representations
-
-::: columns
-
-:::: {.column width="50%}
-
-**Inter-modal experimental paradigms**
-
-[@bergelson2012months; @bergelson2015early; @tincoff1999beginnings; @tincoff2012sixmontholds]
-
-![@bergelson2012months, *Science News*](assets/img/bergelson.jpg){width="80%"}
-
-::::
-
-:::: {.column width="50%}
-
-**Parental reports and surveys**
-
-e.g., MacArthur-Bates Communicative Development Inventory (CDI) [@fenson1994variability]
-
-![@fenson1994variability](assets/img/macarthur.jpg){width="80%"}
-
-::::
-
-:::
-
-
-::: notes
-
+* In the last five years, we have explored the initial lexicon through the lens of a particular case of language learning: bilingual infants
 * The foundations of a lexicon are laid by the first form-meaning mappings at 6 months
 * Two sources of evidence: inter-modal experimental paradigms and parental reports
 * The internal workings of this initial lexicon are still unclear
 
 :::
 
-
-
-## Vocabulary growth
-
-Vocabulary size grows non-linearly during the second year of life
+## Vocabulary *spurt* during the 2nd year
 
 ```{r fig-wordbank}
 #| label: fig-wordbank
@@ -245,60 +179,27 @@ Vocabulary size grows non-linearly during the second year of life
 :::
 
 
-## Early dynamics of lexical processing
+## Bilinguals face additional challenges, but do not lag behind
 
-::: columns
-
-:::: {.column width="40%}
-
-**Cascaded activation**: activation spreads across non-selected lexical representations
-
-::::
-
-:::: {.column width="60%}
-
-![](assets/img/lexicon-mon.png){width="80%"}
-
-::::
-
-:::
-
-## Early dynamics of lexical processing
-
-::: columns
-
-:::: {.column width="50%}
-
-Adults
-
-![@allopenna1998tracking](assets/img/allopenna-2.png){width="30%"}
-
-::::
-
-:::: {.column width="50%}
-
-In children [@chow2017spokenword]
-
-- Semantic priming [@styles2009how; @arias-trejo2009lexical]
-- Phonological priming [@mani2010infant; @avila-varela2021longitudinal]
-
-![](assets/img/chow.jpg){width="80%"}
-
-::::
-
-:::
-
-
-## Challenges of a bilingual environment
-
+::: {.columns}
+::: {.column width="60%"}
 * Increased **complexity** in linguistic context (learning two codes)
 * Reduced linguistic **input** (split into two languages)
 * Increased **referential ambiguity**
 
+<br> 
+
 ::: box
+**@hoff2012dual**: bilinguals acquire words at similar rates as monolinguals
 
-Yet, **bilinguals keep up with monolinguals** [@sebastian-galles2020bilingual]
+47 English-Spanish bilinguals, 56 English monolinguals in Florida
+:::
+:::
+::: {.column width="40%"}
+![](assets/img/hoff-1.png){width="80%"}
+![](assets/img/hoff-2.png){width="80%"}
 
+:::
 :::
 
 ::: notes
@@ -310,37 +211,22 @@ Yet, **bilinguals keep up with monolinguals** [@sebastian-galles2020bilingual]
 
 :::
 
+## Lexical similarity modulates vocabulary acquisition in bilinguals
 
-## Challenges of a bilingual environment
-
-Bilinguals acquire words at similar rates as monolinguals
-[@hoff2012dual]
-
-English-Spanish bilinguals in Florida
-
-::: columns
-
-:::: {.column width="40%}
-
-![](assets/img/hoff-1.png)
-
-::::
-
-:::: {.column width="60%}
-
-![](assets/img/hoff-2.png)
-
-::::
-
+::: box
+**Floccia et al. (2018)**: CDI response of 372 bilinguals (UK) learning English + additional language
 :::
 
-## A cognate facilitation in lexical acquisition?
+Lexical similarity:
+: Average phonological similarity  (Levenshtein similarity) between pairs of translations
 
-Lexically closer languages :arrow_right: Larger vocabulary size [@floccia2018introduction]
+> English-Dutch (22.14%) > English-Mandarin (1.97%)
 
-> English-Dutch > English-Mandarin
+**Higher lexical similarity, larger vocabulary size**  
 
-## A cognate facilitation in lexical acquisition?
+Stronger effect in the additional language (e.g., Dutch, Mandarin)
+
+## Lexical similarity modulates vocabulary acquisition in bilinguals
 
 ```{r fig-cat-spa-distance}
 #| label: fig-cat-spa-distance
@@ -410,119 +296,59 @@ tibble::tribble(~language, ~dist,
 
 ## A cognate facilitation in lexical acquisition?
 
-Lexical similarity: average Levenshtein similarity between translations equivalents (TE)
-
 ::: box
 
-**Cognate**: form-similar TE
+**Cognates**: phonologically-similar translation equivalents
+
 
 | *Cognate*           | *Non-cognate*       |
 |:-------------------:|:-------------------:|
-| [cat] /ˈgat-ˈgato/  | [dog] /ˈgos-ˈpe.ro/ |
+| [cat] /ˈgat-ˈga.to/ | [dog] /ˈgos-ˈpe.ro/ |
 
 :::
 
-Cognates **acquired earlier** than non-cognates [@mitchell2023cognates; @bosch2014first]
+Some evidence that cognates **acquired earlier** than non-cognates [@mitchell2023cognates; @bosch2014first]
 
-
-## A cognate facilitation in lexical acquisition?
-
-
-## A cognate facilitation in lexical acquisition?
-
-::: columns
-
-:::: {.column width="50%"}
-
-```{r}
-#| label: fig-prop
-#| fig-height: 4
-#| fig-width: 4
-#| fig-cap: "Aggregated vocabularies might conceal facilitation effects"
-#| fig-cap-location: margin
-tibble::tribble(
-    ~type, ~l_cog, ~l_noncog, ~v_cog, ~v_noncog,
-    "No cognate facilitation", 50, 50, 50, 50,
-    "Cognate facilitation", 50, 50, 80, 20,
-) |> 
-    tidyr::pivot_longer(-c(type),
-                        names_to = c("measure", "cognate"),
-                        names_sep = "_") |> 
-    mutate(cognate = factor(cognate, levels = c("noncog", "cog"),
-                            labels = c("Non-cognates", "Cognates")),
-           measure = factor(measure, levels = c("l", "v"),
-                            labels = c("Language", "Vocabulary")),
-           type = factor(type, levels = c("No cognate facilitation",
-                                          "Cognate facilitation"))) |> 
-    ggplot(aes(value, reorder(measure, desc(measure)), 
-               fill = type, 
-               colour = type,
-               alpha = cognate)) +
-    facet_wrap(~type, ncol = 1) +
-    geom_col(position = position_fill(),
-             colour = "white") +
-    geom_vline(xintercept = 0.5, colour = "grey", linewidth = 1) +
-    guides(fill = guide_none()) +
-    labs(x = "Proportion of cognates") +
-    scale_fill_manual(values = clrs[c(1, 5)]) +
-    scale_colour_manual(values = clrs[c(1, 5)]) +
-    scale_alpha_manual(values = c(0.5, 1)) + 
-    scale_x_continuous(labels = scales::percent) +
-    theme(legend.position = "top",
-          axis.title.x = element_blank(),
-          axis.line = element_blank(),
-          axis.ticks = element_blank(),
-          panel.grid = element_blank(),
-          axis.text.x = element_blank(),
-          legend.title = element_blank(),
-          axis.title.y = element_blank())
-
-```
-
-::::
-
-:::: {.column width="50%"}
+<br>
 
 What **mechanisms** support a cognate facilitation during word acquisition?
 
-> Language non-selective lexical access
+## Language non-selective lexical access
 
-::::
+Activation spreads across **non-selected representations** in both languages, through **phonological** and **conceptual** links. [e.g., @costa2000cognate]
 
+Evidence in **children** [@bosma2020cognate; @dehouwer2014bilingual] and **infants** [@vonholzen2012language; @jardak2019labels; @singh2014one].
+
+![](assets/img/lexicon.png)
+
+## The present dissertation
+
+::: box
+**Study 1**
 :::
+
+1. Provide a mechanistic account for the cognateness facilitation in early word acquisition
+2. Test predictions of the model
+
+::: box
+**Study 2**
+:::
+
+3. Test core assumption of the model: language non-selectivity in the initial lexicon
 
 
 # Study 1 {.inverse}
 
-*Cognate beginnings to lexical acquisition*
+*Cognate beginnings to lexical acquisition: the AMBLA model*
 
-## Introduction
-
-* Bilinguals keep up with monolinguals in vocabulary growth
-* The presence of cognates seems to facilitate vocabulary acquisition
-* Language co-activation has been suggested to underlie this phenomenon
-* Mechanisms supporting the role of co-activation in cognate acquisition are unclear
-
-## Language non-selectivity
-
-Activation spreads across **non-selected representations** in both languages, through **phonological** and **conceptual** links. [e.g., @costa2000cognate]
-
-Evidence in children [@bosma2020cognate; @dehouwer2014bilingual] and infants [@vonholzen2012language; @jardak2019labels; @singh2014one].
-
-![](assets/img/lexicon.png)
-
-## The AMBLA model
-
-::: box
-**A**ccumulator **M**odel of **B**ilingual **L**exical **A**cquisition (**AMBLA**)
-:::
-
----
+## **A**ccumulator **M**odel of **B**ilingual **L**exical **A**cquisition (**AMBLA**)
 
 ::: box
 
-1. Information about form-meaning mappings is provided by <span style="color:#a80035;">**learning instances**</span>.
-- Exposure to a word-form that results in the accumulation of information about its meaning
+1. Information about form-meaning mappings is provided by <span style="color:#a80035;">**learning instances**</span>
+
+Exposure to a word-form that results in the accumulation of information about its meaning
+
 2. <span style="color:#00a857;">**Age of acquisition**</span>: the infant accumulates a <span style="color:#0040a8;">**threshold**</span> amount of learning instances for a word-form
 
 :::
@@ -557,7 +383,7 @@ $$
 
 ---
 
-Extended to the bilingual case:
+## Extending the model to the **bilingual** case:
 
 ::: box
 
@@ -568,8 +394,6 @@ Extended to the bilingual case:
 :::
 
 Accumulation of learning instances, a function of <span style="color:#a80035;">**Exposure**</span> and *Frequency*.
-
-
 
 $$
 \begin{aligned}
@@ -591,7 +415,6 @@ $$
 
 ![](assets/gif/ambla-eli-single.gif)
 
----
 
 ---
 
@@ -599,7 +422,7 @@ $$
 
 ---
 
-Implementing a cognateness facilitation mechanism:
+## Implementing a **cognateness facilitation mechanism**
 
 ::: box
 
@@ -617,11 +440,12 @@ $$
 \definecolor{myorange}{RGB}{ 235, 127, 26 }
 \textbf{For participant } &i \textbf{ and word-form } j \text{ (translation of } j'): \\
 \text{Age of Acquisition}_{ij} &= \{\text{Age}_i \mid \text{Learning instances}_{ij} = \text{Threshold} \}\\
-\text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \cdot \text{Exposure}_{ij} \cdot {\color{myred}\text{Cognateness}_{j}}\\
+\text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \cdot \text{Exposure}_{ij} + \\
+&({\color{myred}\text{Learning instances}_{ij'} \cdot {Cognateness}_{j}})\\
 \textbf{where:} \\
 \text{Threshold} &= 300 \\
 \text{Freq}_j &\sim \text{Poisson}(\lambda = 50) \\
-{\color{myred}\text{Cognateness}}&{\color{myred}=\text{Levenshtein}(j, j')}
+{\color{myred}\text{Cognateness}}&{\color{myred} = \text{Levenshtein}(j, j')}
 \end{aligned}
 $$
 
@@ -633,22 +457,25 @@ $$
 
 ![](assets/img/ambla-all-c.png)
 
+---
 
+### Predictions
 
+1. Cognates acquired earlier than non-cognates
+2. Cognateness facilitation stronger in the lower-exposure language
+
+---
 ## Methods
 
-* **Barcelona Vocabulary Questionnaire (BVQ)**: vocabulary checklist, language exposure questionnaire, demographic survey
-    - Online, inspired by Oxford CDI [@hamilton2000infant]
-    - 793 Catalan words, 797 Spanish words, divided into 4 sublists
-
-* *N* = 366 children, 12-32 months (*M* = 22.23, *SD* = 4.88, *Range* = 12.06–31.93)
+* **Barcelona Vocabulary Questionnaire (BVQ)**: 302 Catalan-Spanish noun translation equivalents
+* 436 questionnaire administrations (366 children)
+* Aged 12-32 months (*M* = 22.2, *SD* = 4.9, *Range* = 12.1–31.9)
 * Exposed to Catalan and Spanish (+ up to 10% to a 3rd languages)
+* 138,078 item responses (*No*, *Understands*, *Understands and Says*)
 
 ## Methods
 
-* 302 translation equivalents
-* 234 questionnaire administrations
-* 138,078 item responses (*No*, *Understands*, *Understands and Says*)
+*p*(Comprehension < Production)
 
 Ordinal, multilevel regression model
 
@@ -665,102 +492,16 @@ $$
 
 Bayesian:
 $$
-\text{Posterior} \propto \text{Prior} \times \text{Likelihood}
+\begin{aligned}
+\text{Posterior} &\propto \text{Prior} \times \text{Likelihood}
+\end{aligned}
 $$
 
-## Results: fixed regression coefficients
-
-```{r fig-coefs}
-#| label: fig-coefs
-#| fig-cap: "Posterior distribution of fixed regression coefficients"
-#| echo: false
-#| message: false
-#| warning: false
-#| out-width: 80%
-#| fig-width: 9
-#| fig-height: 4
-# summarise posterior draws
-intercept_label <- glue::glue("Intercepts (at average{round(mean(responses$age), 2)} months)")
-
-rope_interval <- c(lower = -0.1, upper = 0.1)/4
-
-model_vars_dict <- get_vars_dict(responses)
-
-sum_data <- model_summary |> 
-    mutate(across(.value:.upper, 
-                  \(x) ifelse(.type == intercept_label, plogis(x), x / 4)),
-           .variable_name = factor(.variable_name,
-                                   levels = unique(model_vars_dict),
-                                   ordered = TRUE),
-           .variable_name = gsub("Comprehension and Production", "Production",
-                                 .variable_name))
-
-draws_data <- model_draws |> 
-    mutate(across(.value, 
-                  \(x) ifelse(.type == intercept_label, plogis(x), x / 4)),
-           .variable_name = factor(.variable_name,
-                                   levels = unique(model_vars_dict),
-                                   ordered = TRUE)) 
-
-
-draws_data |> 
-    filter(.type=="Slopes") |> 
-    ggplot(aes(.value,
-               factor(.variable_name, levels = unique(model_vars_dict)),
-               fill = after_stat(abs(x) < rope_interval["upper"]))) +
-    facet_wrap(vars(.type), ncol = 1, scales = "free") +
-    annotate(geom = "rect",
-             colour = NA,
-             fill = "grey",
-             alpha = 1/4,
-             ymin = -Inf,
-             ymax = Inf,
-             xmin = rope_interval["lower"],
-             xmax = rope_interval["upper"]) +
-    annotate(geom = "text",
-             label = "ROPE",
-             colour = "grey",
-             angle = 90,
-             x = rope_interval["upper"],
-             y = 10,
-             size = 3,
-             hjust = 1.1,
-             vjust = 1.5) +
-    geom_vline(xintercept = 0,
-               colour = "grey") +
-    stat_slab() +
-    geom_errorbar(data = filter(sum_data, .type=="Slopes"),
-                  aes(xmin = .lower, xmax = .upper),
-                  width = 0.2, position = position_nudge(y = -0.2)) +
-    geom_point(data = filter(sum_data, .type=="Slopes"),
-               position = position_nudge(y = -0.2),
-               size = 1.5, show.legend = FALSE) +
-    scale_fill_manual(values = c(clrs[2], "grey80"),
-                      labels = c("Inside ROPE",
-                                 "Outside ROPE")) +
-    scale_y_discrete(limits = rev) +
-    labs(x = "Change in acquisition probability",
-         y = "Predictor",
-         fill = "Inside ROPE") +
-    theme_ambla() +
-    scale_x_continuous(limits = c(-0.2, 1)) +
-    theme(legend.position = c(1, 1),
-          legend.justification = c(1, 1),
-          legend.text.align = 0,
-          legend.title = element_blank(),
-          panel.grid.major.y = element_blank(),
-          panel.grid.minor.y = element_blank(),
-          panel.grid.minor.x = element_blank(),
-          # axis.text.y = element_text(angle = 30),
-          axis.title.y = element_blank()) 
-
-```
-
-## Results: marginal posterior predictions
+## Results
 
 ```{r}
 #| label: fig-marginal-1
-#| fig-cap: "Posterior marginal effects"
+#| fig-cap: "Marginal posterior predictions"
 model_epreds <- arrow::read_csv_arrow(here("data", "02-chapter-2",
                                            "results", "predictions",
                                            "predictions.csv"))
@@ -829,9 +570,9 @@ fig_data |>
               colour = "black") +
     scale_fill_manual(values = clrs_1[2:4],
                       guide = guide_legend(
-                          override.aes = list(fill = c("#333333",
+                          override.aes = list(fill = rev(c("#333333",
                                                        "#505050",
-                                                       "#9D9D9D")))) +
+                                                       "#9D9D9D"))))) +
     theme(axis.title.x = element_blank(),
           axis.text.x = element_blank(),
           legend.position = "top",
@@ -906,14 +647,16 @@ fig_data |>
 
 ## Discussion
 
-* **Earlier acquisition** for **cognates** vs. non-cognates
-* Cognate facilitation **moderated by exposure**
+**Earlier acquisition** for **cognates** vs. non-cognates
+
+Cognate facilitation **moderated by exposure**
 
 > Only words from the lower exposure benefit from cognateness
 > Parallel to language dominance effects in adults?
 
-* Cognateness as a candidate mechanism underlying @floccia2018introduction's results
-* Cross-language facilitation via co-activation of phonologically similar translation equivalents
+Cognateness as a candidate mechanism underlying @floccia2018introduction's results
+
+Cross-language facilitation via co-activation of phonologically similar translation equivalents
 
 ::: box
 
@@ -925,17 +668,29 @@ fig_data |>
 
 Developmental trajectories of bilingual spoken word recognition
 
-## Language non-seletivity in the initial lexicon
+## Language non-selectivity in the initial lexicon
+
+::: columns
 
 Cross-language phonological priming:
 
-@vonholzen2012language: German-English (*N* = 20, 21-43 months), priming through translation paradigm
+:::: {.column width="60%"}
 
-## Language non-seletivity in the initial lexicon
+@vonholzen2012language: German-English (*N* = 20, 21-43 months), priming through translation paradigm
 
 @mani2010infant: English monolinguals, implicit priming
 
+![@mani2010infant](assets/img/mani-1.png)
 
+::::
+
+:::: {.column width="40%"}
+
+![@mani2010infant](assets/img/mani-2.png){width="40%"}
+
+::::
+
+:::
 
 ## Hypotheses
 
@@ -1228,20 +983,20 @@ vocabulary_bcn <- inner_join(vocabulary,
 vocab_plot_data |>
 	dplyr::filter(study == "Study 2 (Catalan/Spanish)") |>
 	ggplot(aes(age, l1_count,
-			   side = side
+			   side = side,
+               colour = lp,
+               fill = lp,
+               linetype = lp,
+               shape = lp
 	)) +
 	geom_point(
 		size = 2,
-		shape = 1,
-		colour = "grey",
 		alpha = 3 / 4,
 		stroke = 1
 	) +
 	geom_smooth(
 		method = "lm",
-		formula = "y ~ x",
-		colour = "black",
-		fill = "black"
+		formula = "y ~ x"
 	) +
 	labs(
 		x = "Age (months)",
@@ -1254,6 +1009,8 @@ vocab_plot_data |>
 		breaks = seq(0, 1e3, 100)
 	) +
 	scale_x_continuous(breaks = seq(0, 50, 2)) +
+    scale_colour_manual(values = clrs) +
+    scale_fill_manual(values = clrs) +
 	theme(
 		panel.grid.major.y = element_line(
 			linetype = "dotted",
@@ -1334,9 +1091,9 @@ plot_summary <- obs_summary |>
     geom_hline(yintercept = 0,
                colour = "grey") +
     geom_line(aes(group = child_id),
-              alpha = 1/2,
+              alpha = 1/3,
               colour = "grey",
-              linewidth = 3/4) +
+              linewidth = 1/2) +
     geom_dots(side = "both",
               layout = "swarm",
               alpha = 1/2) +
@@ -1441,9 +1198,9 @@ plot_summary <- obs_summary |>
     geom_hline(yintercept = 0,
                colour = "grey") +
     geom_line(aes(group = child_id),
-              alpha = 1/2,
+              alpha = 1/3,
               colour = "grey",
-              linewidth = 3/4) +
+              linewidth =1/2) +
     geom_dots(side = "both",
               layout = "swarm",
               alpha = 1/2) +
@@ -1529,9 +1286,81 @@ plot_time + plot_summary +
 
 ## Discussion
 
+Successful word recognition across:
+
+- Ages
+- Language profiles
+- Vocabulary sizes
+
+No evidence of priming effects, within or across languages
+
+Most likely due to design issues
+
+# General discussion
+
+## Summary
+
+## Towards a model of bilingual lexical acquisition
+
+## Limitations
+
+## Future steps
+
+## Conclusions
+
 ---
 
 ::: thanks
 Thanks
 :::
+
+# Appendix
+
+
+## A cognate facilitation in lexical acquisition?
+
+```{r}
+#| label: fig-prop
+#| fig-height: 4
+#| fig-width: 4
+#| fig-cap: "Aggregated vocabularies might conceal facilitation effects"
+#| fig-cap-location: margin
+tibble::tribble(
+    ~type, ~l_cog, ~l_noncog, ~v_cog, ~v_noncog,
+    "No cognate facilitation", 50, 50, 50, 50,
+    "Cognate facilitation", 50, 50, 80, 20,
+) |> 
+    tidyr::pivot_longer(-c(type),
+                        names_to = c("measure", "cognate"),
+                        names_sep = "_") |> 
+    mutate(cognate = factor(cognate, levels = c("noncog", "cog"),
+                            labels = c("Non-cognates", "Cognates")),
+           measure = factor(measure, levels = c("l", "v"),
+                            labels = c("Language", "Vocabulary")),
+           type = factor(type, levels = c("No cognate facilitation",
+                                          "Cognate facilitation"))) |> 
+    ggplot(aes(value, reorder(measure, desc(measure)), 
+               fill = type, 
+               colour = type,
+               alpha = cognate)) +
+    facet_wrap(~type, ncol = 1) +
+    geom_col(position = position_fill(),
+             colour = "white") +
+    geom_vline(xintercept = 0.5, colour = "grey", linewidth = 1) +
+    guides(fill = guide_none()) +
+    labs(x = "Proportion of cognates") +
+    scale_fill_manual(values = clrs[c(1, 5)]) +
+    scale_colour_manual(values = clrs[c(1, 5)]) +
+    scale_alpha_manual(values = c(0.5, 1)) + 
+    scale_x_continuous(labels = scales::percent) +
+    theme(legend.position = "top",
+          axis.title.x = element_blank(),
+          axis.line = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.major.y = element_blank(),
+          axis.text.x = element_blank(),
+          legend.title = element_blank(),
+          axis.title.y = element_blank())
+
+```
 
