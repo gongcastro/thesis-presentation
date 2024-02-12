@@ -182,7 +182,7 @@ Vocabulary size grows non-linearly during the second year of life
 ## Bilinguals face additional challenges, but do not lag behind
 
 ::: {.columns}
-::: {.column width="60%"}
+::: {.column width="50%"}
 * Increased **complexity** in linguistic context (learning two codes)
 * Reduced linguistic **input** (split into two languages)
 * Increased **referential ambiguity**
@@ -195,10 +195,9 @@ Vocabulary size grows non-linearly during the second year of life
 47 English-Spanish bilinguals, 56 English monolinguals in Florida
 :::
 :::
-::: {.column width="40%"}
-![](assets/img/hoff-1.png){width="80%"}
-![](assets/img/hoff-2.png){width="80%"}
-
+::: {.column width="50%"}
+![](assets/img/hoff-1.png){width="60%"}
+![](assets/img/hoff-2.png){width="60%"}
 :::
 :::
 
@@ -327,14 +326,14 @@ Evidence in **children** [@bosma2020cognate; @dehouwer2014bilingual] and **infan
 **Study 1**
 :::
 
-1. Provide a mechanistic account for the cognateness facilitation in early word acquisition
-2. Test predictions of the model
+1. Provide a mechanistic account for the **cognateness facilitation**
+2. **Test predictions** of the model
 
 ::: box
 **Study 2**
 :::
 
-3. Test core assumption of the model: language non-selectivity in the initial lexicon
+3. Test core assumption of the model: **language non-selectivity** in the initial lexicon
 
 
 # Study 1 {.inverse}
@@ -369,28 +368,26 @@ $$
 $$
 
 
----
+## AMBLA: monolingual word acquisition
 
 ![](assets/gif/ambla-eli-single-mon.gif){width="80%"}
 
----
+## AMBLA: monolingual word acquisition
 
 ![](assets/img/ambla-single-nc-mon.png){width="80%"}
 
----
+## AMBLA: monolingual word acquisition
 
 ![](assets/img/ambla-all-nc-mon.png){width="80%"}
 
----
+## AMBLA: bilingual word acquisition
 
-## Extending the model to the **bilingual** case:
+Catalan 60%, Spanish 40%
 
 ::: box
-
 3. Linguistic input divided into two languages
 
 <span style="color:#a80035;">**Exposure**</span>: proportion of time exposed to the language of $j$ word
-
 :::
 
 Accumulation of learning instances, a function of <span style="color:#a80035;">**Exposure**</span> and *Frequency*.
@@ -411,18 +408,16 @@ $$
 $$
 
 
----
+## AMBLA: bilingual word acquisition
 
 ![](assets/gif/ambla-eli-single.gif)
 
 
----
+## AMBLA: bilingual word acquisition
 
 ![](assets/img/ambla-all-nc.png)
 
----
-
-## Implementing a **cognateness facilitation mechanism**
+## AMBLA: cognate facilitation
 
 ::: box
 
@@ -449,35 +444,31 @@ $$
 \end{aligned}
 $$
 
----
+## AMBLA: cognate facilitation
 
 ![](assets/gif/ambla-single-c.gif)
 
----
+## AMBLA: cognate facilitation
 
 ![](assets/img/ambla-all-c.png)
 
----
-
-### Predictions
+## Predictions
 
 1. Cognates acquired earlier than non-cognates
 2. Cognateness facilitation stronger in the lower-exposure language
 
----
-## Methods
+
+## Dataset
 
 * **Barcelona Vocabulary Questionnaire (BVQ)**: 302 Catalan-Spanish noun translation equivalents
-* 436 questionnaire administrations (366 children)
-* Aged 12-32 months (*M* = 22.2, *SD* = 4.9, *Range* = 12.1–31.9)
-* Exposed to Catalan and Spanish (+ up to 10% to a 3rd languages)
+* 436 administrations (366 children)
+* Age: 12-32 months (*M* = 22.2, *SD* = 4.9)
+* Lang. exposure: Catalan and Spanish ($\leq$ 10% 3rd language)
 * 138,078 item responses (*No*, *Understands*, *Understands and Says*)
 
-## Methods
+## Modelling and statistical inference
 
-*p*(Comprehension < Production)
-
-Ordinal, multilevel regression model
+*p*(Comprehension $<$ Production) ~ Ordinal, multilevel (Bayesian) regression model
 
 ```r
 response ~ age * exposure * cognateness + length + (...|child) + (...|te) 
@@ -487,13 +478,6 @@ $$
 \begin{aligned}
 \text{Exposure}_{ij} &= \text{Frequency}_j \times \text{Language degree of exposure}_{ij} \\
 \text{Cognateness}_{j} &= \text{Levenshtein}(j, j')
-\end{aligned}
-$$
-
-Bayesian:
-$$
-\begin{aligned}
-\text{Posterior} &\propto \text{Prior} \times \text{Likelihood}
 \end{aligned}
 $$
 
@@ -515,10 +499,9 @@ fig_data <- model_epreds |>
             .by = c(ends_with("_std"), .category)) |>
     mutate(age = (age_std * sd(responses$age)) + mean(responses$age),
            exposure = factor(exposure_std,
-                             levels = unique(exposure_std),
-                             labels = c("Low exposure (-1 SD)",
-                                        "Mean exposure (0 SD)",
-                                        "High exposure (+1 SD)"),
+                             levels = c(-1, 1),
+                             labels = c("Lower-exposure (-1 SD)",
+                                        "Higher-exposure (+1 SD)"),
                              ordered = TRUE),
            lv = factor(lv_std,
                        levels = unique(lv_std),
@@ -526,7 +509,8 @@ fig_data <- model_epreds |>
                        ordered = TRUE),
            .category = ifelse(.category == "Understands",
                               "Comprehension",
-                              "Production"))
+                              "Production")) |>
+    drop_na()
 
 clrs_1 <- colorRampPalette(c("#F2F2F2", "#C8102E"))(4)
 clrs_2 <- colorRampPalette(c("#F2F2F2", "#004CA3"))(4) 
@@ -539,7 +523,7 @@ fig_data |>
                colour = lv,
                fill = lv,
                linetype = lv)) +
-    facet_wrap( ~ exposure) +
+    facet_grid(.category ~ exposure) +
     annotate(geom = "rect",
              xmin = min(responses$age),
              xmax = max(responses$age),
@@ -577,7 +561,6 @@ fig_data |>
           axis.text.x = element_blank(),
           legend.position = "top",
           legend.box = "horizontal",
-          legend.title.align = 1,
           legend.justification = "right",
           legend.direction = "horizontal",
           legend.key.size = unit(1, "cm"),
@@ -591,7 +574,7 @@ fig_data |>
                colour = lv,
                fill = lv,
                linetype = lv)) +
-    facet_wrap( ~ exposure) +
+    facet_grid(.category ~ exposure) +
     annotate(geom = "rect",
              xmin = min(responses$age),
              xmax = max(responses$age),
@@ -664,6 +647,7 @@ Cross-language facilitation via co-activation of phonologically similar translat
 
 :::
 
+
 # Study 2 {.inverse}
 
 Developmental trajectories of bilingual spoken word recognition
@@ -672,37 +656,51 @@ Developmental trajectories of bilingual spoken word recognition
 
 ::: columns
 
-Cross-language phonological priming:
 
 :::: {.column width="60%"}
 
-@vonholzen2012language: German-English (*N* = 20, 21-43 months), priming through translation paradigm
+**Priming through translation task**:
 
-@mani2010infant: English monolinguals, implicit priming
+@vonholzen2012language: German-English bilinguals (*N* = 20, 21-43 months)
 
-![@mani2010infant](assets/img/mani-1.png)
+**Implicit naming task**:
+
+@mani2010infant: English monolinguals
+
+![@mani2010infant](assets/img/mani-1.png){width="100%"}
 
 ::::
 
 :::: {.column width="40%"}
-
-![@mani2010infant](assets/img/mani-2.png){width="40%"}
-
+![@mani2010infant](assets/img/mani-2.png){width="70%"}
 ::::
 
 :::
 
-## Hypotheses
+## Experiment 1: predictions
 
 ![](assets/img/hypotheses.png)
 
-## Experiment 1
+## Experiment 1: predictions
+
+- Successful spoken word recognition across groups
+- Interference in cognate/non-cognate vs. unrelated trials
+- If language non-selectivity, stronger interference in cognate vs. non-cognate trials
+
+## Experiment 1: design
+
+![](assets/img/design.png)
+
+
+## Experiment 1: participants
 
 *N* = 112 children (15 longitudinal)
 
 Average age 26.36 months (*SD* = 4.01, *Range* = 20.03–32.5)
 
 English monolinguals, Oxford (United Kindgom)
+
+Proportion of target looking at test ~ (Bayesian) GAMMs
 
 ```{r}
 #| label: fig-vocabulary-oxf
@@ -801,15 +799,10 @@ vocab_plot_data |>
 	)
 ```
 
----
 
-### Design
 
-![](assets/img/design.png)
 
----
-
-### Results
+## Experiment 1: results (monolinguals)
 
 ```{r fig-epreds-oxf}
 #| label: fig-epreds-oxf
@@ -959,7 +952,7 @@ plot_time + plot_summary +
           legend.title = element_blank())
 ```
 
-## Experiment 2
+## Experiment 2: participants
 
 *N* = 112 children (15 longitudinal)
 
@@ -1022,9 +1015,7 @@ vocab_plot_data |>
 ```
 
 
----
-
-### Results (monolinguals)
+## Experiment 2: results (monolinguals)
 
 ```{r fig-epreds-bcn-mon}
 #| label: fig-epreds-bcn-mon
@@ -1179,9 +1170,7 @@ plot_time + plot_summary +
 ```
 
 
----
-
-### Results (bilinguals)
+## Experiment 2: results (bilinguals)
 
 ```{r fig-epreds-bcn-bil}
 #| label: fig-epreds-bcn-bil
@@ -1296,19 +1285,42 @@ No evidence of priming effects, within or across languages
 
 Most likely due to design issues
 
-# General discussion
+# General discussion {.inverse}
 
 ## Summary
 
+Cognateness facilitates word acquisition in the lower-exposure language
+
+Candidate mechanism behind bilingual vocabulary growth
+
+> AMBLA: Cross-language accumulation of learning instances
+
+Language non-selectivity in the initial lexicon: pending severe testing
+
 ## Towards a model of bilingual lexical acquisition
+
+Explanation for Floccia et. (2018)
+
+Asymmetry in adult models of lexical processing
+
+AMBLA: natural extension of the Standard Model of language acquisition? [@kachergis2022standard]
+
 
 ## Limitations
 
-## Future steps
+Design caviats
+
+Generalisability? Language pairs with fewer cognates
+
+Does cognateness impact the acquisition of other grammatical categories (e.g., verbs, adjectives) 
+
+Word acquisition vs. word learning
 
 ## Conclusions
 
----
+* Insights into the developing bilingual lexicon: cognateness
+* Evidence in favour of language non-selectivity as the underlying mechanisms behind the cognate facilitation
+* Important consequences for bilingual vocabulary growth
 
 ::: thanks
 Thanks
@@ -1317,7 +1329,8 @@ Thanks
 # Appendix
 
 
-## A cognate facilitation in lexical acquisition?
+
+## Study 1: posterior regression coefficients
 
 ```{r}
 #| label: fig-prop
@@ -1364,3 +1377,5 @@ tibble::tribble(
 
 ```
 
+
+## References

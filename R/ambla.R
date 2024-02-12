@@ -12,27 +12,28 @@ library(gganimate)
 set.seed(1234)
 
 # make functions ---------------------------------------------------------------
-generate_eli <- function(te = list(
-    noncognate = c("gos", "pero"),
-    cognate = c("gat", "gato")
-),
-age = 0:40,
-freq_month = 5,
-freq_beta = 0.1,
-parallel_beta = 1,
-threshold = 500,
-l1_doe = 0.65) {
+generate_eli <- function(
+    te = list(
+        noncognate = c("gos", "pero"),
+        cognate = c("gat", "gato")
+    ),
+    age = 0:40,
+    freq_month = 5,
+    freq_beta = 0.1,
+    parallel_beta = 1,
+    threshold = 500,
+    l1_doe = 0.65) {
     freq_adj <- freq_month / (length(age) - 1)
     nms <- if (!is.null(names(te))) names(te) else 1:length(te)
     items_df <- as_tibble(t(as.data.frame(te)))
     items_df$.te <- nms
     items_df <- items_df[, c(3, 1, 2)]
     names(items_df) <- c(".te", "l1.item", "l2.item")
-    
+
     item_df <- items_df |>
         mutate(lv = map_dbl(te, \(x) stringsim(x[1], x[2]))) |>
         mutate(l1.doe = l1_doe, l2.doe = 1 - l1_doe)
-    
+
     eli <- expand_grid(item_df, age = age) |>
         mutate(
             n_month = rpois(n(), freq_adj) * age,
@@ -46,22 +47,22 @@ l1_doe = 0.65) {
             )
         ) |>
         mutate(across(matches("h0|h1"), cumsum),
-               .by = .te
+            .by = .te
         ) |>
         select(te = .te, lv, age, n_month, matches("l1|l2")) |>
         pivot_longer(-c(te, lv, age, n_month),
-                     names_to = c("language", ".value"),
-                     names_pattern = "(.+)\\.(.+)"
+            names_to = c("language", ".value"),
+            names_pattern = "(.+)\\.(.+)"
         ) |>
         mutate(language = toupper(language)) |>
         pivot_longer(matches("h0|h1"),
-                     names_to = c("hypothesis", ".value"),
-                     names_pattern = "(.+)_(.+)",
-                     names_transform = toupper
+            names_to = c("hypothesis", ".value"),
+            names_pattern = "(.+)_(.+)",
+            names_transform = toupper
         ) |>
         rename_with(tolower) |>
         arrange(te, language, hypothesis, age)
-    
+
     return(eli)
 }
 
@@ -71,8 +72,8 @@ generate_aoa <- function(eli, threshold = 500, .by = NULL) {
         mutate(
             aoa = age[which.min(abs(.env$threshold - eli))],
             aoa = case_when(aoa <= min(age) ~ NA,
-                            aoa >= max(age) ~ NA,
-                            .default = aoa
+                aoa >= max(age) ~ NA,
+                .default = aoa
             ),
             .by = c(te, hypothesis, language, iteration, any_of(.by))
         ) |>
@@ -80,7 +81,7 @@ generate_aoa <- function(eli, threshold = 500, .by = NULL) {
         distinct(pick(-c(age, eli))) |>
         arrange(te, language) |>
         mutate(threshold = .env$threshold)
-    
+
     return(aoa)
 }
 
@@ -91,23 +92,23 @@ generate_figure <- function(...) {
     # simulate data ---------------
     eli_df <- generate_eli(threshold = 500, ...) |>
         dplyr::filter(!(hypothesis == "H1" & grepl("Non-cognate", te)))
-    
+
     aoa_df <- generate_aoa(eli_df, threshold = 500) |>
         mutate(across(aoa, lst(min, max)), .by = c(te, language)) |>
         dplyr::filter(!(hypothesis == "H1" & grepl("Non-cognate", te)))
-    
+
     img <- c(
         cat = here::here("_assets", "img", "diagram-cat.png"),
         dog = here::here("_assets", "img", "diagram-dog.png"),
     ) |>
         map(magick::image_read) |>
         map(\(x) magick::image_ggplot(x, interpolate = FALSE))
-    
+
     plot <- eli_df |>
         ggplot(aes(age, eli,
-                   colour = language,
-                   linetype = hypothesis,
-                   shape = hypothesis
+            colour = language,
+            linetype = hypothesis,
+            shape = hypothesis
         )) +
         facet_grid(~te) +
         geom_segment(
@@ -158,12 +159,12 @@ generate_figure <- function(...) {
             )
         ) +
         inset_element(img$cat,
-                      on_top = FALSE, ignore_tag = TRUE,
-                      left = -0.25, bottom = 0.50, right = 0.5, top = 1
+            on_top = FALSE, ignore_tag = TRUE,
+            left = -0.25, bottom = 0.50, right = 0.5, top = 1
         ) +
         inset_element(img$dog,
-                      on_top = FALSE, ignore_tag = TRUE,
-                      left = 0.25, bottom = 0.50, right = 1, top = 1
+            on_top = FALSE, ignore_tag = TRUE,
+            left = 0.25, bottom = 0.50, right = 1, top = 1
         ) +
         scale_x_continuous(breaks = seq(
             min(eli_df$age),
@@ -303,8 +304,8 @@ eli_df_summary <- eli_df |>
 
 # age of acquisition
 aoa_df <- generate_aoa(eli_df,
-                       threshold = threshold,
-                       .by = c("id", "iteration")
+    threshold = threshold,
+    .by = c("id", "iteration")
 )
 
 aoa_df_summary <- aoa_df |>
@@ -342,9 +343,9 @@ eli_plot_iter <- eli_df |>
         te == te_labels[1]
     ) |>
     ggplot(aes(age, eli,
-               colour = id,
-               fill = id,
-               shape = id
+        colour = id,
+        fill = id,
+        shape = id
     )) +
     facet_grid(~te) +
     geom_hline(
@@ -353,7 +354,7 @@ eli_plot_iter <- eli_df |>
         colour = "grey80"
     ) +
     geom_line(aes(group = interaction(id, iteration, language)),
-              linewidth = 3 / 4
+        linewidth = 3 / 4
     ) +
     annotate(
         geom = "label",
@@ -426,9 +427,9 @@ aoa_plot_iter <- aoa_df |>
         te == te_labels[1]
     ) |>
     ggplot(aes(aoa, 0.5,
-               colour = id,
-               fill = id,
-               shape = id
+        colour = id,
+        fill = id,
+        shape = id
     )) +
     geom_hline(
         yintercept = 0.5,
@@ -483,8 +484,8 @@ eli_plot_iter / aoa_plot_iter +
 
 
 ggsave("assets/img/ambla-single-nc-mon.png",
-       height = 5,
-       width = 8
+    height = 5,
+    width = 8
 )
 
 # no facilitation, all iterations, monolingual ---------------------------------
@@ -496,9 +497,9 @@ eli_plot_iter <- eli_df |>
         te == te_labels[1]
     ) |>
     ggplot(aes(age, eli,
-               colour = id,
-               fill = id,
-               shape = id
+        colour = id,
+        fill = id,
+        shape = id
     )) +
     facet_grid(~te) +
     geom_hline(
@@ -507,8 +508,8 @@ eli_plot_iter <- eli_df |>
         colour = "grey80"
     ) +
     geom_line(aes(group = interaction(id, iteration)),
-              linewidth = 3 / 4,
-              alpha = 1 / 10
+        linewidth = 3 / 4,
+        alpha = 1 / 10
     ) +
     annotate(
         geom = "label",
@@ -590,9 +591,9 @@ aoa_plot_iter <- aoa_df |>
         te == te_labels[1]
     ) |>
     ggplot(aes(aoa, 0.5,
-               colour = id,
-               fill = id,
-               shape = id
+        colour = id,
+        fill = id,
+        shape = id
     )) +
     geom_hline(
         yintercept = 0.5,
@@ -665,8 +666,8 @@ eli_plot_iter / aoa_plot_iter +
 
 
 ggsave("assets/img/ambla-all-nc-mon.png",
-       height = 5,
-       width = 8
+    height = 5,
+    width = 8
 )
 
 
@@ -677,9 +678,9 @@ eli_plot <- eli_df |>
         te == te_labels[1]
     ) |>
     ggplot(aes(age, eli,
-               colour = id,
-               fill = id,
-               shape = id
+        colour = id,
+        fill = id,
+        shape = id
     )) +
     facet_grid(~te) +
     geom_hline(
@@ -688,8 +689,8 @@ eli_plot <- eli_df |>
         colour = "grey80"
     ) +
     geom_line(aes(group = interaction(id, iteration, language)),
-              linewidth = 3 / 4,
-              alpha = 1 / 10
+        linewidth = 3 / 4,
+        alpha = 1 / 10
     ) +
     geom_line(
         data = filter(
@@ -763,9 +764,9 @@ aoa_plot <- aoa_df_summary |>
         te == te_labels[1]
     ) |>
     ggplot(aes(aoa, 0.5,
-               colour = id,
-               fill = id,
-               shape = id
+        colour = id,
+        fill = id,
+        shape = id
     )) +
     geom_hline(
         yintercept = 0.5,
@@ -835,8 +836,8 @@ eli_plot / aoa_plot +
     theme_ambla()
 
 ggsave("assets/img/ambla-all-nc.png",
-       height = 5,
-       width = 8
+    height = 5,
+    width = 8
 )
 
 # facilitation, all iterations -------------------------------------------------
@@ -846,9 +847,9 @@ eli_plot <- eli_df |>
         te == te_labels[2]
     ) |>
     ggplot(aes(age, eli,
-               colour = id,
-               fill = id,
-               shape = id
+        colour = id,
+        fill = id,
+        shape = id
     )) +
     facet_grid(~te) +
     geom_hline(
@@ -857,8 +858,8 @@ eli_plot <- eli_df |>
         colour = "grey80"
     ) +
     geom_line(aes(group = interaction(id, iteration, language)),
-              linewidth = 3 / 4,
-              alpha = 1 / 10
+        linewidth = 3 / 4,
+        alpha = 1 / 10
     ) +
     geom_line(
         data = filter(
@@ -929,9 +930,9 @@ aoa_plot <- aoa_df_summary |>
         te == te_labels[2]
     ) |>
     ggplot(aes(aoa, 0.5,
-               colour = id,
-               fill = id,
-               shape = id
+        colour = id,
+        fill = id,
+        shape = id
     )) +
     geom_hline(
         yintercept = 0.5,
@@ -1001,8 +1002,8 @@ eli_plot / aoa_plot +
     theme_ambla()
 
 ggsave("assets/img/ambla-all-c.png",
-       height = 5,
-       width = 8
+    height = 5,
+    width = 8
 )
 
 # animations -------------------------------------------------------------------
@@ -1038,7 +1039,7 @@ eli_plot <- ggplot(
         colour = "grey80"
     ) +
     geom_line(aes(group = interaction(id, iteration, language)),
-              linewidth = 3 / 4
+        linewidth = 3 / 4
     ) +
     annotate(
         geom = "label",
@@ -1114,19 +1115,19 @@ eli_plot <- ggplot(
     transition_reveal(age)
 
 eli_gif <- animate(eli_plot,
-                   width = 8,
-                   height = 6,
-                   units = "in",
-                   duration = 10,
-                   renderer = gifski_renderer(),
-                   res = 200
+    width = 8,
+    height = 6,
+    units = "in",
+    duration = 10,
+    renderer = gifski_renderer(),
+    res = 200
 )
 
 anim_save("assets/gif/ambla-eli-single-mon.gif", eli_gif)
 
 eli_mp4 <- animate(eli_plot,
-                   duration = 10,
-                   renderer = ffmpeg_renderer()
+    duration = 10,
+    renderer = ffmpeg_renderer()
 )
 
 anim_save("assets/videos/ambla-eli-single-mon.mp4", eli_mp4)
@@ -1148,9 +1149,9 @@ eli_data_plot <- eli_df |>
 
 eli_plot <- eli_data_plot |>
     ggplot(aes(age, eli,
-               colour = id,
-               fill = id,
-               shape = id
+        colour = id,
+        fill = id,
+        shape = id
     )) +
     facet_grid(~te) +
     geom_hline(
@@ -1159,8 +1160,8 @@ eli_plot <- eli_data_plot |>
         colour = "grey80"
     ) +
     geom_line(aes(group = interaction(id, iteration, language)),
-              linewidth = 3 / 4,
-              alpha = 1 / 10
+        linewidth = 3 / 4,
+        alpha = 1 / 10
     ) +
     annotate(
         geom = "label",
@@ -1241,18 +1242,18 @@ eli_plot <- eli_data_plot |>
 
 
 eli_gif <- animate(eli_plot,
-                   width = 6,
-                   height = 3.5,
-                   units = "in",
-                   renderer = gifski_renderer(),
-                   duration = 10,
-                   res = 200
+    width = 6,
+    height = 3.5,
+    units = "in",
+    renderer = gifski_renderer(),
+    duration = 10,
+    res = 200
 )
 
 anim_save("assets/gif/ambla-eli-single.gif", eli_gif)
 
 eli_mp4 <- animate(eli_plot,
-                   renderer = ffmpeg_renderer()
+    renderer = ffmpeg_renderer()
 )
 anim_save("assets/videos/ambla-eli-single.mp4", eli_mp4)
 
@@ -1274,9 +1275,9 @@ eli_data_plot <- eli_df |>
 
 eli_plot <- eli_data_plot |>
     ggplot(aes(age, eli,
-               colour = id,
-               fill = id,
-               shape = id
+        colour = id,
+        fill = id,
+        shape = id
     )) +
     facet_grid(~te) +
     geom_hline(
@@ -1285,8 +1286,8 @@ eli_plot <- eli_data_plot |>
         colour = "grey80"
     ) +
     geom_line(aes(group = interaction(id, iteration, language)),
-              linewidth = 3 / 4,
-              alpha = 1 / 10
+        linewidth = 3 / 4,
+        alpha = 1 / 10
     ) +
     annotate(
         geom = "label",
@@ -1368,23 +1369,23 @@ eli_plot <- eli_data_plot |>
 
 
 eli_gif <- animate(eli_plot,
-                   width = 6,
-                   height = 3.5,
-                   units = "in",
-                   renderer = gifski_renderer(),
-                   duration = 10,
-                   res = 200
+    width = 6,
+    height = 3.5,
+    units = "in",
+    renderer = gifski_renderer(),
+    duration = 10,
+    res = 200
 )
 
 anim_save("assets/gif/ambla-single-c.gif", eli_gif)
 
 eli_mp4 <- animate(eli_plot,
-                   width = 6,
-                   height = 3.5,
-                   units = "in",
-                   renderer = ffmpeg_renderer(),
-                   duration = 10,
-                   res = 200
+    width = 6,
+    height = 3.5,
+    units = "in",
+    renderer = ffmpeg_renderer(),
+    duration = 10,
+    res = 200
 )
 
 anim_save("assets/videos/ambla-single-c.mp4", eli_mp4)
