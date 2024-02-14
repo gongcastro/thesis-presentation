@@ -36,7 +36,7 @@ $endfor$
 $if(affiliation-logo)$
     <div class="affiliation-logo">
     $for(affiliation-logo)$
-        <img src=$affiliation-logo$ >
+        <img src=$affiliation-logo$ >$if(qr-code)$<img src=$qr-code$ >$endif$
     $endfor$
     </div>
 $endif$

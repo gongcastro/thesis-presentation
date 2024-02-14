@@ -39,14 +39,10 @@ get_vars_dict <- function(responses) {
   return(vars_dict)
 }
 
+# custom theme
 theme_ambla <- function() {
   theme(
     strip.background = element_rect(fill = "grey90", colour = "grey90"),
-    strip.text = ggtext::element_markdown(
-      size = 10,
-      margin = margin(0.35, 0, 0.35, 0, "cm")
-    ),
-    legend.title = element_blank(),
     panel.grid.major.y = element_line(
       colour = "grey",
       linetype = "dotted"
@@ -60,6 +56,7 @@ theme_ambla <- function() {
       colour = NA
     ),
     axis.line = element_line(colour = "grey", linewidth = 1),
-    strip.text.x = element_text(face = "bold")
+    axis.text = element_text(size = 11),
+    axis.ticks = element_blank()
   )
 }
