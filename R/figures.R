@@ -48,7 +48,7 @@ plot_comp <- wb_fig |>
   facet_wrap(~type) +
   stat_interval(
     .width = c(0.95, 0.89, 0.75, 0.67, 0.50),
-    size = 5.5,
+    size = 5.25,
     position = "dodge"
   ) +
   geom_line(
@@ -86,7 +86,7 @@ plot_prod <- wb_fig |>
   facet_wrap(~type) +
   stat_interval(
     .width = levels,
-    size = 5.5,
+    size = 5.25,
     position = "dodge"
   ) +
   geom_line(
@@ -113,7 +113,7 @@ plot_comp + plot_prod +
   plot_layout(nrow = 1) &
   plot_annotation(tag_levels = "A") &
   labs(
-    x = "Age (months)",
+    x = "\nAge (months)",
     y = "Vocabulary size",
     colour = "Sample coverage",
     colour_ramp = "% sample"
@@ -299,7 +299,7 @@ fig_data |>
     alpha = 1
   ) +
   geom_line(
-    linewidth = 2 / 4,
+    linewidth = 1 / 2,
     colour = "black"
   ) +
   scale_fill_manual(
@@ -322,10 +322,13 @@ fig_data |>
     legend.key.size = unit(1, "cm"),
     legend.key.height = unit(0.5, "cm"),
     strip.text.y = ggtext::element_markdown(
-      size = 11,
-      face = "bold",
+      size = 10,
       angle = 270,
       margin = margin(0, 0.35, 0, 0.35, "cm")
+    ),
+    strip.text.x = ggtext::element_markdown(
+      size = 10,
+      margin = margin(0.35, 0, 0.35, 0, "cm")
     )
   ) +
   fig_data |>
@@ -356,7 +359,7 @@ fig_data |>
     alpha = 1
   ) +
   geom_line(
-    linewidth = 2 / 4,
+    linewidth = 1 / 2,
     colour = "black"
   ) +
   scale_fill_manual(values = clrs_2[2:4]) +
@@ -364,8 +367,7 @@ fig_data |>
     legend.position = "none",
     strip.text.x = element_blank(),
     strip.text.y = ggtext::element_markdown(
-      size = 11,
-      face = "bold",
+      size = 10,
       angle = 270,
       margin = margin(0, 0.35, 0, 0.35, "cm")
     )
@@ -393,7 +395,7 @@ fig_data |>
     panel.grid.major.y = element_blank()
   )
 
-ggsave("assets/img/s1-predictions.png", width = 8, height = 6)
+ggsave("assets/img/s1-predictions.png", width = 6, height = 5)
 
 # Study 2: Exp. 1 predictions --------------------------------------------------
 

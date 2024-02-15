@@ -110,7 +110,6 @@ generate_figure <- function(...) {
       linetype = hypothesis,
       shape = hypothesis
     )) +
-    facet_grid(~te) +
     geom_segment(
       data = aoa_df,
       aes(
@@ -131,7 +130,7 @@ generate_figure <- function(...) {
     ) +
     labs(
       x = "Age (months)",
-      y = "Cumulative\nlearning instances",
+      y = "Learning instances",
       colour = "Language (exposure)",
       shape = "Hypothesis",
       linetype = "Hypothesis"
@@ -199,7 +198,8 @@ theme_ambla <- function() {
       colour = NA
     ),
     axis.line = element_line(colour = "grey", linewidth = 1),
-    strip.text.x = element_text(face = "bold")
+    strip.text.x = element_text(face = "bold"),
+    panel.grid = element_blank()
   )
 }
 
@@ -347,7 +347,6 @@ eli_plot_iter <- eli_df |>
     fill = id,
     shape = id
   )) +
-  facet_grid(~te) +
   geom_hline(
     yintercept = threshold,
     linewidth = 3 / 4,
@@ -387,7 +386,7 @@ eli_plot_iter <- eli_df |>
   ) +
   labs(
     x = "Age (months)",
-    y = "Cumulative\nlearning instances",
+    y = "Learning instances",
     colour = "Language",
     shape = "Language profile",
     fill = "Language",
@@ -395,7 +394,7 @@ eli_plot_iter <- eli_df |>
   ) +
   scale_y_continuous(labels = function(x) format(x, big.mark = ",")) +
   theme(
-    legend.position = "top",
+    legend.position = "none",
     legend.text = element_text(size = 8),
     legend.key.width = unit(1, "cm"),
     legend.key.height = unit(0.5, "cm"),
@@ -473,7 +472,8 @@ aoa_plot_iter <- aoa_df |>
     labels = function(x) format(x, big.mark = ","),
     limits = c(0, age_max)
   ) +
-  theme_ambla()
+  theme_ambla() &
+  theme(panel.grid = element_blank())
 
 eli_plot_iter / aoa_plot_iter +
   plot_layout(
@@ -484,8 +484,8 @@ eli_plot_iter / aoa_plot_iter +
 
 
 ggsave("assets/img/ambla-single-nc-mon.png",
-  height = 4,
-  width = 4
+  height = 5,
+  width = 6
 )
 
 # no facilitation, all iterations, monolingual ---------------------------------
@@ -501,7 +501,6 @@ eli_plot_iter <- eli_df |>
     fill = id,
     shape = id
   )) +
-  facet_grid(~te) +
   geom_hline(
     yintercept = threshold,
     linewidth = 3 / 4,
@@ -550,7 +549,7 @@ eli_plot_iter <- eli_df |>
   ) +
   labs(
     x = "Age (months)",
-    y = "Cumulative\nlearning instances",
+    y = "Learning instances",
     colour = "Language",
     shape = "Language profile",
     fill = "Language",
@@ -558,7 +557,7 @@ eli_plot_iter <- eli_df |>
   ) +
   scale_y_continuous(labels = function(x) format(x, big.mark = ",")) +
   theme(
-    legend.position = "top",
+    legend.position = "none",
     legend.text = element_text(size = 8),
     legend.key.width = unit(1, "cm"),
     legend.key.height = unit(0.5, "cm"),
@@ -580,7 +579,8 @@ eli_plot_iter <- eli_df |>
     labels = function(x) format(x, big.mark = ","),
     limits = c(0, age_max)
   ) +
-  theme_ambla()
+  theme_ambla() +
+  theme(panel.grid = element_blank())
 
 
 
@@ -655,7 +655,8 @@ aoa_plot_iter <- aoa_df |>
     labels = function(x) format(x, big.mark = ","),
     limits = c(0, age_max)
   ) +
-  theme_ambla()
+  theme_ambla() +
+  theme(panel.grid = element_blank())
 
 eli_plot_iter / aoa_plot_iter +
   plot_layout(
@@ -666,8 +667,8 @@ eli_plot_iter / aoa_plot_iter +
 
 
 ggsave("assets/img/ambla-all-nc-mon.png",
-  height = 4,
-  width = 4
+  height = 5,
+  width = 6
 )
 
 
@@ -682,7 +683,6 @@ eli_plot <- eli_df |>
     fill = id,
     shape = id
   )) +
-  facet_grid(~te) +
   geom_hline(
     yintercept = threshold,
     linewidth = 3 / 4,
@@ -734,7 +734,7 @@ eli_plot <- eli_df |>
   #               left = 1, bottom = 1, right = 1, top = 1) +
   labs(
     x = "Age (months)",
-    y = "Cumulative\nlearning instances",
+    y = "Learning instances",
     colour = "Language",
     shape = "Language profile",
     fill = "Language",
@@ -742,7 +742,7 @@ eli_plot <- eli_df |>
   ) +
   scale_y_continuous(labels = function(x) format(x, big.mark = ",")) +
   theme(
-    legend.position = "top",
+    legend.position = "none",
     legend.text = element_text(size = 8),
     legend.key.width = unit(1, "cm"),
     legend.key.height = unit(0.5, "cm"),
@@ -815,9 +815,11 @@ aoa_plot <- aoa_df_summary |>
     fill = "Language",
     linetype = "Language profile"
   ) +
+  scale_y_continuous(breaks = c(0, 1)) +
   theme(
     legend.position = "none",
-    axis.title.y = element_markdown()
+    axis.title.y = element_markdown(),
+    panel.grid.major.y = element_blank()
   )
 
 eli_plot / aoa_plot +
@@ -833,11 +835,12 @@ eli_plot / aoa_plot +
     labels = function(x) format(x, big.mark = ","),
     limits = c(0, age_max)
   ) &
-  theme_ambla()
+  theme_ambla() &
+  theme(panel.grid = element_blank())
 
 ggsave("assets/img/ambla-all-nc.png",
-  height = 4,
-  width = 4
+  height = 5,
+  width = 6
 )
 
 # facilitation, all iterations -------------------------------------------------
@@ -851,7 +854,6 @@ eli_plot <- eli_df |>
     fill = id,
     shape = id
   )) +
-  facet_grid(~te) +
   geom_hline(
     yintercept = threshold,
     linewidth = 3 / 4,
@@ -899,7 +901,7 @@ eli_plot <- eli_df |>
   ) +
   labs(
     x = "Age (months)",
-    y = "Cumulative\nlearning instances",
+    y = "Learning instances",
     colour = "Language",
     shape = "Language profile",
     fill = "Language",
@@ -907,7 +909,7 @@ eli_plot <- eli_df |>
   ) +
   scale_y_continuous(labels = function(x) format(x, big.mark = ",")) +
   theme(
-    legend.position = "top",
+    legend.position = "none",
     legend.text = element_text(size = 8),
     legend.key.width = unit(1, "cm"),
     legend.key.height = unit(0.5, "cm"),
@@ -981,9 +983,11 @@ aoa_plot <- aoa_df_summary |>
     fill = "Language",
     linetype = "Language profile"
   ) +
+  scale_y_continuous(breaks = c(0, 1)) +
   theme(
     legend.position = "none",
-    axis.title.y = element_markdown()
+    axis.title.y = element_markdown(),
+    panel.grid = element_blank()
   )
 
 eli_plot / aoa_plot +
@@ -999,11 +1003,12 @@ eli_plot / aoa_plot +
     labels = function(x) format(x, big.mark = ","),
     limits = c(0, age_max)
   ) &
-  theme_ambla()
+  theme_ambla() &
+  theme(panel.grid = element_blank())
 
 ggsave("assets/img/ambla-all-c.png",
-  height = 4,
-  width = 4
+  height = 5,
+  width = 6
 )
 
 # animations -------------------------------------------------------------------
@@ -1032,7 +1037,6 @@ eli_plot <- ggplot(
     shape = id
   )
 ) +
-  facet_grid(~te) +
   geom_hline(
     yintercept = threshold,
     linewidth = 3 / 4,
@@ -1060,7 +1064,9 @@ eli_plot <- ggplot(
       iteration == iter_id,
       te == te_labels[1]
     ) |>
-      mutate(aoa = ifelse(age < aoa, NA, aoa)),
+      mutate(
+        aoa = ifelse(age < aoa, NA, aoa)
+      ),
     aes(
       label = round(aoa, 2),
       x = aoa,
@@ -1083,7 +1089,7 @@ eli_plot <- ggplot(
   ) +
   labs(
     x = "Age (months)",
-    y = "Cumulative\nlearning instances",
+    y = "Learning instances",
     colour = "Language",
     shape = "Language profile",
     fill = "Language",
@@ -1099,7 +1105,7 @@ eli_plot <- ggplot(
   ) +
   theme_ambla() +
   theme(
-    legend.position = "top",
+    legend.position = "none",
     legend.text = element_text(size = 8),
     legend.key.width = unit(1, "cm"),
     legend.key.height = unit(0.5, "cm"),
@@ -1107,6 +1113,7 @@ eli_plot <- ggplot(
       fill = "white",
       colour = NA
     ),
+    panel.grid = element_blank(),
     legend.background = element_rect(
       fill = "white",
       colour = NA
@@ -1115,7 +1122,7 @@ eli_plot <- ggplot(
   transition_reveal(age)
 
 eli_gif <- animate(eli_plot,
-  width = 4,
+  width = 5,
   height = 4,
   units = "in",
   duration = 10,
@@ -1146,7 +1153,6 @@ eli_plot <- eli_data_plot |>
     fill = id,
     shape = id
   )) +
-  facet_grid(~te) +
   geom_hline(
     yintercept = threshold,
     linewidth = 3 / 4,
@@ -1202,7 +1208,7 @@ eli_plot <- eli_data_plot |>
   ) +
   labs(
     x = "Age (months)",
-    y = "Cumulative\nlearning instances",
+    y = "Learning instances",
     colour = "Language",
     shape = "Language profile",
     fill = "Language",
@@ -1218,7 +1224,7 @@ eli_plot <- eli_data_plot |>
   ) +
   theme_ambla() +
   theme(
-    legend.position = "top",
+    legend.position = "none",
     legend.text = element_text(size = 8),
     legend.key.width = unit(1, "cm"),
     legend.key.height = unit(0.5, "cm"),
@@ -1229,12 +1235,13 @@ eli_plot <- eli_data_plot |>
     legend.background = element_rect(
       fill = "white",
       colour = NA
-    )
+    ),
+    panel.grid = element_blank()
   ) +
   transition_reveal(age)
 
 eli_gif <- animate(eli_plot,
-  width = 4,
+  width = 5,
   height = 4,
   units = "in",
   renderer = gifski_renderer(),
@@ -1267,7 +1274,6 @@ eli_plot <- eli_data_plot |>
     fill = id,
     shape = id
   )) +
-  facet_grid(~te) +
   geom_hline(
     yintercept = threshold,
     linewidth = 3 / 4,
@@ -1323,7 +1329,7 @@ eli_plot <- eli_data_plot |>
   ) +
   labs(
     x = "Age (months)",
-    y = "Cumulative\nlearning instances",
+    y = "Learning instances",
     colour = "Language",
     shape = "Language profile",
     fill = "Language",
@@ -1339,7 +1345,7 @@ eli_plot <- eli_data_plot |>
   ) +
   theme_ambla() +
   theme(
-    legend.position = "top",
+    legend.position = "none",
     legend.text = element_text(size = 8),
     legend.key.width = unit(1, "cm"),
     legend.key.height = unit(0.5, "cm"),
@@ -1350,14 +1356,15 @@ eli_plot <- eli_data_plot |>
     legend.background = element_rect(
       fill = "white",
       colour = NA
-    )
+    ),
+    panel.grid = element_blank()
   ) +
   transition_reveal(age)
 
 
 
 eli_gif <- animate(eli_plot,
-  width = 4,
+  width = 5,
   height = 4,
   units = "in",
   renderer = gifski_renderer(),

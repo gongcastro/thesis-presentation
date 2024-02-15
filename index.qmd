@@ -71,7 +71,7 @@ Lexical representations
 
 ## Normative trajectories of lexical development
 
-![Vocabulary size norms for 51,800 monolingual children learning 35 distinct languages [Wordbank, @frank2017wordbank])](assets/img/wordbank.png)
+![Vocabulary size norms for 51,800 monolingual children learning 35 distinct languages [Wordbank, @frank2017wordbank]](assets/img/wordbank.png)
 
 ::: notes
 
@@ -83,7 +83,7 @@ Vocabulary size grows non-linearly during the second year of life
 ## Bilinguals face additional challenges, but do not lag behind
 
 ::: {.columns}
-::: {.column width="50%"}
+::: {.column width="60%"}
 * Increased **complexity** in linguistic context (learning two codes)
 * Reduced linguistic **input** (split into two languages)
 * Increased **referential ambiguity**
@@ -91,12 +91,13 @@ Vocabulary size grows non-linearly during the second year of life
 <br> 
 
 ::: box
-**@hoff2012dual**: bilinguals acquire words at similar rates as monolinguals
+**Hoff et al. (2012)**: bilinguals acquire words at similar rates as monolinguals
 
-47 English-Spanish bilinguals, 56 English monolinguals in Florida
+- 47 English-Spanish bilinguals
+- 56 English monolinguals in Florida
 :::
 :::
-::: {.column width="50%"}
+::: {.column width="40%"}
 ![](assets/img/hoff-1.png){width="60%"}
 ![](assets/img/hoff-2.png){width="60%"}
 :::
@@ -114,7 +115,7 @@ Vocabulary size grows non-linearly during the second year of life
 ## Lexical similarity modulates vocabulary acquisition in bilinguals
 
 ::: box
-**@floccia2018introduction**: CDI response of 372 bilinguals (UK) learning English + additional language
+**Floccia et al. (2018)**: CDI response of 372 bilinguals (UK) learning **English + additional language**
 :::
 
 Lexical similarity:
@@ -122,32 +123,36 @@ Lexical similarity:
 
 > English-Dutch (22.14%) > English-Mandarin (1.97%)
 
+<br>
+
 **Higher lexical similarity, larger vocabulary size**  
 
 Stronger effect in the additional language (e.g., Dutch, Mandarin)
 
 ## Lexical similarity modulates vocabulary acquisition in bilinguals
 
-![Pairwise lexical similarity (average Levensthein similarity across translations [@floccia2018introduction]](assets/img/similarity.png)
+![Pairwise lexical similarity (average Levensthein similarity across translations in Floccia et al.)](assets/img/similarity.png)
 
 ## A cognate facilitation in lexical acquisition?
 
-::: box
-
+::: {.columns}
+::: {.column}
 **Cognates**: phonologically-similar translation equivalents
-
 
 | *Cognate*           | *Non-cognate*       |
 |:-------------------:|:-------------------:|
 | [cat] /ˈgat-ˈga.to/ | [dog] /ˈgos-ˈpe.ro/ |
-
 :::
-
+::: {.column}
+::: box
 Some evidence that cognates **acquired earlier** than non-cognates [@mitchell2023cognates; @bosch2014first]
+:::
+:::
+::: 
 
 <br>
 
-What **mechanisms** support a cognate facilitation during word acquisition?
+**What *mechanisms* support a cognate facilitation during word acquisition?**
 
 ## Language non-selective lexical access
 
@@ -155,18 +160,26 @@ What **mechanisms** support a cognate facilitation during word acquisition?
 
 ## The present dissertation
 
+::: {.columns}
+::: {.column}
 ::: box
 **Study 1**
 :::
-
 1. Provide a mechanistic account for the **cognateness facilitation**
 2. **Test predictions** of the model
 
+> Submitted, under review
+:::
+::: {.column}
 ::: box
 **Study 2**
 :::
-
 3. Test core assumption of the model: **language non-selectivity** in the initial lexicon
+
+> In preparation
+:::
+:::
+
 
 
 # Study 1 {.inverse}
@@ -204,11 +217,17 @@ $$
 
 ::: {.columns}
 ::: {.column width="40%"}
+
+**Parameters**:
+
+Catalan monolingual child
+
+- <span style="color:#FFFFFF; background:#004AAD;">/'gos/ (Catalan), 100%</span>
+
 $$
 \begin{aligned}
-\textbf{Parameters}&: \\
-\text{Threshold} &= 300 \\
-\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) 
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50) 
 \end{aligned}
 $$
 :::
@@ -221,11 +240,16 @@ $$
 
 ::: {.columns}
 ::: {.column width="40%"}
+**Parameters**:
+
+Catalan monolingual child
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
 $$
 \begin{aligned}
-\textbf{Parameters}&: \\
-\text{Threshold} &= 300 \\
-\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) 
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50) 
 \end{aligned}
 $$
 :::
@@ -238,11 +262,16 @@ $$
 
 ::: {.columns}
 ::: {.column width="40%"}
+**Parameters**:
+
+Catalan monolingual child
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
 $$
 \begin{aligned}
-\textbf{Parameters}&: \\
-\text{Threshold} &= 300 \\
-\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) 
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50) 
 \end{aligned}
 $$
 :::
@@ -264,10 +293,6 @@ Accumulation of learning instances, a function of <span style="color:#a80035;">*
 
 $$
 \begin{aligned}
-\definecolor{myred}{RGB}{ 168, 0, 53 }
-\definecolor{myblue}{RGB}{ 0, 64, 168 }
-\definecolor{mygreen}{RGB}{0, 168, 87}
-\definecolor{myorange}{RGB}{ 235, 127, 26 }
 \textbf{For participant } &i \textbf{ and word-form } j \text{ (translation of } j'): \\
 \text{Age of Acquisition}_{ij} &= \{\text{Age}_i \mid \text{Learning instances}_{ij} = \text{Threshold} \}\\
 \text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \cdot {\color{myred}\text{Exposure}_{ij}}\\
@@ -280,14 +305,22 @@ $$
 
 ::: {.columns}
 ::: {.column width="40%"}
+**Parameters**:
+
+Catalan monolingual child
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
+Catalan/Spanish bilingual child
+
+- <span style="background:#C8102E;color:white;">/'gos/ (Catalan), 60%</span>
+
+- <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
 
 $$
 \begin{aligned}
-\textbf{Parameters}&: \\
-\text{Threshold} &= 300 \\
-\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) \\
-\text{Exposure}_{ij} &= 0.6 \\
-\text{Exposure}_{ij'} &= 0.4 
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50)
 \end{aligned}
 $$
 
@@ -302,14 +335,20 @@ $$
 
 ::: {.columns}
 ::: {.column width="40%"}
+Catalan monolingual child
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
+Catalan/Spanish bilingual child
+
+- <span style="background:#C8102E;color:white;">/'gos/ (Catalan), 60%</span>
+
+- <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
 
 $$
 \begin{aligned}
-\textbf{Parameters}&: \\
-\text{Threshold} &= 300 \\
-\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) \\
-\text{Exposure}_{ij} &= 0.6 \\
-\text{Exposure}_{ij'} &= 0.4 
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50)
 \end{aligned}
 $$
 
@@ -343,40 +382,68 @@ $$
 
 ## AMBLA: cognate facilitation
 
+::: columns
+
+::: {.column width="40%"}
+Catalan monolingual child
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
+Catalan/Spanish bilingual child
+
+- <span style="background:#C8102E;color:white;">/'gos/ (Catalan), 60%</span>
+
+- <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
+
 $$
 \begin{aligned}
-\textbf{Parameters}&: \\
-\text{Threshold} &= 300 \\
-\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) \\
-\text{Exposure}_{ij} &= 0.6 \\
-\text{Exposure}_{ij'} &= 0.4 \\
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50) \\
 \text{Cognateness}_{j,j'} = 0.75
 \end{aligned}
 $$
-
+:::
+::: {.column width="60%"}
 ![](assets/gif/ambla-single-c.gif)
+:::
+:::
 
 ## AMBLA: cognate facilitation
 
+::: columns
+::: {.column width="40%"}
+
+Catalan monolingual child:
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
+Catalan/Spanish bilingual child:
+
+- <span style="background:#C8102E;color:white;">/'gos/ (Catalan), 60%</span>
+
+- <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
+
 $$
 \begin{aligned}
-\textbf{Parameters}&: \\
-\text{Threshold} &= 300 \\
-\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) \\
-\text{Exposure}_{ij} &= 0.6 \\
-\text{Exposure}_{ij'} &= 0.4 \\
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50) \\
 \text{Cognateness}_{j,j'} = 0.75
 \end{aligned}
 $$
-
+:::
+::: {.column width="60%"}
 ![](assets/img/ambla-all-c.png)
+:::
+:::
 
-## Predictions
+---
+
+### Predictions
 
 1. Cognates acquired earlier than non-cognates
 2. Cognateness facilitation stronger in the lower-exposure language
 
-## Dataset
+### Dataset
 
 * **Barcelona Vocabulary Questionnaire (BVQ)**: 302 Catalan-Spanish noun translation equivalents
 * 436 administrations (366 children)
@@ -384,26 +451,32 @@ $$
 * Lang. exposure: Catalan and Spanish ($\leq$ 10% 3rd language)
 * 138,078 item responses (*No*, *Understands*, *Understands and Says*)
 
-## Modelling and statistical inference
-
-*p*(Comprehension $<$ Production) ~ Ordinal, multilevel (Bayesian) regression model
-
-```r
-response ~ age * exposure * cognateness + length + (...|child) + (...|te) 
-```
-
-$$
-\begin{aligned}
-\text{Exposure}_{ij} &= \text{Frequency}_j \times \text{Language degree of exposure}_{ij} \\
-\text{Cognateness}_{j} &= \text{Levenshtein}(j, j')
-\end{aligned}
-$$
-
 ## Results
 
+::: columns
+::: {.column width="40%"}
 
-![Marginal posterior predictions](assets/img/s1-predictions.png)
+ Ordinal, multilevel (Bayesian) regression model
 
+**Response variable:**
+
+*p*(Comprehension $<$ Production)
+
+<br>
+
+**Predictors**:
+
+- $\text{Age}_{i}$
+- $\text{Exposure}_{ij}$
+- $\text{Cognateness}_j$*
+
+*$\text{Levenshtein}(j, j')$
+
+:::
+::: {.column width="60%"}
+![](assets/img/s1-predictions.png)
+:::
+:::
 
 ## Discussion
 
@@ -412,7 +485,6 @@ $$
 Cognate facilitation **moderated by exposure**
 
 > Only words from the lower exposure benefit from cognateness
-> Parallel to language dominance effects in adults?
 
 Cognateness as a candidate mechanism underlying @floccia2018introduction's results
 
@@ -420,7 +492,7 @@ Cross-language facilitation via co-activation of phonologically similar translat
 
 ::: box
 
-**Is language-non selectivity already present?**
+**Is language-non selectivity already present in the initial lexicon?**
 
 :::
 
@@ -431,67 +503,119 @@ Developmental trajectories of bilingual spoken word recognition
 
 ## Language non-selectivity in the initial lexicon
 
+Some evidence in infants and children [@vonholzen2012language; @singh2014one].
+
+Methodological pitfalls: "bilingual" task.
+
 ::: columns
 
+:::: {.column width="30%"}
 
-:::: {.column width="70%"}
+**Implicit naming task**
 
-**Priming through translation task**:
+[@mani2010infant; @mani2011phonological]
 
-@vonholzen2012language: German-English bilinguals (*N* = 20, 21-43 months)
+English monolinguals
 
-**Implicit naming task**:
-
-@mani2010infant: English monolinguals
-
-![@mani2010infant](assets/img/mani-1.jpeg){width="100%"}
+![](assets/img/mani-2.jpeg){width="60%"}
 
 ::::
 
-:::: {.column width="30%"}
-![@mani2010infant](assets/img/mani-2.jpeg){width="70%"}
+:::: {.column width="70%"}
+![](assets/img/s2-design-mani.png){width="100%"}
 ::::
 
 :::
 
-## Experiment 1: predictions
+## Study 2: design
 
-If language non-selectivity, stronger interference in cognate vs. non-cognate trials
+Extending the task to test cross-language priming in bilinguals.
 
+::: columns
+
+:::: {.column width="30%"}
+Change in order of  trial timecourse:
+
+<br>
+
+**Auditory label *before* target-distractor images**
+
+Length of Catalan and Spanish words
+
+Temporal proximity of prime and target labels
+
+::::
+
+:::: {.column width="70%"}
+![](assets/img/s2-design.png)
+::::
+:::
+
+## Study 2: predictions
+
+::: columns
+::: {.column width="35%"}
+::: box
+**Exp. 1: monolinguals**
+:::
+
+Replicate **within-language phonological interference** from Mani and Plunkett (*proof of concept*)
+
+::: box
+**Exp. 2 (monolinguals and bilinguals)**
+:::
+If **language non-selectivity**, **stronger interference** in cognate vs. non-cognate trials
+:::
+::: {.column width="65%"}
 ![](assets/img/hypotheses.png)
-
-## Experiment 1: participants
-
-**Replication study**
-
-*N* = 112 children (15 longitudinal)
-
-Aged 26.36 months (*SD* = 4.01, *Range* = 20.03–32.5)
-
-English monolinguals, Oxford (United Kindgom) [as in @mani2010infant]
-
-Proportion of target looking (PTLT) ~ (Bayesian) GAMMs
+:::
+:::
 
 
 ## Experiment 1: results (monolinguals)
 
-![Time course of proportion of target looking tin Experiment 2](assets/img/s2-1-predictions.png)
+::: columns
+::: {.column width="30%"}
+*N* = 112 children (15 longitudinal)
 
-## Experiment 2: participants
+26.36 months $\pm$ 4.01, 20.03–32.5
 
+English monolinguals, Oxford (United Kindgom) [@mani2010infant]
+
+**Bayesian GAMMs**
+
+Proportion of target looking (PTLT)
+
+* $\text{Condition}$
+
+
+:::
+::: {.column width="70%"}
+![](assets/img/s2-1-predictions.png)
+:::
+:::
+## Experiment 2: results
+
+::: columns
+::: {.column width="35%"}
 *N* = 162 children (81 longitudinal)
 
-- 107 sessions in monolinguals (>= 80% exposure to Catalan/Spanish)
-- 135 session in bilinguals
+- 107 monolingual sessions ($\geq$ 80% Catalan/Spanish)
+- 135 bilingual sessions
 
-Exposed to Catalan or Spanish (Metropolitan Area of Barcelona, Spain)
+25.36 months $\pm$ 4.01, 20.03–32.5
 
-Aged 25.36 months (*SD* = 4.01, *Range* = 20.03–32.5)
+**Bayesian GAMMs**
 
+Proportion of target looking (PTLT)
 
-## Experiment 2: results (monolinguals)
+* $\text{Condition} \times \text{Group}$
+:::
+::: {.column width="65%"}
 
 ![Time course of proportion of target looking tin Experiment 2](assets/img/s2-2-predictions.png)
+:::
+:::
 
 ## Discussion
 
@@ -565,6 +689,7 @@ Thanks!
 ## Study 1: MCMC convergence ($\hat{R}$)
 
 ![MCMC convergence for the model in Study 1](assets/img/s1-convergence.png)
+
 ## Study 2: predictions
 
 - Successful spoken word recognition across groups

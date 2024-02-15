@@ -9,6 +9,8 @@ format:
     preload-iframes: true
     link-external-newwindow: true
     qr-code: assets/img/qr-code.png
+    github: https://github.com/gongcastro/thesis-presentation
+
 author:
   - name: "Gonzalo Garcia-Castro"
     orcid: 0000-0002-8553-4209

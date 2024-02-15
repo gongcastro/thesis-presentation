@@ -43,10 +43,7 @@ get_vars_dict <- function(responses) {
 theme_ambla <- function() {
   theme(
     strip.background = element_rect(fill = "grey90", colour = "grey90"),
-    panel.grid.major.y = element_line(
-      colour = "grey",
-      linetype = "dotted"
-    ),
+    panel.grid = element_blank(),
     plot.background = element_rect(
       fill = "white",
       colour = NA

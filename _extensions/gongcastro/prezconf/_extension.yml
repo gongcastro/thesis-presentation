@@ -18,3 +18,5 @@ contributes:
       - logo-upf.png
       affiliation-logo:
       - logo-upf.png
+      github-logo:
+      - logo-github.png
