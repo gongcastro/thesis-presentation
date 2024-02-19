@@ -46,10 +46,33 @@ plot_comp <- wb_fig |>
   filter(type == "Comprehension") |>
   ggplot(aes(age, size)) +
   facet_wrap(~type) +
+  annotate(
+    geom = "text",
+    label = "Words and Gestures",
+    x = 15,
+    y = 700,
+    size = 2.5,
+    vjust = 1,
+    hjust = 1
+  ) +
+  annotate(
+    geom = "text",
+    label = "Words and Sentences",
+    x = 15,
+    y = 700,
+    size = 2.5,
+    vjust = 1,
+    hjust = 0
+  ) +
   stat_interval(
     .width = c(0.95, 0.89, 0.75, 0.67, 0.50),
     size = 4.75,
     position = "dodge"
+  ) +
+  geom_vline(
+    xintercept = 15,
+    linewidth = 3 / 4,
+    color = "grey"
   ) +
   geom_line(
     data = filter(wb_summary, type == "Comprehension"),
@@ -89,6 +112,15 @@ plot_prod <- wb_fig |>
     size = 4.75,
     position = "dodge"
   ) +
+  annotate(
+    geom = "text",
+    label = "Words and Sentences",
+    x = 30 / 2,
+    y = 700,
+    size = 3,
+    vjust = 1,
+    hjust = 0
+  ) +
   geom_line(
     data = filter(wb_summary, type == "Production"),
     colour = "white",
@@ -111,7 +143,6 @@ plot_prod <- wb_fig |>
 
 plot_comp + plot_prod +
   plot_layout(nrow = 1) &
-  plot_annotation(tag_levels = "A") &
   labs(
     x = "\nAge (months)",
     y = "Vocabulary size",
@@ -280,7 +311,7 @@ fig_data |>
     fill = lv,
     linetype = lv
   )) +
-  facet_grid(.category ~ exposure) +
+  facet_wrap(~exposure) +
   geom_vline(
     xintercept = mean(responses$age),
     linewidth = 2 / 4,
@@ -304,17 +335,25 @@ fig_data |>
   ) +
   scale_fill_manual(
     values = clrs_1[2:4],
-    guide = guide_legend(
-      override.aes = list(fill = rev(c(
-        "#333333",
-        "#505050",
-        "#9D9D9D"
-      )))
-    )
   ) +
+  labs(
+    x = "Age (months)",
+    y = "*p*(Comprehension)",
+    colour = "Cognateness (phonological similarity)",
+    fill = "Cognateness (phonological similarity)",
+    linetype = "Cognateness (phonological similarity)"
+  ) +
+  scale_linetype_manual(values = rev(c("solid", "dashed", "dotdash"))) +
+  scale_y_continuous(
+    breaks = seq(0, 1, 0.25),
+    limits = c(0, 1)
+  ) +
+  scale_x_continuous(breaks = seq(0, 50, 5)) +
+  theme_ambla() +
   theme(
     axis.title.x = element_blank(),
     axis.text.x = element_blank(),
+    axis.title.y = ggtext::element_markdown(),
     legend.position = "top",
     legend.box = "horizontal",
     legend.justification = "right",
@@ -324,14 +363,20 @@ fig_data |>
     strip.text.y = ggtext::element_markdown(
       size = 10,
       angle = 270,
-      margin = margin(0, 0.35, 0, 0.35, "cm")
+      margin = margin(0, 0.2, 0, 0.2, "cm")
     ),
     strip.text.x = ggtext::element_markdown(
       size = 10,
-      margin = margin(0.35, 0, 0.35, 0, "cm")
-    )
-  ) +
-  fig_data |>
+      margin = margin(0.2, 0, 0.2, 0, "cm")
+    ),
+    axis.line = element_blank(),
+    panel.border = element_blank(),
+    panel.grid.major.y = element_blank()
+  )
+
+ggsave("assets/img/s1-predictions-comp.png", width = 8, height = 3)
+
+fig_data |>
   filter(.category == "Production") |>
   ggplot(aes(age, .median,
     ymin = .lower,
@@ -340,7 +385,7 @@ fig_data |>
     fill = lv,
     linetype = lv
   )) +
-  facet_grid(.category ~ exposure) +
+  facet_wrap(~exposure) +
   geom_vline(
     xintercept = mean(responses$age),
     linewidth = 2 / 4,
@@ -363,39 +408,45 @@ fig_data |>
     colour = "black"
   ) +
   scale_fill_manual(values = clrs_2[2:4]) +
-  theme(
-    legend.position = "none",
-    strip.text.x = element_blank(),
-    strip.text.y = ggtext::element_markdown(
-      size = 10,
-      angle = 270,
-      margin = margin(0, 0.35, 0, 0.35, "cm")
-    )
-  ) +
-  plot_layout(ncol = 1) &
-  plot_annotation(tag_levels = "A") &
-
   labs(
     x = "Age (months)",
-    y = "p(acquisition)",
+    y = "*p*(Comprehension)",
     colour = "Cognateness (phonological similarity)",
     fill = "Cognateness (phonological similarity)",
     linetype = "Cognateness (phonological similarity)"
-  ) &
-  scale_linetype_manual(values = rev(c("solid", "dashed", "dotdash"))) &
+  ) +
+  scale_linetype_manual(values = rev(c("solid", "dashed", "dotdash"))) +
   scale_y_continuous(
     breaks = seq(0, 1, 0.25),
     limits = c(0, 1)
-  ) &
-  scale_x_continuous(breaks = seq(0, 50, 5)) &
-  theme_ambla() &
+  ) +
+  scale_x_continuous(breaks = seq(0, 50, 5)) +
+  theme_ambla() +
   theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.y = ggtext::element_markdown(),
+    legend.position = "top",
+    legend.box = "horizontal",
+    legend.justification = "right",
+    legend.direction = "horizontal",
+    legend.key.size = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    strip.text.y = ggtext::element_markdown(
+      size = 10,
+      angle = 270,
+      margin = margin(0, 0.2, 0, 0.2, "cm")
+    ),
+    strip.text.x = ggtext::element_markdown(
+      size = 10,
+      margin = margin(0.2, 0, 0.2, 0, "cm")
+    ),
     axis.line = element_blank(),
     panel.border = element_blank(),
     panel.grid.major.y = element_blank()
   )
 
-ggsave("assets/img/s1-predictions.png", width = 6, height = 5)
+ggsave("assets/img/s1-predictions-prod.png", width = 8, height = 3)
 
 # Study 2: Exp. 1 predictions --------------------------------------------------
 
@@ -618,7 +669,7 @@ plot_time + plot_summary +
 
 ggsave("assets/img/s2-1-predictions.png", width = 6, height = 4)
 
-# Study 2: Exp. 1 - predictions ------------------------------------------------
+# Study 2: Exp. 2 - predictions ------------------------------------------------
 
 data_bcn <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "data_bcn.csv"))
 model_fits_bcn <- readRDS(here("data", "03-chapter-3", "results", "fit_list_bcn.rds"))
@@ -721,7 +772,7 @@ plot_time <- epreds |>
   ) +
   labs(
     x = "Time (ms)",
-    y = "Logit PTLT",
+    y = "*p*(Target looking)",
     colour = "Condition",
     fill = "Condition",
     linetype = "Condition",
@@ -794,7 +845,7 @@ plot_summary <- obs_summary |>
   ) +
   labs(
     x = "Condition",
-    y = "Logit PTLT",
+    y = "*p*(Target looking)",
     colour = "Condition",
     fill = "Condition"
   ) +
@@ -817,6 +868,7 @@ plot_time + plot_summary +
   scale_fill_manual(values = clrs) &
   theme_ambla() &
   theme(
+    axis.title.y = ggtext::element_markdown(),
     legend.position = "top",
     axis.line = element_blank(),
     panel.grid.major.x = element_blank(),
@@ -824,7 +876,7 @@ plot_time + plot_summary +
     legend.title = element_blank()
   )
 
-ggsave("assets/img/s2-2-predictions.png", width = 7, height = 6)
+ggsave("assets/img/s2-2-predictions.png", width = 9, height = 6.5)
 
 # Appendix ---------------------------------------------------------------------
 
