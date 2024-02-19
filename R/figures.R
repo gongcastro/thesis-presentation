@@ -48,7 +48,7 @@ plot_comp <- wb_fig |>
   facet_wrap(~type) +
   stat_interval(
     .width = c(0.95, 0.89, 0.75, 0.67, 0.50),
-    size = 5.25,
+    size = 4.75,
     position = "dodge"
   ) +
   geom_line(
@@ -86,7 +86,7 @@ plot_prod <- wb_fig |>
   facet_wrap(~type) +
   stat_interval(
     .width = levels,
-    size = 5.25,
+    size = 4.75,
     position = "dodge"
   ) +
   geom_line(

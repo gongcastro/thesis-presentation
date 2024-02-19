@@ -517,7 +517,7 @@ Methodological pitfalls: "bilingual" task.
 
 English monolinguals
 
-![](assets/img/mani-2.jpeg){width="60%"}
+![](assets/img/mani-2.png){width="60%"}
 
 ::::
 
@@ -547,7 +547,7 @@ Temporal proximity of prime and target labels
 ::::
 
 :::: {.column width="70%"}
-![](assets/img/s2-design.png)
+![](assets/img/s2-design-barcelona.png)
 ::::
 :::
 

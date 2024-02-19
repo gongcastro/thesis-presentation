@@ -8,7 +8,7 @@ format:
     progress: true
     preload-iframes: true
     link-external-newwindow: true
-    qr-code: assets/img/qr-code.png
+    #qr-code: assets/img/qr-code.png
     github: https://github.com/gongcastro/thesis-presentation
 
 author:
