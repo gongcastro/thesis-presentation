@@ -876,7 +876,7 @@ plot_time + plot_summary +
     legend.title = element_blank()
   )
 
-ggsave("assets/img/s2-2-predictions.png", width = 9, height = 6.5)
+ggsave("assets/img/s2-2-predictions.png", width = 7, height = 4)
 
 # Appendix ---------------------------------------------------------------------
 

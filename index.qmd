@@ -615,7 +615,7 @@ Barcelona Vocabulary Questionnaire (BVQ) + {{< fa brands r-project >}} package +
 
 **Levenshtein distance** as a valid measure of word-level effects of pghonological similarity
 
-> {jtracer} {{< fa brands r-project >}} package
+> jtracer {{< fa brands r-project >}} package
 
 
 AMBLA: natural extension of the Standard Model of language acquisition? [@kachergis2022standard]

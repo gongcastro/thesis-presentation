@@ -363,7 +363,7 @@ eli_plot_iter <- eli_df |>
     fill = "grey80",
     x = 0,
     y = threshold,
-    size = 2,
+    size = 3,
     hjust = 0
   ) +
   geom_label(
@@ -518,7 +518,7 @@ eli_plot_iter <- eli_df |>
     fill = "grey80",
     x = 0,
     y = threshold,
-    size = 2,
+    size = 3,
     hjust = 0
   ) +
   geom_line(
@@ -725,7 +725,7 @@ eli_plot <- eli_df |>
     fill = "grey80",
     x = 0,
     y = threshold,
-    size = 2,
+    size = 3,
     hjust = 0
   ) +
   # inset_element(img$cat, on_top = FALSE, ignore_tag = TRUE,
@@ -880,7 +880,7 @@ eli_plot <- eli_df |>
     fill = "grey80",
     x = 0,
     y = threshold,
-    size = 2,
+    size = 3,
     hjust = 0
   ) +
   geom_label(
@@ -1053,7 +1053,7 @@ eli_plot <- ggplot(
     fill = "grey80",
     x = 0,
     y = threshold,
-    size = 2,
+    size = 3,
     hjust = 0
   ) +
   geom_label(
@@ -1076,16 +1076,6 @@ eli_plot <- ggplot(
     show.legend = FALSE,
     size = 4,
     label.r = unit(0, "lines")
-  ) +
-  geom_text(
-    data = eli_data_plot |>
-      mutate(x = max(age), .by = id),
-    aes(
-      label = glue::glue("ELI: {round(n_cum)}"),
-      x = x, y = eli
-    ),
-    hjust = 1,
-    show.legend = FALSE
   ) +
   labs(
     x = "Age (months)",
@@ -1196,16 +1186,6 @@ eli_plot <- eli_data_plot |>
     size = 4,
     label.r = unit(0, "lines")
   ) +
-  geom_text(
-    data = eli_data_plot |>
-      mutate(x = max(age), .by = id),
-    aes(
-      label = glue::glue("ELI: {round(n_cum)}"),
-      x = x, y = eli
-    ),
-    hjust = 1,
-    show.legend = FALSE
-  ) +
   labs(
     x = "Age (months)",
     y = "Learning instances",
@@ -1291,7 +1271,7 @@ eli_plot <- eli_data_plot |>
     fill = "grey80",
     x = 0,
     y = threshold,
-    size = 2,
+    size = 3,
     hjust = 0
   ) +
   geom_line(
@@ -1316,16 +1296,6 @@ eli_plot <- eli_data_plot |>
     show.legend = FALSE,
     size = 4,
     label.r = unit(0, "lines")
-  ) +
-  geom_text(
-    data = eli_data_plot |>
-      mutate(x = max(age), .by = id),
-    aes(
-      label = glue::glue("ELI: {round(n_cum)}"),
-      x = x, y = eli
-    ),
-    hjust = 1,
-    show.legend = FALSE
   ) +
   labs(
     x = "Age (months)",
