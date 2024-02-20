@@ -15,10 +15,12 @@ source("R/utils.R")
 
 # set ggplot theme and colour palette
 my_theme <- theme_ambla() +
-    theme(panel.grid = element_blank(),
-          axis.line = element_line(colour = "black"),
-          text = element_text(size = 12, colour = "black"),
-          axis.text = element_text(colour = "black"))
+    theme(
+        panel.grid = element_blank(),
+        axis.line = element_line(colour = "black"),
+        text = element_text(size = 12, colour = "black"),
+        axis.text = element_text(colour = "black")
+    )
 
 theme_set(my_theme)
 
@@ -34,40 +36,13 @@ options(
 )
 
 set.seed(1234)
-
-
-# load data
-wb <- here::here("data", "01-introduction", "wordbank_administration_data.csv") |> 
-    arrow::read_csv_arrow() |>
-    add_count(language) |>
-    filter(typically_developing,
-           monolingual,
-           language!="English (British)",
-           between(age, 10, 30))
-
-responses <- arrow::read_csv_arrow(here("data", "02-chapter-2",
-                                        "data", "responses.csv"))
-
-model_summary <- arrow::read_csv_arrow(here("data", "02-chapter-2",
-                                            "results", "posterior", "model_summary.csv"))
-
-model_draws <- arrow::read_csv_arrow(here("data", "02-chapter-2",
-                                          "results", "posterior", "posterior_draws.csv"))
-
-bvq_data <- readRDS(here::here("data", "01-introduction", "bvq.rds"))
-
-data_oxf <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "data_oxf.csv"))
-model_fits_oxf <- readRDS(here("data", "03-chapter-3", "results", "fit_list_oxf.rds"))
-model_loos_oxf <- readRDS(here("data", "03-chapter-3", "results", "loos_oxf.rds"))
-attrition_trials <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "attrition_trials.csv"))
-attrition_participants <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "attrition_participants.csv"))
 ```
 
 
 
 ## The initial lexicon
 
-Average English-native 20-year-old knows ~42,000 words: **mental lexicon**
+Average 20-year-old knows ~42,000 lemmas: **mental lexicon**
 
 ::: box
 
@@ -79,21 +54,8 @@ Lexical representations
 
 **First lexical representations at 6-9 months**
 
-::: columns
-
-:::: {.column width="50%}
-
-![Inter-modal experimental paradigms. @bergelson2012months, *Science News*](assets/img/bergelson.jpg){width="60%"}
-
-::::
-
-:::: {.column width="50%}
-
-![Parental reports and surveys, @fenson1994variability](assets/img/macarthur.jpg){width="55%"}
-
-::::
-
-:::
+* Inter-modal experimental paradigms [@bergelson2012months; @tincoff1999beginnings]
+* Parental reports and surveys  [e.g., CDI, @fenson1994variability]
 
 ::: {.notes}
 
@@ -107,71 +69,10 @@ Lexical representations
 
 :::
 
-## Vocabulary *spurt* during the 2nd year
+## Normative trajectories of lexical development
 
-```{r fig-wordbank}
-#| label: fig-wordbank
-#| fig-width: 10
-#| fig-height: 4
-#| fig-cap: "Vocabulary size norms for 51,800 monolingual children learning 35 distinct languages (wordbank)"
-wb_fig <- wb |>
-    pivot_longer(c(comprehension, production),
-                 names_to = "type",
-                 values_to = "size",
-                 names_transform = tools::toTitleCase)
+![Vocabulary size norms for 51,800 monolingual children learning 35 distinct languages [Wordbank, @frank2017wordbank]](assets/img/wordbank.png)
 
-wb_summary <- wb_fig |>
-    summarise(size = median(size),
-              .by = c(type, age))
-
-plot_comp <- wb_fig |>
-    filter(type=="Comprehension") |>
-    ggplot(aes(age, size)) +
-    facet_wrap(~type) +
-    stat_interval(.width = c(0.95, 0.89, 0.75, 0.67, 0.50),
-                  size = 5.5,
-                  position = "dodge") +
-    geom_line(data = filter(wb_summary, type=="Comprehension"),
-              colour = "white",
-              linewidth = 1) +
-    geom_point(data = filter(wb_summary, type=="Comprehension"),
-               colour = "white",
-               size = 2.25) +
-    scale_colour_manual(values = colorRampPalette(c("grey95", clrs[6]))(5)) +
-    theme(legend.position = "left",
-          legend.justification = c(0, 1))
-
-
-plot_prod <- wb_fig |>
-    filter(type=="Production") |>
-    ggplot(aes(age, size)) +
-    facet_wrap(~type) +
-    stat_interval(.width = c(0.95, 0.89, 0.75, 0.67, 0.50),
-                  size = 5.5,
-                  position = "dodge") +
-    geom_line(data = filter(wb_summary, type=="Production"),
-              colour = "white",
-              linewidth = 1) +
-    geom_point(data = filter(wb_summary, type=="Production"),
-               colour = "white",
-               size = 2.25) +
-    scale_colour_manual(values = colorRampPalette(c("grey95", clrs[1]))(5)) +
-    theme(legend.position = "none")
-
-
-plot_comp + plot_prod +
-    plot_layout(nrow = 1) &
-    plot_annotation(tag_levels = "A") &
-    labs(x = "Age (months)",
-         y = "Vocabulary size",
-         colour = "% sample",
-         colour_ramp = "% sample") &
-    scale_x_continuous(breaks = seq(0, 30, 2)) &
-    scale_y_continuous(breaks = seq(0, 1000, 100)) &
-    theme(panel.grid.major.y = element_line(
-        colour = "grey",
-        linetype = "dotted"))
-```
 ::: notes
 
 Vocabulary size grows non-linearly during the second year of life
@@ -182,22 +83,21 @@ Vocabulary size grows non-linearly during the second year of life
 ## Bilinguals face additional challenges, but do not lag behind
 
 ::: {.columns}
-::: {.column width="50%"}
+::: {.column width="65%"}
 * Increased **complexity** in linguistic context (learning two codes)
 * Reduced linguistic **input** (split into two languages)
 * Increased **referential ambiguity**
 
-<br> 
-
 ::: box
-**@hoff2012dual**: bilinguals acquire words at similar rates as monolinguals
+**Hoff et al. (2012)**: bilinguals acquire words at similar rates as monolinguals
 
-47 English-Spanish bilinguals, 56 English monolinguals in Florida
+- 47 English-Spanish bilinguals
+- 56 English monolinguals in Florida
 :::
 :::
-::: {.column width="50%"}
-![](assets/img/hoff-1.png){width="60%"}
-![](assets/img/hoff-2.png){width="60%"}
+::: {.column width="35%"}
+![](assets/img/hoff-1.png){width="78%"}
+![](assets/img/hoff-2.png){width="78%"}
 :::
 :::
 
@@ -213,13 +113,14 @@ Vocabulary size grows non-linearly during the second year of life
 ## Lexical similarity modulates vocabulary acquisition in bilinguals
 
 ::: box
-**Floccia et al. (2018)**: CDI response of 372 bilinguals (UK) learning English + additional language
+**Floccia et al. (2018)**: CDI responses of 372 bilinguals (UK) learning **English + additional language**
 :::
 
-Lexical similarity:
-: Average phonological similarity  (Levenshtein similarity) between pairs of translations
+**Lexical similarity**: average phonological similarity  (Levenshtein similarity) between pairs of translations
 
 > English-Dutch (22.14%) > English-Mandarin (1.97%)
+
+<br>
 
 **Higher lexical similarity, larger vocabulary size**  
 
@@ -227,113 +128,55 @@ Stronger effect in the additional language (e.g., Dutch, Mandarin)
 
 ## Lexical similarity modulates vocabulary acquisition in bilinguals
 
-```{r fig-cat-spa-distance}
-#| label: fig-cat-spa-distance
-#| fig-cap: "Pairwise lexical similarity (average Levensthein similarity across translations)."
-#| fig-height: 5
-#| fig-width: 10
-#| out-width: 50%
-
-flatten_xsampa <- function(x) {
-    str_rm <- c("\\.", "\\\\", ",", "/", "?", "'", '"')
-    str <- gsub(paste0(str_rm, collapse = "|"), "", x)
-    str <- gsub("\\{", "\\\\{", str)
-    return(str)
-}
-
-dist <- bvq_data$pool |>
-    mutate(phon = flatten_xsampa(xsampa)) |>
-    filter(!(semantic_category %in% c("Interjections"))) |>
-    distinct(te, language, .keep_all = TRUE) |>
-    pivot_wider(id_cols = c(te),
-                names_from = language,
-                values_from = phon,
-                names_repair = janitor::make_clean_names) |>
-    mutate(distance = stringdist::stringsim(catalan, spanish)) |>
-    pull(distance) |>
-    mean(na.rm = TRUE)
-
-tibble::tribble(~language, ~dist,
-                "Dutch", 0.2214,
-                "Welsh", 0.2163,
-                "German", 0.1975,
-                "Italian", 0.1076,
-                "French", 0.1034,
-                "Bengali", 0.0941,
-                "Hindi", 0.0899,
-                "Spanish", 0.0874,
-                "Polish", 0.0828,
-                "Greek", 0.0807,
-                "Portuguese", 0.0801,
-                "Cantonese", 0.0422,
-                "Mandarin", 0.0197) |>
-    mutate(language = paste0("English-", language)) |>
-    add_row(language = "Catalan-Spanish", dist = dist) |>
-    mutate(study = if_else(grepl("English", language),
-                           "Floccia et al. (2018)", "BVQ")) |>
-    ggplot(aes(dist, reorder(language, dist),
-               fill = study)) +
-    geom_col(colour = "white") +
-    geom_text(aes(label = scales::percent(dist, accuracy = 0.01)),
-              size = 3,
-              hjust = 0,
-              position = position_nudge(x = 0.005)) +
-    labs(x = "Lexical similarity",
-         y = "Language pair") +
-    scale_fill_manual(values = clrs[c(2, 5)]) +
-    scale_x_continuous(limits = c(0, 0.50),
-                       labels = scales::percent,
-                       breaks = seq(0, 1, 0.1)) +
-    theme(legend.position = "none",
-          axis.title.y = element_blank(),
-          panel.grid.major.y = element_blank(),
-          panel.grid.major.x = element_line(
-              linetype = "dotted",
-              colour = "grey"))
-
-```
+![Pairwise lexical similarity (average Levensthein similarity across translations in Floccia et al.)](assets/img/similarity.png)
 
 ## A cognate facilitation in lexical acquisition?
 
-::: box
-
+::: {.columns}
+::: {.column}
 **Cognates**: phonologically-similar translation equivalents
-
 
 | *Cognate*           | *Non-cognate*       |
 |:-------------------:|:-------------------:|
 | [cat] /ˈgat-ˈga.to/ | [dog] /ˈgos-ˈpe.ro/ |
-
 :::
-
+::: {.column}
+::: box
 Some evidence that cognates **acquired earlier** than non-cognates [@mitchell2023cognates; @bosch2014first]
+:::
+:::
+::: 
 
 <br>
 
-What **mechanisms** support a cognate facilitation during word acquisition?
+**What *mechanisms* support a cognate facilitation during word acquisition?**
 
 ## Language non-selective lexical access
 
-Activation spreads across **non-selected representations** in both languages, through **phonological** and **conceptual** links. [e.g., @costa2000cognate]
-
-Evidence in **children** [@bosma2020cognate; @dehouwer2014bilingual] and **infants** [@vonholzen2012language; @jardak2019labels; @singh2014one].
-
-![](assets/img/lexicon.png)
+![Activation spreads across **non-selected representations** in both languages, through **phonological** and **conceptual** links in adults [e.g., @costa2000cognate] and infants  [e.g., @vonholzen2012language; @singh2014one]](assets/img/lexicon.png){ width="120%" }
 
 ## The present dissertation
 
+::: {.columns}
+::: {.column}
 ::: box
 **Study 1**
 :::
-
 1. Provide a mechanistic account for the **cognateness facilitation**
 2. **Test predictions** of the model
 
+> Submitted, under review {{< ai psyarxiv >}} {{< ai github >}}
+:::
+::: {.column}
 ::: box
 **Study 2**
 :::
-
 3. Test core assumption of the model: **language non-selectivity** in the initial lexicon
+
+> In preparation {{< ai github >}}
+:::
+:::
+
 
 
 # Study 1 {.inverse}
@@ -344,13 +187,15 @@ Evidence in **children** [@bosma2020cognate; @dehouwer2014bilingual] and **infan
 
 ::: box
 
-1. Information about form-meaning mappings is provided by <span style="color:#a80035;">**learning instances**</span>
+1. **Accumulation** of information about **form-meaning mappings**:
 
-Exposure to a word-form that results in the accumulation of information about its meaning
+- Provided by <span style="color:#a80035;">**learning instances**</span>: exposure to a word-form that results in the accumulation of information about its meaning
 
 2. <span style="color:#00a857;">**Age of acquisition**</span>: the infant accumulates a <span style="color:#0040a8;">**threshold**</span> amount of learning instances for a word-form
 
 :::
+
+<br>
 
 $$
 \begin{aligned}
@@ -360,62 +205,155 @@ $$
 \definecolor{grey}{RGB}{128, 128, 128}
 \textbf{For participant } &i \textbf{ and word-form } j \text{ (translation of } j'): \\
 {\color{mygreen}\text{Age of Acquisition}_{ij}} &= \{\text{Age}_i \mid {\color{myred}\text{Learning instances}_{ij}} = {\color{myblue}\text{Threshold}} \}\\
-\color{myred}{\text{Learning instances}_{ij}} &= \text{Age}_i \cdot \text{Freq}_j \\
-\textbf{where:} \\
-{\color{myblue}\text{Threshold}} &= 300 \\
-\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) 
+{\color{myred}\text{Learning instances}_{ij}} &= \text{Age}_i \cdot \text{Freq}_j \\
 \end{aligned}
 $$
 
 
 ## AMBLA: monolingual word acquisition
 
-![](assets/gif/ambla-eli-single-mon.gif){width="80%"}
+::: {.columns}
+::: {.column width="40%"}
+
+**Parameters**:
+
+Catalan monolingual child
+
+- <span style="color:#FFFFFF; background:#004AAD;">/'gos/ (Catalan), 100%</span>
+
+$$
+\begin{aligned}
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50) 
+\end{aligned}
+$$
+:::
+::: {.column width="60%"}
+![](assets/gif/ambla-eli-single-mon.gif){width="100%"}
+:::
+::: 
 
 ## AMBLA: monolingual word acquisition
 
-![](assets/img/ambla-single-nc-mon.png){width="80%"}
+::: {.columns}
+::: {.column width="40%"}
+**Parameters**:
+
+Catalan monolingual child
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
+$$
+\begin{aligned}
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50) 
+\end{aligned}
+$$
+:::
+::: {.column width="60%"}
+![](assets/img/ambla-single-nc-mon.png){width="100%"}
+:::
+::: 
 
 ## AMBLA: monolingual word acquisition
 
-![](assets/img/ambla-all-nc-mon.png){width="80%"}
+::: {.columns}
+::: {.column width="40%"}
+**Parameters**:
+
+Catalan monolingual child
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
+$$
+\begin{aligned}
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50) 
+\end{aligned}
+$$
+:::
+::: {.column width="60%"}
+![](assets/img/ambla-all-nc-mon.png){width="100%"}
+:::
+::: 
 
 ## AMBLA: bilingual word acquisition
 
-Catalan 60%, Spanish 40%
-
 ::: box
-3. Linguistic input divided into two languages
+3. **Linguistic input divided** into two languages: **Catalan 60%, Spanish 40%**
 
 <span style="color:#a80035;">**Exposure**</span>: proportion of time exposed to the language of $j$ word
 :::
 
 Accumulation of learning instances, a function of <span style="color:#a80035;">**Exposure**</span> and *Frequency*.
 
+
 $$
 \begin{aligned}
-\definecolor{myred}{RGB}{ 168, 0, 53 }
-\definecolor{myblue}{RGB}{ 0, 64, 168 }
-\definecolor{mygreen}{RGB}{0, 168, 87}
-\definecolor{myorange}{RGB}{ 235, 127, 26 }
 \textbf{For participant } &i \textbf{ and word-form } j \text{ (translation of } j'): \\
 \text{Age of Acquisition}_{ij} &= \{\text{Age}_i \mid \text{Learning instances}_{ij} = \text{Threshold} \}\\
 \text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \cdot {\color{myred}\text{Exposure}_{ij}}\\
-\textbf{where:} \\
-\text{Threshold} &= 300 \\
-\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) 
 \end{aligned}
 $$
 
 
 ## AMBLA: bilingual word acquisition
 
-![](assets/gif/ambla-eli-single.gif)
+
+::: {.columns}
+::: {.column width="40%"}
+**Parameters**:
+
+Catalan monolingual child
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
+Catalan/Spanish bilingual child
+
+- <span style="background:#C8102E;color:white;">/'gos/ (Catalan), 60%</span>
+
+- <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
+
+$$
+\begin{aligned}
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50)
+\end{aligned}
+$$
+
+:::
+::: {.column width="60%"}
+![](assets/gif/ambla-eli-single.gif){width="100%"}
+:::
+::: 
 
 
 ## AMBLA: bilingual word acquisition
 
-![](assets/img/ambla-all-nc.png)
+::: {.columns}
+::: {.column width="40%"}
+Catalan monolingual child
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
+Catalan/Spanish bilingual child
+
+- <span style="background:#C8102E;color:white;">/'gos/ (Catalan), 60%</span>
+
+- <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
+
+$$
+\begin{aligned}
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50)
+\end{aligned}
+$$
+:::
+::: {.column width="60%"}
+![](assets/img/ambla-all-nc.png){width="100%"}
+:::
+::: 
+
 
 ## AMBLA: cognate facilitation
 
@@ -429,204 +367,105 @@ Degree proportional to their phonological similarity (<span style="color:#a80035
 
 $$
 \begin{aligned}
-\definecolor{myred}{RGB}{ 168, 0, 53 }
-\definecolor{myblue}{RGB}{ 0, 64, 168 }
-\definecolor{mygreen}{RGB}{0, 168, 87}
-\definecolor{myorange}{RGB}{ 235, 127, 26 }
 \textbf{For participant } &i \textbf{ and word-form } j \text{ (translation of } j'): \\
 \text{Age of Acquisition}_{ij} &= \{\text{Age}_i \mid \text{Learning instances}_{ij} = \text{Threshold} \}\\
 \text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \cdot \text{Exposure}_{ij} + \\
-&({\color{myred}\text{Learning instances}_{ij'} \cdot {Cognateness}_{j}})\\
+&({\color{myred}\text{Learning instances}_{ij'} \cdot {\text{Cognateness}}_{j}})\\
 \textbf{where:} \\
-\text{Threshold} &= 300 \\
-\text{Freq}_j &\sim \text{Poisson}(\lambda = 50) \\
-{\color{myred}\text{Cognateness}}&{\color{myred} = \text{Levenshtein}(j, j')}
+{\color{myred}\text{Cognateness}_{j,j'}}&{\color{myred} = \text{Levenshtein}(j, j')}
 \end{aligned}
 $$
 
 ## AMBLA: cognate facilitation
 
-![](assets/gif/ambla-single-c.gif)
+::: columns
 
-## AMBLA: cognate facilitation
+::: {.column width="40%"}
+Catalan monolingual child
 
-![](assets/img/ambla-all-c.png)
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
 
-## Predictions
+Catalan/Spanish bilingual child
 
-1. Cognates acquired earlier than non-cognates
-2. Cognateness facilitation stronger in the lower-exposure language
+- <span style="background:#C8102E;color:white;">/'gos/ (Catalan), 60%</span>
 
-
-## Dataset
-
-* **Barcelona Vocabulary Questionnaire (BVQ)**: 302 Catalan-Spanish noun translation equivalents
-* 436 administrations (366 children)
-* Age: 12-32 months (*M* = 22.2, *SD* = 4.9)
-* Lang. exposure: Catalan and Spanish ($\leq$ 10% 3rd language)
-* 138,078 item responses (*No*, *Understands*, *Understands and Says*)
-
-## Modelling and statistical inference
-
-*p*(Comprehension $<$ Production) ~ Ordinal, multilevel (Bayesian) regression model
-
-```r
-response ~ age * exposure * cognateness + length + (...|child) + (...|te) 
-```
+- <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
 
 $$
 \begin{aligned}
-\text{Exposure}_{ij} &= \text{Frequency}_j \times \text{Language degree of exposure}_{ij} \\
-\text{Cognateness}_{j} &= \text{Levenshtein}(j, j')
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50) \\
+\text{Cognateness}_{j,j'} = 0.75
 \end{aligned}
 $$
+:::
+::: {.column width="60%"}
+![](assets/gif/ambla-single-c.gif)
+:::
+:::
 
-## Results
+## AMBLA: cognate facilitation
 
-```{r}
-#| label: fig-marginal-1
-#| fig-cap: "Marginal posterior predictions"
-model_epreds <- arrow::read_csv_arrow(here("data", "02-chapter-2",
-                                           "results", "predictions",
-                                           "predictions.csv"))
+::: columns
+::: {.column width="40%"}
+
+Catalan monolingual child:
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
+Catalan/Spanish bilingual child:
+
+- <span style="background:#C8102E;color:white;">/'gos/ (Catalan), 60%</span>
+
+- <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
+
+$$
+\begin{aligned}
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50) \\
+\text{Cognateness}_{j,j'} = 0.75
+\end{aligned}
+$$
+:::
+::: {.column width="60%"}
+![](assets/img/ambla-all-c.png)
+:::
+:::
+
+---
+
+### Predictions
+
+::: box
+1. Cognates acquired **earlier** than non-cognates
+2. Cognateness facilitation stronger in the **lower-exposure language**
+:::
+
+### Dataset
+
+**Barcelona Vocabulary Questionnaire (BVQ)**:
+
+* 302 Catalan-Spanish noun translation equivalents
+* 436 administrations, 366 children (12-32 months)
+* Lang. exposure: Catalan and Spanish ($\leq$ 10% 3rd language)
+* 138,078 item responses (*No*, *Understands*, *Understands and Says*)
 
 
-fig_data <- model_epreds |>
-    ungroup() |>
-    reframe(.median = mean(.value),
-            .lower = tidybayes::qi(.value, .width = 0.95)[, 1],
-            .upper = tidybayes::qi(.value, .width = 0.95)[, 2],
-            .by = c(ends_with("_std"), .category)) |>
-    mutate(age = (age_std * sd(responses$age)) + mean(responses$age),
-           exposure = factor(exposure_std,
-                             levels = c(-1, 1),
-                             labels = c("Lower-exposure (-1 SD)",
-                                        "Higher-exposure (+1 SD)"),
-                             ordered = TRUE),
-           lv = factor(lv_std,
-                       levels = unique(lv_std),
-                       labels = paste0(c(0, 50, 100), "%"),
-                       ordered = TRUE),
-           .category = ifelse(.category == "Understands",
-                              "Comprehension",
-                              "Production")) |>
-    drop_na()
+## Results: comprehension
 
-clrs_1 <- colorRampPalette(c("#F2F2F2", "#C8102E"))(4)
-clrs_2 <- colorRampPalette(c("#F2F2F2", "#004CA3"))(4) 
+Ordinal, multilevel (Bayesian) regression model
 
-fig_data |>
-    filter(.category=="Comprehension") |> 
-    ggplot(aes(age, .median,
-               ymin = .lower,
-               ymax = .upper,
-               colour = lv,
-               fill = lv,
-               linetype = lv)) +
-    facet_grid(.category ~ exposure) +
-    annotate(geom = "rect",
-             xmin = min(responses$age),
-             xmax = max(responses$age),
-             ymin = -Inf,
-             ymax = Inf,
-             fill = "grey",
-             alpha = 1 / 4,
-             linetype = "dotted") +
-    annotate(geom = "text",
-             x = min(responses$age),
-             y = 1,
-             hjust = 0,
-             vjust = 0.9,
-             label = "Observed\nage range",
-             size = 2) +
-    geom_vline(xintercept = mean(responses$age),
-               linewidth = 2 / 4,
-               alpha = 0.5,
-               colour = "grey") +
-    geom_hline(yintercept = 0.5,
-               linewidth = 2 / 4,
-               alpha = 0.5,
-               colour = "grey") +
-    geom_ribbon(linewidth = 0,
-                colour = NA,
-                alpha = 1) +
-    geom_line(linewidth = 2/4,
-              colour = "black") +
-    scale_fill_manual(values = clrs_1[2:4],
-                      guide = guide_legend(
-                          override.aes = list(fill = rev(c("#333333",
-                                                       "#505050",
-                                                       "#9D9D9D"))))) +
-    theme(axis.title.x = element_blank(),
-          axis.text.x = element_blank(),
-          legend.position = "top",
-          legend.box = "horizontal",
-          legend.justification = "right",
-          legend.direction = "horizontal",
-          legend.key.size = unit(1, "cm"),
-          legend.key.height = unit(0.5, "cm")) +
-    
-    fig_data |>
-    filter(.category=="Production") |> 
-    ggplot(aes(age, .median,
-               ymin = .lower,
-               ymax = .upper,
-               colour = lv,
-               fill = lv,
-               linetype = lv)) +
-    facet_grid(.category ~ exposure) +
-    annotate(geom = "rect",
-             xmin = min(responses$age),
-             xmax = max(responses$age),
-             ymin = -Inf,
-             ymax = Inf,
-             fill = "grey",
-             alpha = 1 / 4,
-             linetype = "dotted") +
-    annotate(geom = "text",
-             x = min(responses$age),
-             y = 1,
-             hjust = 0,
-             vjust = 0.9,
-             label = "Observed\nage range",
-             size = 2) +
-    geom_vline(xintercept = mean(responses$age),
-               linewidth = 2 / 4,
-               alpha = 0.5,
-               colour = "grey") +
-    geom_hline(yintercept = 0.5,
-               linewidth = 2 / 4,
-               alpha = 0.5,
-               colour = "grey") +
-    geom_ribbon(linewidth = 0,
-                colour = NA,
-                alpha = 1) +
-    geom_line(linewidth = 2/4,
-              colour = "black") +
-    scale_fill_manual(values = clrs_2[2:4]) +
-    theme(legend.position = "none",
-          axis.text.x = element_text(size = 9),
-          strip.text = element_blank()) +
-    
-    plot_layout(ncol = 1) &
-    plot_annotation(tag_levels = "A") &
-    
-    labs(x = "Age (months)",
-         y = "p(acquisition)",
-         colour = "Cognateness (phonological similarity)",
-         fill = "Cognateness (phonological similarity)",
-         linetype = "Cognateness (phonological similarity)") &
-    scale_linetype_manual(values = rev(c("solid", "dashed", "dotdash"))) &
-    scale_y_continuous(breaks = seq(0, 1, 0.25),
-                       limits = c(0, 1)) &
-    scale_x_continuous(breaks = seq(0, 50, 5)) &
-    theme_ambla() +
-    theme(panel.grid = element_blank(),
-          panel.border = element_rect(fill = NA,
-                                      colour = "black",
-                                      linewidth = 0.75)) 
-```
+$p(\text{Comprehension}, \text{Production}) \sim \text{Exposure}_{ij} \cdot \text{Cognateness}_j$
 
+![](assets/img/s1-predictions-comp.png)
+
+## Results: production
+
+Ordinal, multilevel (Bayesian) regression model
+
+$p(\text{Comprehension}, \text{Production}) \sim \text{Exposure}_{ij} \cdot \text{Cognateness}_j$
+
+![](assets/img/s1-predictions-prod.png)
 
 ## Discussion
 
@@ -635,18 +474,14 @@ fig_data |>
 Cognate facilitation **moderated by exposure**
 
 > Only words from the lower exposure benefit from cognateness
-> Parallel to language dominance effects in adults?
 
-Cognateness as a candidate mechanism underlying @floccia2018introduction's results
+Cognateness as a candidate mechanism underlying Floccia et al.'s results
 
 Cross-language facilitation via co-activation of phonologically similar translation equivalents
 
 ::: box
-
-**Is language-non selectivity already present?**
-
+**Is language-non selectivity already present in the initial lexicon?**
 :::
-
 
 # Study 2 {.inverse}
 
@@ -654,728 +489,194 @@ Developmental trajectories of bilingual spoken word recognition
 
 ## Language non-selectivity in the initial lexicon
 
+Some evidence in infants and children [e.g., @vonholzen2012language; @singh2014one]
+
+Methodological pitfalls: "bilingual" task
+
 ::: columns
+:::: {.column width="30%"}
+**Implicit naming task**
 
+[@mani2010infant; @mani2011phonological]
 
-:::: {.column width="60%"}
-
-**Priming through translation task**:
-
-@vonholzen2012language: German-English bilinguals (*N* = 20, 21-43 months)
-
-**Implicit naming task**:
-
-@mani2010infant: English monolinguals
-
-![@mani2010infant](assets/img/mani-1.png){width="100%"}
+English monolinguals
+![](assets/img/mani-2.png){width="80%"}
 
 ::::
 
-:::: {.column width="40%"}
-![@mani2010infant](assets/img/mani-2.png){width="70%"}
+:::: {.column width="70%"}
+![](assets/img/s2-design-mani.png){width="100%"}
 ::::
 
 :::
 
-## Experiment 1: predictions
+## Study 2: design
+
+Extending the task to test cross-language priming in bilinguals.
+
+::: columns
+:::: {.column width="30%"}
+Change in order of  trial timecourse:
+
+<br>
+
+**Auditory label *before* target-distractor images**
+
+Length of Catalan and Spanish words
+
+Temporal proximity of prime and target labels
+::::
+:::: {.column width="70%"}
+![](assets/img/s2-design-barcelona.png)
+::::
+:::
+
+## Predictions
 
 ![](assets/img/hypotheses.png)
 
-## Experiment 1: predictions
 
-- Successful spoken word recognition across groups
-- Interference in cognate/non-cognate vs. unrelated trials
-- If language non-selectivity, stronger interference in cognate vs. non-cognate trials
+## Predictions and dataset
 
-## Experiment 1: design
+::: columns
+::: {.column width="50%"}
+::: box
+**Exp. 1: monolinguals**
+:::
+Replicate **within-language phonological interference** from Mani and Plunkett (*proof of concept*)
+:::
+::: {.column width="50%"}
+::: box
+**Exp. 2: monolinguals and bilinguals**
+:::
+If **language non-selectivity**, **stronger interference** in cognate vs. non-cognate trials
+:::
+:::
 
-![](assets/img/design.png)
+::: columns
+::: {.column width="50%"}
+**79 English monolinguals**
 
+> 89 sessions
+:::
+::: {.column width="50%"}
+**77 Catalan/Spanish monolinguals**
 
-## Experiment 1: participants
+> 107 sessions
 
-*N* = 112 children (15 longitudinal)
+**78 Catalan/Spanish bilinguals**
 
-Average age 26.36 months (*SD* = 4.01, *Range* = 20.03–32.5)
+> 133 sessions 
+:::
+:::
 
-English monolinguals, Oxford (United Kindgom)
+---
 
-Proportion of target looking at test ~ (Bayesian) GAMMs
+## Experiment 1: results, Bayesian GAMMs
 
-```{r}
-#| label: fig-vocabulary-oxf
-#| fig-cap: "Participant receptive vocabulary sizes across ages and language profiles."
-#| fig-width: 5
-#| fig-height: 4
-#| out-width: 70%
-participants <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "participants.csv"))
-participants_oxf <- dplyr::filter(participants, location == "Oxford")
+![](assets/img/s2-1-predictions.png)
 
-vocabulary <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "vocabulary.csv"))
-vocabulary_oxf <- inner_join(vocabulary,
-							 select(participants_oxf, session_id),
-							 by = join_by(session_id))
+---
 
-vocabulary_oxf_exc <- nrow(participants_oxf) - nrow(vocabulary_oxf)
+![](assets/img/collection.png)
 
-vocab_plot_data <- vocabulary |>
-	inner_join(dplyr::filter(attrition_participants, is_valid_participant),
-			   by = join_by(session_id)) |>
-	inner_join(
-		select(
-			participants, location, lp, age,
-			child_id, session_id, age_group
-		),
-		by = join_by(child_id, session_id)
-	) |>
-	dplyr::filter(is_valid_participant) |>
-	select(
-		child_id, session_id, vocab_id, is_imputed, l1_count,
-		lp, location, age_group, age
-	) |>
-	mutate(
-		location = factor(location,
-						  levels = c("Oxford", "Barcelona")
-		),
-		lp = gsub(" \\(English\\)", "", lp),
-		side = case_when(
-			location == "Oxford" ~ "both",
-			lp == "Monolingual" ~ "left",
-			lp == "Bilingual" ~ "right"
-		),
-		study = if_else(location == "Oxford",
-						"Study 1 (English)", "Study 2 (Catalan/Spanish)"
-		)
-	)
+## Experiment 2: results, Bayesian GAMMs
 
-vocab_plot_means <- vocab_plot_data |>
-	summarise(
-		l1_count_sd = sd(l1_count, na.rm = TRUE),
-		l1_count = mean(l1_count, na.rm = TRUE),
-		n = n(),
-		.by = c(age, side, lp, study)
-	) |>
-	mutate(
-		.lower = l1_count - (l1_count_sd / sqrt(n)),
-		.upper = l1_count + (l1_count_sd / sqrt(n))
-	)
-
-vocab_plot_data |>
-	dplyr::filter(study == "Study 1 (English)") |>
-	ggplot(aes(age, l1_count,
-			   side = side
-	)) +
-	geom_point(
-		size = 2,
-		shape = 1,
-		colour = "grey",
-		alpha = 3 / 4,
-		stroke = 1
-	) +
-	geom_smooth(
-		method = "lm",
-		formula = "y ~ x",
-		colour = "black",
-		fill = "black"
-	) +
-	labs(
-		x = "Age (months)",
-		y = "Vocabulary size",
-		colour = "Group",
-		fill = "Group"
-	) +
-	scale_y_continuous(
-		limits = c(0, 575),
-		breaks = seq(0, 1e3, 100)
-	) +
-	scale_x_continuous(breaks = seq(0, 50, 2)) +
-	theme(
-		panel.grid.major.y = element_line(
-			linetype = "dotted",
-			colour = "grey"
-		),
-		legend.position = "top",
-		legend.title = element_blank()
-	)
-```
-
-
-
-
-## Experiment 1: results (monolinguals)
-
-```{r fig-epreds-oxf}
-#| label: fig-epreds-oxf
-#| fig-cap: "Time course of target fixations in Experiment 1."
-#| fig-width: 6
-#| fig-height: 4
-clrs <- c("#004AAD", "#C8102E", "#FF9E1F")
-
-rope_interval <- c(lower = -0.1, upper = 0.1)
-
-make_std <- function(x, mean, sd) (x - mean) / sd
-
-timebin_values <- make_std(
-    seq(0, 16, length.out = 100),
-    mean(data_oxf$timebin),
-    sd(data_oxf$timebin))
-
-nd <- expand_grid(distinct(data_oxf, condition),
-                  timebin_std = timebin_values,
-                  age_std = 0)
-
-epreds <- tidybayes::add_epred_draws(nd, model_fits_oxf$fit_oxf_1,
-                                     re_formula = NA,
-                                     ndraws = NULL,
-                                     value = ".epred")
-
-obs_time <- data_oxf |> 
-    summarise(.sd = sd(.elog),
-              .elog = mean(.elog),
-              .n = n(),
-              .by = c(condition, timebin)) |> 
-    mutate(.lower = .elog-(.sd/sqrt(.n)),
-           .upper = .elog+(.sd/sqrt(.n)),
-           timebin = make_std(timebin,
-                              mean = mean(data_oxf$timebin),
-                              sd = sd(data_oxf$timebin))) 
-
-obs_summary <- data_oxf |> 
-    summarise(.sd = sd(.elog),
-              .elog = mean(.elog),
-              .n = n(),
-              .by = c(condition, child_id)) |>
-    mutate(.lower = .elog-(.sd/sqrt(.n)),
-           .upper = .elog+(.sd/sqrt(.n))) 
-
-epreds_summary <- epreds |>
-    ungroup() |>
-    summarise(.value = tidybayes::mean_qi(.epred)[[1]],
-              .lower = tidybayes::mean_qi(.epred)[[2]],
-              .upper = tidybayes::mean_qi(.epred)[[3]],
-              .by = c(condition, timebin_std))
-
-plot_summary <- obs_summary |> 
-    pivot_wider(names_from = condition,
-                values_from = .elog,
-                id_cols = child_id) |> 
-    mutate(diff = Related - Unrelated) |> 
-    pivot_longer(c(Related, Unrelated),
-                 names_to = "condition",
-                 values_to = ".elog") |> 
-    summarise(.elog = mean(.elog),
-              .by = c(child_id, condition)) |> 
-    ggplot(aes(condition, .elog, 
-               colour = condition,
-               fill = condition)) +
-    geom_hline(yintercept = 0,
-               colour = "grey") +
-    geom_line(aes(group = child_id),
-              alpha = 1/2,
-              colour = "grey",
-              linewidth = 3/4) +
-    geom_dots(side = "both",
-              layout = "swarm",
-              alpha = 1/2) +
-    geom_errorbar(data = summarise(obs_summary,
-                                   across(c(.elog, .upper, .lower), mean),
-                                   .by = c(condition)),
-                  aes(ymin = .lower,
-                      ymax = .upper),
-                  width = 0.1,
-                  colour = "black",
-                  linewidth = 3/4,
-                  show.legend = FALSE) +
-    geom_point(data = summarise(obs_summary, 
-                                across(c(.elog, .lower, .upper),
-                                       mean),
-                                .by = condition),
-               size = 2, colour = "black",
-               show.legend = FALSE) +
-    labs(x = "Condition",
-         y = "Logit PTLT",
-         colour = "Condition",
-         fill = "Condition") +
-    theme(axis.title = element_blank(),
-          legend.position = "none",
-          axis.text = element_blank(),
-          axis.line.y = element_blank())
-
-plot_time <- epreds |>
-    ggplot(aes(timebin_std, .epred,
-               colour = condition,
-               fill = condition,
-               linetype = condition,
-               shape = condition)) +
-    geom_hline(yintercept = 0,
-               colour = "grey") +
-    stat_summary(fun.data = tidybayes::mean_qi,
-                 geom = "ribbon",
-                 alpha = 1 / 4,
-                 linewidth = NA) +
-    stat_summary(fun = "mean",
-                 geom = "line",
-                 linewidth = 3 / 4) +
-    # geom_errorbar(
-    #     data = obs,
-    #     aes(y = .elog, ymin = .lower, ymax = .upper),
-    #     linewidth = 3/4,
-    #     linetype = "solid",
-    #     width = 0.1) +
-    geom_point(
-        data = obs_time,
-        aes(y = .elog, x = timebin),
-        stroke = 1,
-        size = 2) +
-    labs(x = "Time (ms)",
-         y = "Logit PTLT",
-         colour = "Condition",
-         fill = "Condition",
-         linetype = "Condition",
-         shape = "Condition") +
-    scale_x_continuous(
-        breaks = make_std(seq(0, 17, 3),
-                          mean(data_oxf$timebin),
-                          sd(data_oxf$timebin)),
-        labels = \(x) format(seq(3e2, 2e3, 3e2),
-                             big.mark = ",")) +
-    theme(legend.position = "top")
-
-plot_time + plot_summary +
-    plot_layout(nrow = 1, widths = c(0.7, 0.3)) &
-    scale_y_continuous(limits = c(-1, 1.4)) &
-    scale_shape_manual(values = c(1, 2)) &
-    scale_linetype_manual(values = c("solid", "dashed", "dotdash")) &
-    scale_colour_manual(values = clrs[c(1, 2)]) &
-    scale_fill_manual(values = clrs[c(1, 2)]) &
-    theme(panel.grid.major.y = element_line(colour = "grey", linetype = "dotted"),
-          legend.title = element_blank())
-```
-
-## Experiment 2: participants
-
-*N* = 112 children (15 longitudinal)
-
-Average age 26.36 months (*SD* = 4.01, *Range* = 20.03–32.5)
-
-English monolinguals, Oxford (United Kindgom)
-
-```{r}
-#| label: fig-vocabulary-bcn
-#| fig-cap: "Participant receptive vocabulary sizes across ages and language profiles."
-#| fig-width: 5
-#| fig-height: 4
-#| out-width: 70%
-participants_bcn <- dplyr::filter(participants, location == "Barcelona")
-
-vocabulary_bcn <- inner_join(vocabulary,
-							 select(participants_bcn, session_id),
-							 by = join_by(session_id))
-
-
-vocab_plot_data |>
-	dplyr::filter(study == "Study 2 (Catalan/Spanish)") |>
-	ggplot(aes(age, l1_count,
-			   side = side,
-               colour = lp,
-               fill = lp,
-               linetype = lp,
-               shape = lp
-	)) +
-	geom_point(
-		size = 2,
-		alpha = 3 / 4,
-		stroke = 1
-	) +
-	geom_smooth(
-		method = "lm",
-		formula = "y ~ x"
-	) +
-	labs(
-		x = "Age (months)",
-		y = "Vocabulary size",
-		colour = "Group",
-		fill = "Group"
-	) +
-	scale_y_continuous(
-		limits = c(0, 575),
-		breaks = seq(0, 1e3, 100)
-	) +
-	scale_x_continuous(breaks = seq(0, 50, 2)) +
-    scale_colour_manual(values = clrs) +
-    scale_fill_manual(values = clrs) +
-	theme(
-		panel.grid.major.y = element_line(
-			linetype = "dotted",
-			colour = "grey"
-		),
-		legend.position = "top",
-		legend.title = element_blank()
-	)
-```
-
-
-## Experiment 2: results (monolinguals)
-
-```{r fig-epreds-bcn-mon}
-#| label: fig-epreds-bcn-mon
-#| fig-cap: "Time course of target fixations in Experiment 1."
-#| fig-width: 6
-#| fig-height: 4
-clrs <- c("#004AAD", "#C8102E", "#FF9E1F")
-data_bcn <- arrow::read_csv_arrow(here("data", "03-chapter-3", "data", "data_bcn.csv"))
-model_fits_bcn <- readRDS(here("data", "03-chapter-3", "results", "fit_list_bcn.rds"))
-model_loos_bcn <- readRDS(here("data", "03-chapter-3", "results", "loos_bcn.rds"))
-
-rope_interval <- c(lower = -0.1, upper = 0.1)
-
-make_std <- function(x, mean, sd) (x - mean) / sd
-
-timebin_values <- make_std(
-    seq(0, 16, length.out = 100),
-    mean(data_bcn$timebin),
-    sd(data_bcn$timebin))
-
-nd <- expand_grid(distinct(data_bcn, condition, lp),
-                  age_std = 0, 
-                  timebin_std = timebin_values)
-
-epreds <- tidybayes::add_epred_draws(nd,
-                                     model_fits_bcn$fit_0,
-                                     ndraws = NULL,
-                                     re_formula = NA) |> 
-    mutate(lp = factor(lp, levels = c("Monolingual", "Bilingual")))
-
-obs_time <- data_bcn |> 
-    summarise(.sd = sd(.elog),
-              .elog = mean(.elog),
-              .n = n(),
-              .by = c(condition, lp, timebin)) |> 
-    mutate(.lower = .elog-(.sd/sqrt(.n)),
-           .upper = .elog+(.sd/sqrt(.n)),
-           timebin = make_std(timebin,
-                              mean = mean(data_bcn$timebin),
-                              sd = sd(data_bcn$timebin))) 
-
-obs_summary <- data_bcn |> 
-    summarise(.sd = sd(.elog),
-              .elog = mean(.elog),
-              .n = n(),
-              .by = c(condition, lp, child_id)) |>
-    mutate(.lower = .elog-(.sd/sqrt(.n)),
-           .upper = .elog+(.sd/sqrt(.n))) 
-
-epreds_summary <- epreds |>
-    ungroup() |>
-    summarise(.value = tidybayes::mean_qi(.epred)[[1]],
-              .lower = tidybayes::mean_qi(.epred)[[2]],
-              .upper = tidybayes::mean_qi(.epred)[[3]],
-              .by = c(condition, lp, timebin_std))
-
-plot_summary <- obs_summary |> 
-    filter(lp=="Monolingual") |>
-    summarise(.elog = mean(.elog),
-              .by = c(child_id, lp, condition)) |> 
-    ggplot(aes(condition, .elog, 
-               colour = condition,
-               fill = condition)) +
-    geom_hline(yintercept = 0,
-               colour = "grey") +
-    geom_line(aes(group = child_id),
-              alpha = 1/3,
-              colour = "grey",
-              linewidth = 1/2) +
-    geom_dots(side = "both",
-              layout = "swarm",
-              alpha = 1/2) +
-    geom_errorbar(data = obs_summary |>
-                filter(lp=="Monolingual") |>
-                summarise(across(c(.elog, .upper, .lower), mean),
-                                   .by = c(condition)),
-                  aes(ymin = .lower,
-                      ymax = .upper),
-                  width = 0.1,
-                  colour = "black",
-                  linewidth = 3/4,
-                  show.legend = FALSE) +
-    geom_point(data = obs_summary |>
-    filter(lp=="Monolingual") |> 
-    summarise(obs_summary, 
-                                across(c(.elog, .lower, .upper),
-                                       mean),
-                                .by = condition),
-               size = 2, colour = "black",
-               show.legend = FALSE) +
-    labs(x = "Condition",
-         y = "Logit PTLT",
-         colour = "Condition",
-         fill = "Condition") +
-    theme(axis.title = element_blank(),
-          legend.position = "none",
-          axis.text = element_blank(),
-          axis.line.y = element_blank())
-
-plot_time <- epreds |>
-    filter(lp=="Monolingual") |>
-    ggplot(aes(timebin_std, .epred,
-               colour = condition,
-               fill = condition,
-               linetype = condition,
-               shape = condition)) +
-    facet_wrap(~lp, ncol = 1) +
-    geom_hline(yintercept = 0,
-               colour = "grey") +
-    stat_summary(fun.data = tidybayes::mean_qi,
-                 geom = "ribbon",
-                 alpha = 1 / 4,
-                 linewidth = NA) +
-    stat_summary(fun = "mean",
-                 geom = "line",
-                 linewidth = 3 / 4) +
-    # geom_errorbar(
-    #     data = obs,
-    #     aes(y = .elog, ymin = .lower, ymax = .upper),
-    #     linewidth = 3/4,
-    #     linetype = "solid",
-    #     width = 0.1) +
-    geom_point(
-        data = obs_time |>
-        filter(lp=="Monolingual"),
-        aes(y = .elog, x = timebin),
-        stroke = 1,
-        size = 2) +
-    labs(x = "Time (ms)",
-         y = "Logit PTLT",
-         colour = "Condition",
-         fill = "Condition",
-         linetype = "Condition",
-         shape = "Condition") +
-    scale_x_continuous(
-        breaks = make_std(seq(0, 17, 3),
-                          mean(data_bcn$timebin),
-                          sd(data_bcn$timebin)),
-        labels = \(x) format(seq(3e2, 2e3, 3e2),
-                             big.mark = ",")) +
-    theme(legend.position = "top")
-
-plot_time + plot_summary +
-    plot_layout(nrow = 1, widths = c(0.7, 0.3)) &
-    scale_y_continuous(limits = c(-1, 1.4)) &
-    #scale_shape_manual(values = c(1, 2, 3)) &
-    #scale_linetype_manual(values = c("solid", "dashed", "dotdash")) &
-    scale_colour_manual(values = clrs) &
-    scale_fill_manual(values = clrs) &
-    theme(panel.grid.major.y = element_line(colour = "grey", linetype = "dotted"),
-          legend.title = element_blank())
-```
-
-
-## Experiment 2: results (bilinguals)
-
-```{r fig-epreds-bcn-bil}
-#| label: fig-epreds-bcn-bil
-#| fig-cap: "Time course of target fixations in Experiment 1."
-#| fig-width: 6
-#| fig-height: 4
-plot_summary <- obs_summary |> 
-    filter(lp=="Bilingual") |>
-    summarise(.elog = mean(.elog),
-              .by = c(child_id, lp, condition)) |> 
-    ggplot(aes(condition, .elog, 
-               colour = condition,
-               fill = condition)) +
-    geom_hline(yintercept = 0,
-               colour = "grey") +
-    geom_line(aes(group = child_id),
-              alpha = 1/3,
-              colour = "grey",
-              linewidth =1/2) +
-    geom_dots(side = "both",
-              layout = "swarm",
-              alpha = 1/2) +
-    geom_errorbar(data = obs_summary |>
-    filter(lp=="Bilingual") |>
-    summarise(across(c(.elog, .upper, .lower), mean),
-                                   .by = c(condition)),
-                  aes(ymin = .lower,
-                      ymax = .upper),
-                  width = 0.1,
-                  colour = "black",
-                  linewidth = 3/4,
-                  show.legend = FALSE) +
-    geom_point(data = obs_summary |>
-    filter(lp=="Bilingual") |>
-    summarise(across(c(.elog, .lower, .upper), mean),
-                                .by = condition),
-               size = 2, colour = "black",
-               show.legend = FALSE) +
-    labs(x = "Condition",
-         y = "Logit PTLT",
-         colour = "Condition",
-         fill = "Condition") +
-    theme(axis.title = element_blank(),
-          legend.position = "none",
-          axis.text = element_blank(),
-          axis.line.y = element_blank())
-
-plot_time <- epreds |>
-    filter(lp=="Bilingual") |>
-    ggplot(aes(timebin_std, .epred,
-               colour = condition,
-               fill = condition,
-               linetype = condition,
-               shape = condition)) +
-    facet_wrap(~lp, ncol = 1) +
-    geom_hline(yintercept = 0,
-               colour = "grey") +
-    stat_summary(fun.data = tidybayes::mean_qi,
-                 geom = "ribbon",
-                 alpha = 1 / 4,
-                 linewidth = NA) +
-    stat_summary(fun = "mean",
-                 geom = "line",
-                 linewidth = 3 / 4) +
-    # geom_errorbar(
-    #     data = obs,
-    #     aes(y = .elog, ymin = .lower, ymax = .upper),
-    #     linewidth = 3/4,
-    #     linetype = "solid",
-    #     width = 0.1) +
-    geom_point(
-        data = obs_time |> 
-        filter(lp=="Bilingual"),
-        aes(y = .elog, x = timebin),
-        stroke = 1,
-        size = 2) +
-    labs(x = "Time (ms)",
-         y = "Logit PTLT",
-         colour = "Condition",
-         fill = "Condition",
-         linetype = "Condition",
-         shape = "Condition") +
-    scale_x_continuous(
-        breaks = make_std(seq(0, 17, 3),
-                          mean(data_bcn$timebin),
-                          sd(data_bcn$timebin)),
-        labels = \(x) format(seq(3e2, 2e3, 3e2),
-                             big.mark = ",")) +
-    theme(legend.position = "top")
-
-plot_time + plot_summary +
-    plot_layout(nrow = 1, widths = c(0.7, 0.3)) &
-    scale_y_continuous(limits = c(-1, 1.4)) &
-    #scale_shape_manual(values = c(1, 2, 3)) &
-    #scale_linetype_manual(values = c("solid", "dashed", "dotdash")) &
-    scale_colour_manual(values = clrs) &
-    scale_fill_manual(values = clrs) &
-    theme(panel.grid.major.y = element_line(colour = "grey", linetype = "dotted"),
-          legend.title = element_blank())
-```
-
+![](assets/img/s2-2-predictions.png)
 
 ## Discussion
 
-Successful word recognition across:
+**Successful word recognition** across ages and language profiles
 
-- Ages
-- Language profiles
-- Vocabulary sizes
+**No evidence of priming effects**, within or across languages
 
-No evidence of priming effects, within or across languages
-
-Most likely due to design issues
+Most likely due to **design caveats**
 
 # General discussion {.inverse}
 
 ## Summary
 
-Cognateness facilitates word acquisition in the lower-exposure language
 
-Candidate mechanism behind bilingual vocabulary growth
+**Cognateness facilitates word acquisition** in the **lower-exposure language**
 
-> AMBLA: Cross-language accumulation of learning instances
+Candidate **mechanism** behind bilingual vocabulary growth
 
-Language non-selectivity in the initial lexicon: pending severe testing
+> AMBLA: cross-language accumulation of learning instances
 
-## Towards a model of bilingual lexical acquisition
+**Language non-selectivity** in the initial lexicon: pending severe testing
 
-Explanation for Floccia et. (2018)
+## Contributions
 
-Asymmetry in adult models of lexical processing
+::: {.columns}
+::: {.column width="50%"}
+### Methods
 
-AMBLA: natural extension of the Standard Model of language acquisition? [@kachergis2022standard]
+**Bayesian modelling**: quantifying uncertainty, estabilising statistical inference
+
+:::
+::: {.column width="50%"}
+### Software
+
+Barcelona Vocabulary Questionnaire (**BVQ**) 
+
+> bvq {{< fa brands r-project >}} package + {{< fa brands github >}}
 
 
-## Limitations
+**Levenshtein distance** as a valid measure of word-level effects of phonological similarity
 
-Design caviats
+> jtracer {{< fa brands r-project >}} package
+:::
+:::
 
-Generalisability? Language pairs with fewer cognates
 
-Does cognateness impact the acquisition of other grammatical categories (e.g., verbs, adjectives) 
+## Future steps
 
-Word acquisition vs. word learning
+- The impact of cognateness in spoken word recognition: *re-analysing data from Study 2*
+- Disentangling lexical similarity from **phonemic overlap**: Basque, Greek
+- Bilingualism and concept lexicalisation: **Backward Semantic Inhibition**
 
-## Conclusions
 
-* Insights into the developing bilingual lexicon: cognateness
-* Evidence in favour of language non-selectivity as the underlying mechanisms behind the cognate facilitation
-* Important consequences for bilingual vocabulary growth
+--- 
 
-::: thanks
-Thanks
+::: {.r-fit-text}
+Thanks!
 :::
 
 # Appendix
 
+## Introduction: bilingualism
 
+![Classification of participants into monolinguals an bilinguals](assets/img/bilingualism.png)
+
+## Introduction: cognate contents in the aggregated vocabulary
+
+![Cognate contents in the aggregated vocabulary](assets/img/cognate-proportion.png)
 
 ## Study 1: posterior regression coefficients
 
-```{r}
-#| label: fig-prop
-#| fig-height: 4
-#| fig-width: 4
-#| fig-cap: "Aggregated vocabularies might conceal facilitation effects"
-#| fig-cap-location: margin
-tibble::tribble(
-    ~type, ~l_cog, ~l_noncog, ~v_cog, ~v_noncog,
-    "No cognate facilitation", 50, 50, 50, 50,
-    "Cognate facilitation", 50, 50, 80, 20,
-) |> 
-    tidyr::pivot_longer(-c(type),
-                        names_to = c("measure", "cognate"),
-                        names_sep = "_") |> 
-    mutate(cognate = factor(cognate, levels = c("noncog", "cog"),
-                            labels = c("Non-cognates", "Cognates")),
-           measure = factor(measure, levels = c("l", "v"),
-                            labels = c("Language", "Vocabulary")),
-           type = factor(type, levels = c("No cognate facilitation",
-                                          "Cognate facilitation"))) |> 
-    ggplot(aes(value, reorder(measure, desc(measure)), 
-               fill = type, 
-               colour = type,
-               alpha = cognate)) +
-    facet_wrap(~type, ncol = 1) +
-    geom_col(position = position_fill(),
-             colour = "white") +
-    geom_vline(xintercept = 0.5, colour = "grey", linewidth = 1) +
-    guides(fill = guide_none()) +
-    labs(x = "Proportion of cognates") +
-    scale_fill_manual(values = clrs[c(1, 5)]) +
-    scale_colour_manual(values = clrs[c(1, 5)]) +
-    scale_alpha_manual(values = c(0.5, 1)) + 
-    scale_x_continuous(labels = scales::percent) +
-    theme(legend.position = "top",
-          axis.title.x = element_blank(),
-          axis.line = element_blank(),
-          axis.ticks = element_blank(),
-          panel.grid.major.y = element_blank(),
-          axis.text.x = element_blank(),
-          legend.title = element_blank(),
-          axis.title.y = element_blank())
+![Aggregated vocabularies might conceal facilitation effects](assets/img/s1-coefficients.png)
 
-```
+## Study 1: MCMC convergence ($\hat{R}$)
 
+![MCMC convergence for the model in Study 1](assets/img/s1-convergence.png)
+
+## Study 2: predictions
+
+- Successful spoken word recognition across groups
+- If language non-selectivity, stronger interference in cognate vs. non-cognate trials
+
+![](assets/img/design.png)
+
+## Study 2: vocabulary size
+
+![Study 2 participant receptive vocabulary sizes across ages and language profiles](assets/img/vocabulary.png)
+
+## Study 2: model convergence (Exp. 1)
+
+![MCMC convergence for model in Study 1 (Exp. 1)](assets/img/s2-1-convergence.png)
+
+## Study 2: model convergence (Exp. 2)
+
+![MCMC convergence for model in Study 2 (Exp. 1)](assets/img/s2-2-convergence.png)
 
 ## References
