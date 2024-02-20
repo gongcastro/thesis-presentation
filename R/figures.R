@@ -352,7 +352,6 @@ fig_data |>
   theme_ambla() +
   theme(
     axis.title.x = element_blank(),
-    axis.text.x = element_blank(),
     axis.title.y = ggtext::element_markdown(),
     legend.position = "top",
     legend.box = "horizontal",
@@ -424,7 +423,6 @@ fig_data |>
   theme_ambla() +
   theme(
     axis.title.x = element_blank(),
-    axis.text.x = element_blank(),
     axis.title.y = ggtext::element_markdown(),
     legend.position = "top",
     legend.box = "horizontal",
@@ -645,7 +643,9 @@ plot_time <- epreds |>
   theme(
     legend.position = c(0.5, 1),
     legend.direction = "horizontal",
-    legend.justification = c(0.5, 1)
+    legend.justification = c(0.5, 1),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
   )
 
 plot_time + plot_summary +
@@ -850,7 +850,8 @@ plot_summary <- obs_summary |>
     fill = "Condition"
   ) +
   theme(
-    axis.title = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
     legend.position = "none",
     axis.text.x = element_blank(),
     axis.text.y = element_blank(),

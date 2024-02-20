@@ -229,6 +229,27 @@ $$
 $$
 :::
 ::: {.column width="60%"}
+:::
+::: 
+
+## AMBLA: monolingual word acquisition
+
+::: {.columns}
+::: {.column width="40%"}
+**Parameters**:
+
+Catalan monolingual child
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
+$$
+\begin{aligned}
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50) 
+\end{aligned}
+$$
+:::
+::: {.column width="60%"}
 ![](assets/gif/ambla-eli-single-mon.gif){width="100%"}
 :::
 ::: 
@@ -254,6 +275,7 @@ $$
 ![](assets/img/ambla-single-nc-mon.png){width="100%"}
 :::
 ::: 
+
 
 ## AMBLA: monolingual word acquisition
 
@@ -323,10 +345,38 @@ $$
 
 :::
 ::: {.column width="60%"}
-![](assets/gif/ambla-eli-single.gif){width="100%"}
 :::
 ::: 
 
+## AMBLA: bilingual word acquisition
+
+
+::: {.columns}
+::: {.column width="40%"}
+**Parameters**:
+
+Catalan monolingual child
+
+- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+
+Catalan/Spanish bilingual child
+
+- <span style="background:#C8102E;color:white;">/'gos/ (Catalan), 60%</span>
+
+- <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
+
+$$
+\begin{aligned}
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50)
+\end{aligned}
+$$
+
+:::
+::: {.column width="60%"}
+![](assets/gif/ambla-eli-single.gif){width="100%"}
+:::
+::: 
 
 ## AMBLA: bilingual word acquisition
 
@@ -379,17 +429,16 @@ $$
 ## AMBLA: cognate facilitation
 
 ::: columns
-
 ::: {.column width="40%"}
 Catalan monolingual child
 
-- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+- <span style="background:#004AAD;color:white;">/'gat/ (Catalan), 100%</span>
 
 Catalan/Spanish bilingual child
 
-- <span style="background:#C8102E;color:white;">/'gos/ (Catalan), 60%</span>
+- <span style="background:#C8102E;color:white;">/'gat/ (Catalan), 60%</span>
 
-- <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
+- <span style="background:#FF9E1F;color:black;">/'ga.to/ (Spanish), 40%</span>
 
 $$
 \begin{aligned}
@@ -510,6 +559,13 @@ English monolinguals
 
 :::
 
+
+
+## Study 2: design
+
+![](assets/img/hypotheses.png)
+
+
 ## Study 2: design
 
 Extending the task to test cross-language priming in bilinguals.
@@ -530,10 +586,6 @@ Temporal proximity of prime and target labels
 ![](assets/img/s2-design-barcelona.png)
 ::::
 :::
-
-## Predictions
-
-![](assets/img/hypotheses.png)
 
 
 ## Predictions and dataset
@@ -586,11 +638,13 @@ If **language non-selectivity**, **stronger interference** in cognate vs. non-co
 
 ## Discussion
 
-**Successful word recognition** across ages and language profiles
+<br>
+
+**Successful spoken word recognition** across ages and language profiles
 
 **No evidence of priming effects**, within or across languages
 
-Most likely due to **design caveats**
+> Most likely due to **design caveats**
 
 # General discussion {.inverse}
 
