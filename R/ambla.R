@@ -1,12 +1,9 @@
 library(dplyr)
 library(tidyr)
 library(ggplot2)
-library(stringdist)
 library(purrr)
-library(ggdist)
 library(patchwork)
 library(magick)
-library(ggtext)
 library(gganimate)
 
 set.seed(1234)
@@ -31,7 +28,7 @@ generate_eli <- function(
   names(items_df) <- c(".te", "l1.item", "l2.item")
 
   item_df <- items_df |>
-    mutate(lv = map_dbl(te, \(x) stringsim(x[1], x[2]))) |>
+    mutate(lv = purrr::map_dbl(te, \(x) stringdist::stringsim(x[1], x[2]))) |>
     mutate(l1.doe = l1_doe, l2.doe = 1 - l1_doe)
 
   eli <- expand_grid(item_df, age = age) |>
@@ -101,8 +98,8 @@ generate_figure <- function(...) {
     cat = here::here("_assets", "img", "diagram-cat.png"),
     dog = here::here("_assets", "img", "diagram-dog.png"),
   ) |>
-    map(magick::image_read) |>
-    map(\(x) magick::image_ggplot(x, interpolate = FALSE))
+    purr::map(magick::image_read) |>
+    purr::map(\(x) magick::image_ggplot(x, interpolate = FALSE))
 
   plot <- eli_df |>
     ggplot(aes(age, eli,
@@ -146,7 +143,7 @@ generate_figure <- function(...) {
       legend.title = element_text(size = 9),
       legend.text = element_text(size = 8),
       strip.background = element_rect(fill = "grey90", colour = "grey90"),
-      strip.text = element_markdown(),
+      strip.text = ggtext::element_markdown(),
       panel.grid = element_blank(),
       panel.grid.major.y = element_line(
         colour = "grey",
@@ -225,8 +222,8 @@ img <- c(
   cat = here::here("assets", "img", "diagram-cat.png"),
   dog = here::here("assets", "img", "diagram-dog.png")
 ) |>
-  map(magick::image_read) |>
-  map(\(x) magick::image_ggplot(x, interpolate = FALSE))
+  purr::map(magick::image_read) |>
+  purr::map(\(x) magick::image_ggplot(x, interpolate = FALSE))
 
 # parameters
 threshold <- 300
@@ -463,7 +460,7 @@ aoa_plot_iter <- aoa_df |>
   ) +
   theme(
     legend.position = "none",
-    axis.title.y = element_markdown()
+    axis.title.y = ggtext::element_markdown()
   ) +
   guides(colour = guide_legend(override.aes = list(linewidth = 2, alpha = 1))) +
   scale_colour_manual(values = clrs) +
@@ -646,7 +643,7 @@ aoa_plot_iter <- aoa_df |>
   ) +
   theme(
     legend.position = "none",
-    axis.title.y = element_markdown()
+    axis.title.y = ggtext::element_markdown()
   ) +
   guides(colour = guide_legend(override.aes = list(linewidth = 2, alpha = 1))) +
   scale_colour_manual(values = clrs) +
@@ -818,7 +815,7 @@ aoa_plot <- aoa_df_summary |>
   scale_y_continuous(breaks = c(0, 1)) +
   theme(
     legend.position = "none",
-    axis.title.y = element_markdown(),
+    axis.title.y = ggtext::element_markdown(),
     panel.grid.major.y = element_blank()
   )
 
@@ -986,7 +983,7 @@ aoa_plot <- aoa_df_summary |>
   scale_y_continuous(breaks = c(0, 1)) +
   theme(
     legend.position = "none",
-    axis.title.y = element_markdown(),
+    axis.title.y = ggtext::element_markdown(),
     panel.grid = element_blank()
   )
 

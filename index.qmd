@@ -45,11 +45,8 @@ set.seed(1234)
 Average 20-year-old knows ~42,000 lemmas: **mental lexicon**
 
 ::: box
-
 Lexical representations
 : Phonological, conceptual, grammatical information of known words
-: Form-meaning association
-
 :::
 
 **First lexical representations at 6-9 months**
@@ -92,7 +89,7 @@ Vocabulary size grows non-linearly during the second year of life
 **Hoff et al. (2012)**: bilinguals acquire words at similar rates as monolinguals
 
 - 47 English-Spanish bilinguals
-- 56 English monolinguals in Florida
+- 56 English monolinguals
 :::
 :::
 ::: {.column width="35%"}
@@ -128,7 +125,14 @@ Stronger effect in the additional language (e.g., Dutch, Mandarin)
 
 ## Lexical similarity modulates vocabulary acquisition in bilinguals
 
-![Pairwise lexical similarity (average Levensthein similarity across translations in Floccia et al.)](assets/img/similarity.png)
+::: columns
+::: {.column width="30%"}
+Pairwise lexical similarity (average Levensthein similarity across translations in Floccia et al.)
+:::
+::: {.column width="70%"}
+![](assets/img/similarity.png)
+:::
+:::
 
 ## A cognate facilitation in lexical acquisition?
 
@@ -153,7 +157,14 @@ Some evidence that cognates **acquired earlier** than non-cognates [@mitchell202
 
 ## Language non-selective lexical access
 
-![Activation spreads across **non-selected representations** in both languages, through **phonological** and **conceptual** links in adults [e.g., @costa2000cognate] and infants  [e.g., @vonholzen2012language; @singh2014one]](assets/img/lexicon.png){ width="120%" }
+::: column
+::: {.column width="30%"}
+Activation spreads across **non-selected representations** in both languages, through **phonological** and **conceptual** links.
+:::
+::: {.column width="70%"}
+![](assets/img/lexicon.png){ width="120%" }
+:::
+:::
 
 ## The present dissertation
 
@@ -165,7 +176,7 @@ Some evidence that cognates **acquired earlier** than non-cognates [@mitchell202
 1. Provide a mechanistic account for the **cognateness facilitation**
 2. **Test predictions** of the model
 
-> Submitted, under review {{< ai psyarxiv >}} {{< ai github >}}
+> Under review in *Child Development* (R2), {{< ai psyarxiv >}} {{< ai github >}}
 :::
 ::: {.column}
 ::: box
@@ -426,6 +437,34 @@ $$
 \end{aligned}
 $$
 
+
+## AMBLA: cognate facilitation
+
+::: columns
+::: {.column width="40%"}
+Catalan monolingual child
+
+- <span style="background:#004AAD;color:white;">/'gat/ (Catalan), 100%</span>
+
+Catalan/Spanish bilingual child
+
+- <span style="background:#C8102E;color:white;">/'gat/ (Catalan), 60%</span>
+
+- <span style="background:#FF9E1F;color:black;">/'ga.to/ (Spanish), 40%</span>
+
+$$
+\begin{aligned}
+\text{Threshold} = 300 \\
+\text{Freq}_j \sim \text{Poisson}(\lambda = 50) \\
+\text{Cognateness}_{j,j'} = 0.75
+\end{aligned}
+$$
+:::
+::: {.column width="60%"}
+:::
+:::
+
+
 ## AMBLA: cognate facilitation
 
 ::: columns
@@ -587,6 +626,10 @@ Temporal proximity of prime and target labels
 ::::
 :::
 
+---
+
+![](assets/img/collection.png)
+
 
 ## Predictions and dataset
 
@@ -626,15 +669,32 @@ If **language non-selectivity**, **stronger interference** in cognate vs. non-co
 
 ## Experiment 1: results, Bayesian GAMMs
 
+::: columns
+::: {.column width="30%"}
+No evidence of phonological priming
+
+Related trials $\eq$ Unrelated trials
+:::
+::: {.column width="70%"}
 ![](assets/img/s2-1-predictions.png)
-
----
-
-![](assets/img/collection.png)
+:::
+:::
 
 ## Experiment 2: results, Bayesian GAMMs
 
+::: columns
+::: {.column width="30%"}
+No evidence of phonological priming
+
+Related trials $\eq$ Unrelated trials
+Cognate trials $\eq$ Non-cognate trials
+
+:::
+::: {.column width="70%"}
 ![](assets/img/s2-2-predictions.png)
+:::
+:::
+
 
 ## Discussion
 
@@ -644,12 +704,13 @@ If **language non-selectivity**, **stronger interference** in cognate vs. non-co
 
 **No evidence of priming effects**, within or across languages
 
-> Most likely due to **design caveats**
+> Unsuccessful retrieval of prime phonological forms?
+
+Inconclusive results, revise design
 
 # General discussion {.inverse}
 
 ## Summary
-
 
 **Cognateness facilitates word acquisition** in the **lower-exposure language**
 
@@ -659,13 +720,21 @@ Candidate **mechanism** behind bilingual vocabulary growth
 
 **Language non-selectivity** in the initial lexicon: pending severe testing
 
-## Contributions
+## Theoretical contributions
+
+### Whats not in this dissertation
+
+* semantic-inhibition: data collection ongoing
+* translation-elicitation: in preparation
+
+## Methodological contributions
 
 ::: {.columns}
 ::: {.column width="50%"}
 ### Methods
 
-**Bayesian modelling**: quantifying uncertainty, estabilising statistical inference
+* Sample size (***N*** = XX)
+* **Bayesian modelling**: quantifying uncertainty, estabilising statistical inference
 
 :::
 ::: {.column width="50%"}

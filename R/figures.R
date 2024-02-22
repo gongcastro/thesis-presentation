@@ -1,7 +1,6 @@
 library(dplyr)
 library(tidyr)
 library(ggplot2)
-library(ggdist)
 library(patchwork)
 library(tidybayes)
 library(here)
@@ -48,23 +47,23 @@ plot_comp <- wb_fig |>
   facet_wrap(~type) +
   annotate(
     geom = "text",
-    label = "Words and Gestures",
+    label = "WG",
     x = 15,
     y = 700,
-    size = 2.5,
+    size = 3,
     vjust = 1,
-    hjust = 1
+    hjust = 1.1
   ) +
   annotate(
     geom = "text",
-    label = "Words and Sentences",
+    label = "WS",
     x = 15,
     y = 700,
-    size = 2.5,
+    size = 3,
     vjust = 1,
-    hjust = 0
+    hjust = 0.1
   ) +
-  stat_interval(
+  ggdist::stat_interval(
     .width = c(0.95, 0.89, 0.75, 0.67, 0.50),
     size = 4.75,
     position = "dodge"
@@ -114,11 +113,11 @@ plot_prod <- wb_fig |>
   ) +
   annotate(
     geom = "text",
-    label = "Words and Sentences",
+    label = "WS",
     x = 30 / 2,
     y = 700,
     size = 3,
-    vjust = 1,
+    vjust = 1.1,
     hjust = 0
   ) +
   geom_line(
@@ -542,7 +541,7 @@ plot_summary <- obs_summary |>
     colour = "grey",
     linewidth = 3 / 4
   ) +
-  geom_dots(
+  ggdist::geom_dots(
     side = "both",
     layout = "swarm",
     dotsize = 2,
@@ -810,7 +809,7 @@ plot_summary <- obs_summary |>
     colour = "grey",
     linewidth = 1 / 2
   ) +
-  geom_dots(
+  ggdist::geom_dots(
     side = "both",
     layout = "swarm",
     alpha = 1 / 2,
@@ -1200,7 +1199,7 @@ ggsave("assets/img/vocabulary.png", width = 8, height = 4)
 clrs_4 <- colorRampPalette(c("grey80", clrs_full[5]))(2)
 
 model_fits_oxf$fit_oxf_0 |>
-  gather_draws(`b_.*`, regex = TRUE) |>
+  tidybayes::gather_draws(`b_.*`, regex = TRUE) |>
   mutate(
     .variable = factor(.variable),
     .chain = as.factor(.chain)
@@ -1233,7 +1232,7 @@ ggsave("assets/img/s2-1-convergence.png", width = 8, height = 3)
 clrs_4 <- colorRampPalette(c("grey80", clrs_full[5]))(2)
 
 model_fits_bcn$fit_0 |>
-  gather_draws(`b_.*`, regex = TRUE) |>
+  tidybayes::gather_draws(`b_.*`, regex = TRUE) |>
   mutate(
     .variable = factor(.variable),
     .chain = as.factor(.chain)
