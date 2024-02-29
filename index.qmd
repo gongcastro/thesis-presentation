@@ -68,7 +68,10 @@ Lexical representations
 
 ## Normative trajectories of lexical development
 
-![Vocabulary size norms for 51,800 monolingual children learning 35 distinct languages [Wordbank, @frank2017wordbank]](assets/img/wordbank.png)
+Vocabulary size norms for 51,800 monolingual children learning 35 distinct languages
+![](assets/img/wordbank.png)
+
+[@frank2017wordbank]
 
 ::: notes
 
@@ -125,14 +128,7 @@ Stronger effect in the additional language (e.g., Dutch, Mandarin)
 
 ## Lexical similarity modulates vocabulary acquisition in bilinguals
 
-::: columns
-::: {.column width="30%"}
-Pairwise lexical similarity (average Levensthein similarity across translations in Floccia et al.)
-:::
-::: {.column width="70%"}
 ![](assets/img/similarity.png)
-:::
-:::
 
 ## A cognate facilitation in lexical acquisition?
 
@@ -155,16 +151,13 @@ Some evidence that cognates **acquired earlier** than non-cognates [@mitchell202
 
 **What *mechanisms* support a cognate facilitation during word acquisition?**
 
-## Language non-selective lexical access
+## Language non-selective account of lexical access
 
-::: column
-::: {.column width="30%"}
-Activation spreads across **non-selected representations** in both languages, through **phonological** and **conceptual** links.
+::: box
+Activation spreads **across languages**, even in monolingual situations
 :::
-::: {.column width="70%"}
-![](assets/img/lexicon.png){ width="120%" }
-:::
-:::
+
+![](assets/img/lexicon.png){ width="150%" }
 
 ## The present dissertation
 
@@ -221,7 +214,7 @@ $$
 $$
 
 
-## AMBLA: monolingual word acquisition
+## AMBLA: simulating *monolingual* word acquisition
 
 ::: {.columns}
 ::: {.column width="40%"}
@@ -243,7 +236,7 @@ $$
 :::
 ::: 
 
-## AMBLA: monolingual word acquisition
+## AMBLA: simulating *monolingual* word acquisition
 
 ::: {.columns}
 ::: {.column width="40%"}
@@ -265,7 +258,7 @@ $$
 :::
 ::: 
 
-## AMBLA: monolingual word acquisition
+## AMBLA: simulating *monolingual* word acquisition
 
 ::: {.columns}
 ::: {.column width="40%"}
@@ -288,7 +281,7 @@ $$
 ::: 
 
 
-## AMBLA: monolingual word acquisition
+## AMBLA: simulating *monolingual* word acquisition
 
 ::: {.columns}
 ::: {.column width="40%"}
@@ -310,7 +303,7 @@ $$
 :::
 ::: 
 
-## AMBLA: bilingual word acquisition
+## AMBLA: stimulating *bilingual* word acquisition
 
 ::: box
 3. **Linguistic input divided** into two languages: **Catalan 60%, Spanish 40%**
@@ -330,7 +323,7 @@ $$
 $$
 
 
-## AMBLA: bilingual word acquisition
+## AMBLA: simulating *bilingual* word acquisition
 
 
 ::: {.columns}
@@ -359,7 +352,7 @@ $$
 :::
 ::: 
 
-## AMBLA: bilingual word acquisition
+## AMBLA: simulating *bilingual* word acquisition
 
 
 ::: {.columns}
@@ -389,7 +382,7 @@ $$
 :::
 ::: 
 
-## AMBLA: bilingual word acquisition
+## AMBLA: simulating *bilingual* word acquisition
 
 ::: {.columns}
 ::: {.column width="40%"}
@@ -416,7 +409,7 @@ $$
 ::: 
 
 
-## AMBLA: cognate facilitation
+## AMBLA: simulating a *cognate facilitation*
 
 ::: box
 
@@ -438,7 +431,7 @@ $$
 $$
 
 
-## AMBLA: cognate facilitation
+## AMBLA: simulating a *cognate facilitation*
 
 ::: columns
 ::: {.column width="40%"}
@@ -465,7 +458,7 @@ $$
 :::
 
 
-## AMBLA: cognate facilitation
+## AMBLA: simulating a *cognate facilitation*
 
 ::: columns
 ::: {.column width="40%"}
@@ -492,20 +485,20 @@ $$
 :::
 :::
 
-## AMBLA: cognate facilitation
+## AMBLA: simulating a *cognate facilitation*
 
 ::: columns
 ::: {.column width="40%"}
 
 Catalan monolingual child:
 
-- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+- <span style="background:#004AAD;color:white;">/'gat/ (Catalan), 100%</span>
 
 Catalan/Spanish bilingual child:
 
-- <span style="background:#C8102E;color:white;">/'gos/ (Catalan), 60%</span>
+- <span style="background:#C8102E;color:white;">/'gat/ (Catalan), 60%</span>
 
-- <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
+- <span style="background:#FF9E1F;color:black;">/'ga.to/ (Spanish), 40%</span>
 
 $$
 \begin{aligned}
@@ -671,9 +664,11 @@ If **language non-selectivity**, **stronger interference** in cognate vs. non-co
 
 ::: columns
 ::: {.column width="30%"}
-No evidence of phonological priming
+::: box
+**No evidence of phonological priming**
 
-Related trials $\eq$ Unrelated trials
+Related trials $\approx$ Unrelated trials
+:::
 :::
 ::: {.column width="70%"}
 ![](assets/img/s2-1-predictions.png)
@@ -684,17 +679,35 @@ Related trials $\eq$ Unrelated trials
 
 ::: columns
 ::: {.column width="30%"}
-No evidence of phonological priming
+::: box
+**No evidence of phonological priming**
 
-Related trials $\eq$ Unrelated trials
-Cognate trials $\eq$ Non-cognate trials
+Related trials $\approx$ Unrelated trials
+Cognate trials $\approx$ Non-cognate trials
+:::
 
 :::
 ::: {.column width="70%"}
-![](assets/img/s2-2-predictions.png)
+![](assets/img/s2-2-predictions-mon.png)
 :::
 :::
 
+## Experiment 2: results, Bayesian GAMMs
+
+::: columns
+::: {.column width="30%"}
+::: box
+**No evidence of phonological priming**
+
+Related trials $\approx$ Unrelated trials
+Cognate trials $\approx$ Non-cognate trials
+:::
+
+:::
+::: {.column width="70%"}
+![](assets/img/s2-2-predictions-bil.png)
+:::
+:::
 
 ## Discussion
 

@@ -98,8 +98,8 @@ generate_figure <- function(...) {
     cat = here::here("_assets", "img", "diagram-cat.png"),
     dog = here::here("_assets", "img", "diagram-dog.png"),
   ) |>
-    purr::map(magick::image_read) |>
-    purr::map(\(x) magick::image_ggplot(x, interpolate = FALSE))
+    purrr::map(magick::image_read) |>
+    purrr::map(\(x) magick::image_ggplot(x, interpolate = FALSE))
 
   plot <- eli_df |>
     ggplot(aes(age, eli,
@@ -222,8 +222,8 @@ img <- c(
   cat = here::here("assets", "img", "diagram-cat.png"),
   dog = here::here("assets", "img", "diagram-dog.png")
 ) |>
-  purr::map(magick::image_read) |>
-  purr::map(\(x) magick::image_ggplot(x, interpolate = FALSE))
+  purrr::map(magick::image_read) |>
+  purrr::map(\(x) magick::image_ggplot(x, interpolate = FALSE))
 
 # parameters
 threshold <- 300
@@ -330,7 +330,7 @@ logistic_df_summary <- aoa_df_summary |>
   )
 
 # no facilitation, single iteration, monolingual -------------------------------
-iter_id <- 1
+iter_id <- 25
 
 eli_plot_iter <- eli_df |>
   filter(
