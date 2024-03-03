@@ -28,58 +28,42 @@ wb <- arrow::read_csv_arrow(
     between(age, 10, 30)
   )
 
+comp_label <- "Comprehension\n(Words and Gestures + Words and Sentences)"
+prod_label <- "Production\n(Words and Sentences)"
+
 wb_fig <- wb |>
   pivot_longer(c(comprehension, production),
     names_to = "type",
     values_to = "size",
     names_transform = tools::toTitleCase
+  ) |>
+  mutate(
+    form = if_else(type == "Comprehension" & age <= 15, "WG", "WS"),
+    type = if_else(type == "Comprehension", comp_label, prod_label)
   )
 
 wb_summary <- wb_fig |>
   summarise(
     size = median(size),
-    .by = c(type, age)
+    .by = c(type, age, form)
   )
 
 plot_comp <- wb_fig |>
-  filter(type == "Comprehension") |>
-  ggplot(aes(age, size)) +
+  filter(type == comp_label) |>
+  ggplot(aes(age, size, group = form)) +
   facet_wrap(~type) +
-  annotate(
-    geom = "text",
-    label = "WG",
-    x = 15,
-    y = 700,
-    size = 3,
-    vjust = 1,
-    hjust = 1.1
-  ) +
-  annotate(
-    geom = "text",
-    label = "WS",
-    x = 15,
-    y = 700,
-    size = 3,
-    vjust = 1,
-    hjust = 0.1
-  ) +
   ggdist::stat_interval(
     .width = c(0.95, 0.89, 0.75, 0.67, 0.50),
     size = 4.75,
     position = "dodge"
   ) +
-  geom_vline(
-    xintercept = 15,
-    linewidth = 3 / 4,
-    color = "grey"
-  ) +
   geom_line(
-    data = filter(wb_summary, type == "Comprehension"),
+    data = filter(wb_summary, type == comp_label),
     colour = "white",
     linewidth = 1
   ) +
   geom_point(
-    data = filter(wb_summary, type == "Comprehension"),
+    data = filter(wb_summary, type == comp_label),
     colour = "white",
     size = 2.25
   ) +
@@ -103,30 +87,23 @@ plot_comp <- wb_fig |>
 
 
 plot_prod <- wb_fig |>
-  filter(type == "Production") |>
-  ggplot(aes(age, size)) +
+  filter(type == prod_label) |>
+  ggplot(aes(age, size,
+    group = form
+  )) +
   facet_wrap(~type) +
   stat_interval(
     .width = levels,
     size = 4.75,
     position = "dodge"
   ) +
-  annotate(
-    geom = "text",
-    label = "WS",
-    x = 30 / 2,
-    y = 700,
-    size = 3,
-    vjust = 1.1,
-    hjust = 0
-  ) +
   geom_line(
-    data = filter(wb_summary, type == "Production"),
+    data = filter(wb_summary, type == prod_label),
     colour = "white",
     linewidth = 1
   ) +
   geom_point(
-    data = filter(wb_summary, type == "Production"),
+    data = filter(wb_summary, type == prod_label),
     colour = "white",
     size = 2.25
   ) +
@@ -225,7 +202,7 @@ tibble::tribble(
     position = position_nudge(x = -0.005)
   ) +
   labs(
-    x = "\nLexical similarity (Levenshtein similarity)",
+    x = "\nPairwise lexical similarity (Levenshtein similarity)",
     y = "Language pair",
     fill = "Source",
   ) +
@@ -253,7 +230,7 @@ tibble::tribble(
     )
   )
 
-ggsave("assets/img/similarity.png", width = 9, height = 5)
+ggsave("assets/img/similarity.png", width = 9, height = 4)
 
 # Study 1: predictions ---------------------------------------------------------
 
@@ -350,7 +327,6 @@ fig_data |>
   scale_x_continuous(breaks = seq(0, 50, 5)) +
   theme_ambla() +
   theme(
-    axis.title.x = element_blank(),
     axis.title.y = ggtext::element_markdown(),
     legend.position = "top",
     legend.box = "horizontal",
@@ -408,7 +384,7 @@ fig_data |>
   scale_fill_manual(values = clrs_2[2:4]) +
   labs(
     x = "Age (months)",
-    y = "*p*(Comprehension)",
+    y = "*p*(Production)",
     colour = "Cognateness (phonological similarity)",
     fill = "Cognateness (phonological similarity)",
     linetype = "Cognateness (phonological similarity)"
@@ -733,8 +709,8 @@ epreds_summary <- epreds |>
     .by = c(condition, lp, timebin_std)
   )
 
-
 plot_time <- epreds |>
+  filter(lp == "Monolingual") |>
   ggplot(aes(timebin_std, .epred,
     colour = condition,
     fill = condition,
@@ -764,7 +740,8 @@ plot_time <- epreds |>
   #     linetype = "solid",
   #     width = 0.1) +
   geom_point(
-    data = obs_time,
+    data = obs_time |>
+      filter(lp == "Monolingual"),
     aes(y = .elog, x = timebin),
     stroke = 1,
     size = 2
@@ -791,6 +768,7 @@ plot_time <- epreds |>
 
 
 plot_summary <- obs_summary |>
+  filter(lp == "Monolingual") |>
   summarise(
     .elog = mean(.elog),
     .by = c(child_id, lp, condition)
@@ -819,6 +797,7 @@ plot_summary <- obs_summary |>
   ) +
   geom_errorbar(
     data = epreds_summary |>
+      filter(lp == "Monolingual") |>
       summarise(across(c(.value, .upper, .lower), mean),
         .by = c(lp, condition)
       ),
@@ -834,6 +813,7 @@ plot_summary <- obs_summary |>
   ) +
   geom_point(
     data = epreds_summary |>
+      filter(lp == "Monolingual") |>
       summarise(across(c(.value, .upper, .lower), mean),
         .by = c(lp, condition)
       ),
@@ -876,7 +856,158 @@ plot_time + plot_summary +
     legend.title = element_blank()
   )
 
-ggsave("assets/img/s2-2-predictions.png", width = 7, height = 4)
+ggsave("assets/img/s2-2-predictions-mon.png", width = 6, height = 4)
+
+# bilinguals
+
+plot_time <- epreds |>
+  filter(lp == "Bilingual") |>
+  ggplot(aes(timebin_std, .epred,
+    colour = condition,
+    fill = condition,
+    linetype = condition,
+    shape = condition
+  )) +
+  facet_wrap(~lp, ncol = 1) +
+  geom_hline(
+    yintercept = 0,
+    colour = "grey"
+  ) +
+  stat_summary(
+    fun.data = tidybayes::mean_qi,
+    geom = "ribbon",
+    alpha = 1 / 4,
+    linewidth = NA
+  ) +
+  stat_summary(
+    fun = "mean",
+    geom = "line",
+    linewidth = 3 / 4
+  ) +
+  # geom_errorbar(
+  #     data = obs,
+  #     aes(y = .elog, ymin = .lower, ymax = .upper),
+  #     linewidth = 3/4,
+  #     linetype = "solid",
+  #     width = 0.1) +
+  geom_point(
+    data = obs_time |>
+      filter(lp == "Bilingual"),
+    aes(y = .elog, x = timebin),
+    stroke = 1,
+    size = 2
+  ) +
+  labs(
+    x = "Time (ms)",
+    y = "*p*(Target looking)",
+    colour = "Condition",
+    fill = "Condition",
+    linetype = "Condition",
+    shape = "Condition"
+  ) +
+  scale_x_continuous(
+    breaks = make_std(
+      seq(0, 17, 3),
+      mean(data_bcn$timebin),
+      sd(data_bcn$timebin)
+    ),
+    labels = \(x) format(seq(3e2, 2e3, 3e2),
+      big.mark = ","
+    )
+  ) +
+  theme(legend.position = "top")
+
+
+plot_summary <- obs_summary |>
+  summarise(
+    .elog = mean(.elog),
+    .by = c(child_id, lp, condition)
+  ) |>
+  filter(lp == "Bilingual") |>
+  ggplot(aes(condition, .elog,
+    colour = condition,
+    fill = condition
+  )) +
+  facet_wrap(~lp, ncol = 1) +
+  geom_hline(
+    yintercept = 0,
+    colour = "grey"
+  ) +
+  geom_line(aes(group = child_id),
+    alpha = 1 / 3,
+    colour = "grey",
+    linewidth = 1 / 2
+  ) +
+  ggdist::geom_dots(
+    side = "both",
+    layout = "swarm",
+    alpha = 1 / 2,
+    dotsize = 2,
+    stroke = 0,
+    show.legend = FALSE
+  ) +
+  geom_errorbar(
+    data = epreds_summary |>
+      filter(lp == "Bilingual") |>
+      summarise(across(c(.value, .upper, .lower), mean),
+        .by = c(lp, condition)
+      ),
+    aes(
+      y = .value,
+      ymin = .lower,
+      ymax = .upper
+    ),
+    width = 0.1,
+    colour = "black",
+    linewidth = 3 / 4,
+    show.legend = FALSE
+  ) +
+  geom_point(
+    data = epreds_summary |>
+      filter(lp == "Bilingual") |>
+      summarise(across(c(.value, .upper, .lower), mean),
+        .by = c(lp, condition)
+      ),
+    aes(y = .value),
+    size = 2,
+    colour = "black",
+    show.legend = FALSE
+  ) +
+  labs(
+    x = "Condition",
+    y = "*p*(Target looking)",
+    colour = "Condition",
+    fill = "Condition"
+  ) +
+  theme(
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    legend.position = "none",
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+  )
+
+plot_time + plot_summary +
+  plot_layout(
+    nrow = 1, widths = c(0.5, 0.5),
+    guides = "collect"
+  ) &
+  scale_y_continuous(limits = c(-1, 1.4)) &
+  # scale_shape_manual(values = c(1, 2, 3)) &
+  # scale_linetype_manual(values = c("solid", "dashed", "dotdash")) &
+  scale_colour_manual(values = clrs) &
+  scale_fill_manual(values = clrs) &
+  theme_ambla() &
+  theme(
+    axis.title.y = ggtext::element_markdown(),
+    legend.position = "top",
+    axis.line = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    legend.title = element_blank()
+  )
+
+ggsave("assets/img/s2-2-predictions-bil.png", width = 6, height = 4)
 
 # Appendix ---------------------------------------------------------------------
 

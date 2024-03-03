@@ -72,7 +72,8 @@ Lexical representations
 
 ## Normative trajectories of lexical development
 
-![Vocabulary size norms for 51,800 monolingual children learning 35 distinct languages [Wordbank, @frank2017wordbank]](assets/img/wordbank.png)
+Vocabulary size norms for 51,800 monolingual children learning 35 distinct languages [@frank2017wordbank]
+![](assets/img/wordbank.png) 
 
 ::: notes
 
@@ -80,22 +81,50 @@ Vocabulary size grows non-linearly during the second year of life
 
 :::
 
-```{r test}
-
-
-
-
-```
 ## Bilinguals face additional challenges, but do not lag behind
 
+<br>
+<br>
+
 ::: columns
-::: {.column width="65%"}
-::: incremental
-* Increased **complexity** in linguistic context (learning two codes)
-* Reduced linguistic **input** (split into two languages)
-* Increased **referential ambiguity**
+:::: {.column width="33%"}
+::::: {.fragment fragment-index=1}
+:::::: box
+Increased **complexity** in linguistic context
+::::::
+:::::
+::::
+:::: {.column width="33%"}
+::::: {.fragment fragment-index=2}
+:::::: box
+Reduced linguistic **input** in each language
+::::::
+:::::
+::::
+:::: {.column width="33%"}
+::::: {.fragment fragment-index=3}
+:::::: box
+Increased **referential ambiguity**
+::::::
+:::::
+::::
 :::
-:::
+::: columns
+:::: {.column width="33%"}
+::::: {.fragment fragment-index=1}
+Two overlapping codes
+:::::
+::::
+:::: {.column width="33%"}
+::::: {.fragment fragment-index=2}
+Split into two languages
+:::::
+::::
+:::: {.column width="33%"}
+::::: {.fragment fragment-index=3}
+\> 2 labels per referent 
+:::::
+::::
 :::
 
 ## Bilinguals face additional challenges, but do not lag behind
@@ -104,15 +133,18 @@ Vocabulary size grows non-linearly during the second year of life
 **Hoff et al. (2012)**: bilinguals acquire words at similar rates as monolinguals
 :::
 
-. . .
 
 ::: columns
-::: {.column}
+:::: {.column}
+::::: fragment
 ![](assets/img/hoff-1.png){width="85%"}
-:::
-::: {.column}
+:::::
+::::
+:::: {.column}
+::::: fragment
 ![](assets/img/hoff-2.png){width="90%"}
-:::
+:::::
+::::
 :::
 
 ::: notes
@@ -124,20 +156,19 @@ Vocabulary size grows non-linearly during the second year of life
 
 :::
 
-## Lexical similarity modulates vocabulary acquisition in bilinguals
+## Lexical similarity modulates vocabulary growth in bilinguals
 
 ::: columns
-
-::: {.column}
-::: box
+:::: {.column}
+::::: box
 **Floccia et al. (2018)**: CDI responses of 372 bilinguals learning **English + additional language**
-:::
-:::
-::: {.column}
-::: fragment
-**Lexical similarity**: average phonological similarity  (Levenshtein similarity) between pairs of translations
-:::
-:::
+:::::
+::::
+:::: {.column}
+::::: fragment
+**Lexical similarity**: Average phonological similarity (Levenshtein) between pairs of translations
+:::::
+::::
 :::
 
 <br>
@@ -150,50 +181,36 @@ Stronger effect in the additional language (e.g., Dutch, Mandarin)
 
 ## Lexical similarity modulates vocabulary acquisition in bilinguals
 
-::: columns
-::: {.column width="30%"}
-Pairwise lexical similarity (average Levensthein similarity across translations in Floccia et al.)
-:::
-::: {.column width="70%"}
 ![](assets/img/similarity.png)
-:::
-:::
 
 ## A cognate facilitation in lexical acquisition?
 
 ::: columns
-::: {.column}
-**Cognates**: phonologically-similar translation equivalents
+:::: {.column}
+**Cognates**: Phonologically-similar translation equivalents
 
 | *Cognate*           | *Non-cognate*       |
 |:-------------------:|:-------------------:|
 | [cat] /ˈgat-ˈga.to/ | [dog] /ˈgos-ˈpe.ro/ |
-:::
-::: {.column}
-:::  fragment
-::: box
+::::
+:::: {.column}
+:::::  fragment
 Some evidence that cognates **acquired earlier** than non-cognates [@mitchell2023cognates; @bosch2014first]
-:::
-:::
-:::
+:::::
+::::
 ::: 
 
 <br>
 
 . . .
 
+::: box
 **What *mechanisms* support a cognate facilitation during word acquisition?**
+:::
 
-## Language non-selective lexical access
+## Lexical access is language non-selective in bilinguals
 
-::: columns
-::: {.column width="30%"}
-Activation spreads across **non-selected representations** in both languages, through **phonological** and **conceptual** links.
-:::
-::: {.column width="70%"}
-![](assets/img/lexicon.png){ width="120%" }
-:::
-:::
+![](assets/img/lexicon.png){ width="150%" }
 
 ## The present dissertation
 
@@ -214,7 +231,7 @@ Activation spreads across **non-selected representations** in both languages, th
 ::: box
 **Study 2**
 :::
-3. Test core assumption of the model: **language non-selectivity** in the initial lexicon
+3. Test core assumption of the model: **Language non-selectivity** in the initial lexicon
 
 > In preparation {{< ai github >}}
 :::
@@ -225,7 +242,7 @@ Activation spreads across **non-selected representations** in both languages, th
 
 # Study 1 {.inverse}
 
-*Cognate beginnings to lexical acquisition: the AMBLA model*
+*Cognate beginnings to lexical acquisition: The AMBLA model*
 
 ## **A**ccumulator **M**odel of **B**ilingual **L**exical **A**cquisition (**AMBLA**)
 
@@ -233,16 +250,14 @@ Activation spreads across **non-selected representations** in both languages, th
 
 1. **Accumulation** of information about **form-meaning mappings**:
 
-<span style="color:#a80035;">**Learning instances**</span>: exposure to a word-form that results in the accumulation of information about its meaning
+<span style="color:#a80035;">**Learning instances**</span>: Exposure to a word-form that results in the accumulation of information about its meaning
 
-:::  fragment
+:::: fragment
 
-2. <span style="color:#00a857;">**Age of acquisition**</span>: the infant accumulates a <span style="color:#0040a8;">**threshold**</span> amount of learning instances for a word-form
+2. <span style="color:#00a857;">**Age of acquisition**</span>: The infant accumulates a <span style="color:#0040a8;">**threshold**</span> amount of learning instances for a word-form
 
+::::
 :::
-:::
-
-<br>
 
 . . .
 
@@ -258,18 +273,15 @@ $$
 \end{aligned}
 $$
 
-
-## AMBLA: monolingual word acquisition
+## AMBLA: Simulating *monolingual* word acquisition
 
 ::: columns
-::: {.column width="40%"}
+:::: {.column width="40%"}
 
 Catalan monolingual child
 
 - <span style="color:#FFFFFF; background:#004AAD;">/'gos/ (Catalan), 100%</span>
 
-:::  fragment
-
 **Parameters**:
 
 $$
@@ -278,24 +290,21 @@ $$
 \text{Freq}_j \sim \text{Poisson}(\lambda = 50) 
 \end{aligned}
 $$
-:::
-:::
-::: {.column width="60%"}
-::: fragment
+::::
+:::: {.column width="60%"}
+::::: fragment
 ![](assets/gif/ambla-eli-single-mon.gif){width="100%"}
-:::
-:::
+:::::
+::::
 :::
 
-
-## AMBLA: monolingual word acquisition
+## AMBLA: Simulating *monolingual* word acquisition
 
 ::: columns
-::: {.column width="40%"}
-
+:::: {.column width="40%"}
 Catalan monolingual child
 
-- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+- <span style="color:#FFFFFF; background:#004AAD;">/'gos/ (Catalan), 100%</span>
 
 **Parameters**:
 
@@ -305,18 +314,19 @@ $$
 \text{Freq}_j \sim \text{Poisson}(\lambda = 50) 
 \end{aligned}
 $$
-:::
-::: {.column width="60%"}
+::::
+:::: {.column width="60%"}
 ![](assets/img/ambla-all-nc-mon.png){width="100%"}
+::::
 :::
-::: 
 
-## AMBLA: bilingual word acquisition
+
+## AMBLA: Simulating *bilingual* word acquisition
 
 ::: box
 3. **Linguistic input divided** into two languages: **Catalan 60%, Spanish 40%**
 
-<span style="color:#a80035;">**Exposure**</span>: proportion of time exposed to the language of $j$ word
+<span style="color:#a80035;">**Exposure**</span>: Proportion of time exposed to the language of $j$ word
 :::
 
 . . .
@@ -333,16 +343,15 @@ $$
 \end{aligned}
 $$
 
+## AMBLA: Simulating *bilingual* word acquisition
 
-## AMBLA: bilingual word acquisition
+**Parameters**:
 
 ::: columns
-::: {.column width="40%"}
+:::: {.column width="40%"}
 Catalan monolingual child
 
 - <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
-
-::: fragment
 
 Catalan/Spanish bilingual child
 
@@ -350,30 +359,24 @@ Catalan/Spanish bilingual child
 
 - <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
 
-:::
-::: fragment
-**Parameters**:
-
 $$
 \begin{aligned}
 \text{Threshold} = 300 \\
 \text{Freq}_j \sim \text{Poisson}(\lambda = 50)
 \end{aligned}
 $$
-:::
-:::
-::: {.column width="60%"}
-::: fragment
+::::
+:::: {.column width="60%"}
+::::: fragment
 ![](assets/gif/ambla-eli-single.gif){width="100%"}
-::: 
-:::
+:::::
+::::
 :::
 
-
-## AMBLA: bilingual word acquisition
+## AMBLA: Simulating *bilingual* word acquisition
 
 ::: columns
-::: {.column width="40%"}
+:::: {.column width="40%"}
 Catalan monolingual child
 
 - <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
@@ -392,14 +395,14 @@ $$
 \text{Freq}_j \sim \text{Poisson}(\lambda = 50)
 \end{aligned}
 $$
-:::
-::: {.column width="60%"}
+::::
+:::: {.column width="60%"}
 ![](assets/img/ambla-all-nc.png){width="100%"}
-:::
+::::
 ::: 
 
 
-## AMBLA: cognate facilitation
+## AMBLA: Simulating a *cognate facilitation*
 
 ::: box
 
@@ -421,15 +424,15 @@ $$
 \end{aligned}
 $$
 
-## AMBLA: cognate facilitation
+
+
+## AMBLA: Simulating a *cognate facilitation*
 
 ::: columns
-::: {.column width="40%"}
+:::: {.column width="40%"}
 Catalan monolingual child
 
 - <span style="background:#004AAD;color:white;">/'gat/ (Catalan), 100%</span>
-
-::: fragment
 
 Catalan/Spanish bilingual child
 
@@ -437,10 +440,6 @@ Catalan/Spanish bilingual child
 
 - <span style="background:#FF9E1F;color:black;">/'ga.to/ (Spanish), 40%</span>
 
-:::
-
-::: fragment
-
 $$
 \begin{aligned}
 \text{Threshold} = 300 \\
@@ -448,31 +447,27 @@ $$
 \text{Cognateness}_{j,j'} = 0.75
 \end{aligned}
 $$
-:::
-:::
-::: {.column width="60%"}
-::: fragment
+::::
+:::: {.column width="60%"}
 ![](assets/gif/ambla-single-c.gif)
-:::
-:::
+::::
 :::
 
 
-
-## AMBLA: cognate facilitation
+## AMBLA: Simulating a *cognate facilitation*
 
 ::: columns
-::: {.column width="40%"}
+:::: {.column width="40%"}
 
 Catalan monolingual child:
 
-- <span style="background:#004AAD;color:white;">/'gos/ (Catalan), 100%</span>
+- <span style="background:#004AAD;color:white;">/'gat/ (Catalan), 100%</span>
 
 Catalan/Spanish bilingual child:
 
-- <span style="background:#C8102E;color:white;">/'gos/ (Catalan), 60%</span>
+- <span style="background:#C8102E;color:white;">/'gat/ (Catalan), 60%</span>
 
-- <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
+- <span style="background:#FF9E1F;color:black;">/'ga.to/ (Spanish), 40%</span>
 
 $$
 \begin{aligned}
@@ -481,10 +476,10 @@ $$
 \text{Cognateness}_{j,j'} = 0.75
 \end{aligned}
 $$
-:::
-::: {.column width="60%"}
+::::
+:::: {.column width="60%"}
 ![](assets/img/ambla-all-c.png)
-:::
+::::
 :::
 
 ---
@@ -496,26 +491,39 @@ $$
 2. Cognateness facilitation stronger in the **lower-exposure language**
 :::
 
-::: fragment
+---
 
-### Dataset
+### Predictions
 
-**Barcelona Vocabulary Questionnaire (BVQ)**
+1. Cognates acquired **earlier** than non-cognates
+2. Cognateness facilitation stronger in the **lower-exposure language**
 
-::: incremental
+### Barcelona Vocabulary Questionnaire (BVQ)
 
-* 302 Catalan-Spanish noun translation equivalents
-* 436 administrations, 366 children (12-32 months)
-* Lang. exposure: Catalan and Spanish ($\leq$ 10% 3rd language)
-* 138,078 item responses (*No*, *Understands*, *Understands and Says*)
+::: columns
+:::: {.column width="50%"}
+::::: fragment
+![](assets/img/bvq.png){ width="100%" }
+:::::
+::::
+:::: {.column width="50%"}
+::::: fragment
 
+<br>
+
+- Online, open source {{< fa brands r-project >}} {{< fa brands github >}}
+- $\approx$ 1,600 words (800 Cat., 800 Spa.)
+- 4 sublists, random allocation
+
+:::::
+::::
 :::
 
-:::
-
-## Results: comprehension
+## Results: Comprehension
 
 Ordinal, multilevel (Bayesian) regression model
+
+366 children (12-32 mo), 436 administrations $\times$ 604 noun words
 
 $p(\text{Comprehension}, \text{Production}) \sim \text{Exposure}_{ij} \cdot \text{Cognateness}_j$
 
@@ -523,13 +531,13 @@ $p(\text{Comprehension}, \text{Production}) \sim \text{Exposure}_{ij} \cdot \tex
 
 ![](assets/img/s1-predictions-comp.png)
 
-## Results: production
+## Results: Production
 
 Ordinal, multilevel (Bayesian) regression model
 
-$p(\text{Comprehension}, \text{Production}) \sim \text{Exposure}_{ij} \cdot \text{Cognateness}_j$
+366 children (12-32 mo), 436 administrations $\times$ 604 noun words
 
-. . .
+$p(\text{Comprehension}, \text{Production}) \sim \text{Exposure}_{ij} \cdot \text{Cognateness}_j$
 
 ![](assets/img/s1-predictions-prod.png)
 
@@ -567,7 +575,7 @@ Some evidence in infants and children [e.g., @vonholzen2012language; @singh2014o
 
 . . .
 
-Methodological pitfalls: "bilingual" task
+Methodological pitfalls: "Bilingual" task
 
 ::: columns
 ::: {.column width="30%"}
@@ -589,11 +597,18 @@ English monolinguals
 :::
 :::
 
-## Study 2: design
+## Implicit naming task
+
+Mani and Plunkett (2010, 2011)
+
+![](assets/img/mani-design.png){width="80%"}
+
+
+## Study 2: Design
 
 ![](assets/img/hypotheses.png)
 
-## Study 2: design
+## Study 2: Design
 
 Extending the task to test cross-language priming in bilinguals.
 
@@ -625,7 +640,7 @@ Temporal proximity of prime and target labels
 ::: {.column width="50%"}
 ::: fragment
 ::: box
-**Exp. 1: monolinguals**
+**Exp. 1: Monolinguals**
 :::
 Replicate **within-language phonological interference** from Mani and Plunkett (*proof of concept*)
 :::
@@ -633,7 +648,7 @@ Replicate **within-language phonological interference** from Mani and Plunkett (
 ::: {.column width="50%"}
 ::: fragment
 ::: box
-**Exp. 2: monolinguals and bilinguals**
+**Exp. 2: Monolinguals and bilinguals**
 :::
 If **language non-selectivity**, **stronger interference** in cognate vs. non-cognate trials
 :::
@@ -663,16 +678,35 @@ If **language non-selectivity**, **stronger interference** in cognate vs. non-co
 
 ---
 
-## Experiment 1: results, Bayesian GAMMs
+## Experiment 1: Results, Bayesian GAMMs
 
 ::: columns
 ::: {.column width="30%"}
-No evidence of phonological priming
+::: box
+**No evidence of phonological priming**
 
-Related trials $\eq$ Unrelated trials
+Related trials $\approx$ Unrelated trials
+:::
 :::
 ::: {.column width="70%"}
 ![](assets/img/s2-1-predictions.png)
+:::
+:::
+
+## Experiment 2: Results, Bayesian GAMMs
+
+::: columns
+::: {.column width="30%"}
+::: box
+**No evidence of phonological priming**
+
+Related trials $\approx$ Unrelated trials
+Cognate trials $\approx$ Non-cognate trials
+:::
+
+:::
+::: {.column width="70%"}
+![](assets/img/s2-2-predictions-mon.png)
 :::
 :::
 
@@ -680,17 +714,18 @@ Related trials $\eq$ Unrelated trials
 
 ::: columns
 ::: {.column width="30%"}
-No evidence of phonological priming
+::: box
+**No evidence of phonological priming**
 
-Related trials $\eq$ Unrelated trials
-Cognate trials $\eq$ Non-cognate trials
+Related trials $\approx$ Unrelated trials
+Cognate trials $\approx$ Non-cognate trials
+:::
 
 :::
 ::: {.column width="70%"}
-![](assets/img/s2-2-predictions.png)
+![](assets/img/s2-2-predictions-bil.png)
 :::
 :::
-
 
 ## Discussion
 
@@ -719,18 +754,18 @@ Inconclusive results, revise design
 Candidate **mechanism** behind bilingual vocabulary growth
 
 
-> AMBLA: cross-language accumulation of learning instances
+> AMBLA: Cross-language accumulation of learning instances
 
 ...
 
-**Language non-selectivity** in the initial lexicon: pending severe testing
+**Language non-selectivity** in the initial lexicon: Pending testing
 
 ## Theoretical contributions
 
 ### Whats not in this dissertation
 
-* `semantic-inhibition`: data collection ongoing
-* `translation-elicitation`: in preparation
+* `semantic-inhibition`: Data collection ongoing
+* `translation-elicitation`: In preparation
 
 ## Methodological contributions
 
@@ -739,7 +774,7 @@ Candidate **mechanism** behind bilingual vocabulary growth
 ### Methods
 
 * Sample size (***N*** = XX)
-* **Bayesian modelling**: quantifying uncertainty, estabilising statistical inference
+* **Bayesian modelling**: Quantifying uncertainty, estabilising statistical inference
 
 :::
 ::: {.column width="50%"}
@@ -764,7 +799,7 @@ Barcelona Vocabulary Questionnaire (**BVQ**)
 ## Future steps
 
 ::: incremental
-- The impact of cognateness in spoken word recognition: *re-analysing data from Study 2*
+- The impact of cognateness in spoken word recognition: *Re-analysing data from Study 2*
 - Disentangling lexical similarity from **phonemic overlap**: Basque, Greek
 - Bilingualism and concept lexicalisation: **Backward Semantic Inhibition**
 :::
@@ -777,15 +812,15 @@ Thanks!
 
 # Appendix
 
-## Introduction: bilingualism
+## Introduction: Bilingualism
 
 ![Classification of participants into monolinguals an bilinguals](assets/img/bilingualism.png)
 
-## Introduction: cognate contents in the aggregated vocabulary
+## Introduction: Cognate contents in the aggregated vocabulary
 
 ![Cognate contents in the aggregated vocabulary](assets/img/cognate-proportion.png)
 
-## Study 1: posterior regression coefficients
+## Study 1: Posterior regression coefficients
 
 ![Aggregated vocabularies might conceal facilitation effects](assets/img/s1-coefficients.png)
 
@@ -793,22 +828,22 @@ Thanks!
 
 ![MCMC convergence for the model in Study 1](assets/img/s1-convergence.png)
 
-## Study 2: predictions
+## Study 2: Predictions
 
 - Successful spoken word recognition across groups
 - If language non-selectivity, stronger interference in cognate vs. non-cognate trials
 
 ![](assets/img/design.png)
 
-## Study 2: vocabulary size
+## Study 2: Vocabulary size
 
 ![Study 2 participant receptive vocabulary sizes across ages and language profiles](assets/img/vocabulary.png)
 
-## Study 2: model convergence (Exp. 1)
+## Study 2: Model convergence (Exp. 1)
 
 ![MCMC convergence for model in Study 1 (Exp. 1)](assets/img/s2-1-convergence.png)
 
-## Study 2: model convergence (Exp. 2)
+## Study 2: Model convergence (Exp. 2)
 
 ![MCMC convergence for model in Study 2 (Exp. 1)](assets/img/s2-2-convergence.png)
 

@@ -244,7 +244,7 @@ footer {
       h2,
       h3 {
         margin-top: 7%;
-        margin-bottom: 5%;
+        margin-bottom: 2.5%;
         font-weight: bolder;
         font-family: $font-family-serif;
       }
@@ -252,6 +252,12 @@ footer {
       h2 {
         font-size: 35px;
         color: black;
+      }
+
+      h3 {
+        margin-top: 2%;
+        margin-bottom: 2%;
+
       }
 
       p,
@@ -272,7 +278,6 @@ footer {
 
       img+p.caption {
         font-size: 0.6em;
-        color: $grey;
         margin-top: 3%;
         margin-right: 5%;
         text-align: right;
