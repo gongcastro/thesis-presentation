@@ -577,32 +577,35 @@ Some evidence in infants and children [e.g., @vonholzen2012language; @singh2014o
 
 Methodological pitfalls: "Bilingual" task
 
-::: columns
-::: {.column width="30%"}
-::: fragment
-
-**Implicit naming task**
-
-[@mani2010infant; @mani2011phonological]
-
-English monolinguals
-![](assets/img/mani-2.png){width="80%"}
-:::
-:::
-::: {.column width="70%"}
-::: fragment
-![](assets/img/s2-design-mani.png){width="100%"}
-:::
-:::
-:::
-:::
 
 ## Implicit naming task
 
+::: box
 Mani and Plunkett (2010, 2011)
+:::
 
 ![](assets/img/mani-design.png){width="80%"}
 
+## Implicit naming task
+
+::: box
+Mani and Plunkett (2011):
+:::
+
+::: columns
+:::: {.column}
+![](assets/img/mani-2.png){width="80%"}
+::::
+:::: {.column}
+::::: fragment
+:::::: incremental
+* Chance-level target looking in related trials
+* Prime-Target phonological **interference**
+* **Implicit naming** of prime pictures
+::::::
+:::::
+::::
+:::
 
 ## Study 2: Design
 
@@ -637,34 +640,34 @@ Temporal proximity of prime and target labels
 ## Predictions and dataset
 
 ::: columns
-::: {.column width="50%"}
-::: fragment
-::: box
+:::: {.column width="50%"}
+::::: fragment
+:::::: box
 **Exp. 1: Monolinguals**
-:::
+::::::
 Replicate **within-language phonological interference** from Mani and Plunkett (*proof of concept*)
-:::
-:::
-::: {.column width="50%"}
-::: fragment
-::: box
+:::::
+::::
+:::: {.column width="50%"}
+::::: fragment
+:::::: box
 **Exp. 2: Monolinguals and bilinguals**
-:::
+::::::
 If **language non-selectivity**, **stronger interference** in cognate vs. non-cognate trials
-:::
-:::
+:::::
+::::
 :::
 
 ::: columns
-::: {.column width="50%"}
-::: fragment
+:::: {.column width="50%"}
+::::: fragment
 **79 English monolinguals**
 
 > 89 sessions
-:::
-:::
-::: {.column width="50%"}
-::: fragment
+:::::
+::::
+:::: {.column width="50%"}
+::::: fragment
 **77 Catalan/Spanish monolinguals**
 
 > 107 sessions
@@ -672,8 +675,8 @@ If **language non-selectivity**, **stronger interference** in cognate vs. non-co
 **78 Catalan/Spanish bilinguals**
 
 > 133 sessions 
-:::
-:::
+:::::
+::::
 :::
 
 ---
@@ -681,50 +684,52 @@ If **language non-selectivity**, **stronger interference** in cognate vs. non-co
 ## Experiment 1: Results, Bayesian GAMMs
 
 ::: columns
-::: {.column width="30%"}
-::: box
+:::: {.column width="30%"}
+::::: box
+English monolinguals
+:::::
+
 **No evidence of phonological priming**
 
 Related trials $\approx$ Unrelated trials
-:::
-:::
-::: {.column width="70%"}
+::::
+:::: {.column width="70%"}
 ![](assets/img/s2-1-predictions.png)
-:::
+::::
 :::
 
 ## Experiment 2: Results, Bayesian GAMMs
 
 ::: columns
-::: {.column width="30%"}
-::: box
+:::: {.column width="30%"}
+::::: box
+Catalan/Spanish monolinguals
+:::::
 **No evidence of phonological priming**
 
 Related trials $\approx$ Unrelated trials
 Cognate trials $\approx$ Non-cognate trials
-:::
-
-:::
-::: {.column width="70%"}
+::::
+:::: {.column width="70%"}
 ![](assets/img/s2-2-predictions-mon.png)
-:::
+::::
 :::
 
-## Experiment 2: results, Bayesian GAMMs
+## Experiment 2: Results, Bayesian GAMMs
 
 ::: columns
-::: {.column width="30%"}
-::: box
+:::: {.column width="30%"}
+::::: box
+Catalan/Spanish bilinguals
+:::::
 **No evidence of phonological priming**
 
 Related trials $\approx$ Unrelated trials
 Cognate trials $\approx$ Non-cognate trials
-:::
-
-:::
-::: {.column width="70%"}
+::::
+:::: {.column width="70%"}
 ![](assets/img/s2-2-predictions-bil.png)
-:::
+::::
 :::
 
 ## Discussion
@@ -756,7 +761,7 @@ Candidate **mechanism** behind bilingual vocabulary growth
 
 > AMBLA: Cross-language accumulation of learning instances
 
-...
+. . .
 
 **Language non-selectivity** in the initial lexicon: Pending testing
 
@@ -770,31 +775,29 @@ Candidate **mechanism** behind bilingual vocabulary growth
 ## Methodological contributions
 
 ::: columns
-::: {.column width="50%"}
-### Methods
+:::: {.column width="50%"}
+**Methods**
 
 * Sample size (***N*** = XX)
 * **Bayesian modelling**: Quantifying uncertainty, estabilising statistical inference
 
-:::
-::: {.column width="50%"}
-::: fragment
-### Software
+::::
+:::: {.column width="50%"}
+::::: fragment
+**Software**
 
 Barcelona Vocabulary Questionnaire (**BVQ**) 
 
 > bvq {{< fa brands r-project >}} package + {{< fa brands github >}}
 
-:::
-::: fragment
-
+:::::
+::::: fragment
 **Levenshtein distance** as a valid measure of word-level effects of phonological similarity
 
 > jtracer {{< fa brands r-project >}} package
+:::::
+::::
 :::
-:::
-:::
-
 
 ## Future steps
 

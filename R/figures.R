@@ -599,7 +599,7 @@ plot_time <- epreds |>
   ) +
   labs(
     x = "Time (ms)",
-    y = "Logit PTLT",
+    y = "Logit *PTLT*",
     colour = "Condition",
     fill = "Condition",
     linetype = "Condition",
@@ -618,9 +618,7 @@ plot_time <- epreds |>
   theme(
     legend.position = c(0.5, 1),
     legend.direction = "horizontal",
-    legend.justification = c(0.5, 1),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank(),
+    legend.justification = c(0.5, 1)
   )
 
 plot_time + plot_summary +
@@ -636,6 +634,7 @@ plot_time + plot_summary +
   theme_ambla() &
   theme(
     legend.position = "top",
+    axis.title.y = ggtext::element_markdown(),
     axis.line = element_blank(),
     panel.grid.major.x = element_blank(),
     panel.grid.major.y = element_blank(),
@@ -717,7 +716,6 @@ plot_time <- epreds |>
     linetype = condition,
     shape = condition
   )) +
-  facet_wrap(~lp, ncol = 1) +
   geom_hline(
     yintercept = 0,
     colour = "grey"
@@ -748,7 +746,7 @@ plot_time <- epreds |>
   ) +
   labs(
     x = "Time (ms)",
-    y = "*p*(Target looking)",
+    y = "Logit *PTLT*",
     colour = "Condition",
     fill = "Condition",
     linetype = "Condition",
@@ -777,7 +775,6 @@ plot_summary <- obs_summary |>
     colour = condition,
     fill = condition
   )) +
-  facet_wrap(~lp, ncol = 1) +
   geom_hline(
     yintercept = 0,
     colour = "grey"
@@ -824,7 +821,7 @@ plot_summary <- obs_summary |>
   ) +
   labs(
     x = "Condition",
-    y = "*p*(Target looking)",
+    y = "Logit *PTLT*",
     colour = "Condition",
     fill = "Condition"
   ) +
@@ -868,7 +865,6 @@ plot_time <- epreds |>
     linetype = condition,
     shape = condition
   )) +
-  facet_wrap(~lp, ncol = 1) +
   geom_hline(
     yintercept = 0,
     colour = "grey"
@@ -899,7 +895,7 @@ plot_time <- epreds |>
   ) +
   labs(
     x = "Time (ms)",
-    y = "*p*(Target looking)",
+    y = "Logit *PTLT*",
     colour = "Condition",
     fill = "Condition",
     linetype = "Condition",
@@ -928,7 +924,6 @@ plot_summary <- obs_summary |>
     colour = condition,
     fill = condition
   )) +
-  facet_wrap(~lp, ncol = 1) +
   geom_hline(
     yintercept = 0,
     colour = "grey"
@@ -975,7 +970,7 @@ plot_summary <- obs_summary |>
   ) +
   labs(
     x = "Condition",
-    y = "*p*(Target looking)",
+    y = "Logit *PTLT*",
     colour = "Condition",
     fill = "Condition"
   ) +
