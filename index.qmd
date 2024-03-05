@@ -589,7 +589,7 @@ Mani and Plunkett (2010, 2011)
 ## Implicit naming task
 
 ::: box
-Mani and Plunkett (2011):
+Mani and Plunkett (2010, 2011)
 :::
 
 ::: columns
@@ -632,10 +632,13 @@ Temporal proximity of prime and target labels
 ::::
 :::
 
----
+## Data collection timeline
 
-![](assets/img/collection.png)
+![](assets/img/timeline-1.png)
 
+## Data collection timeline
+
+![](assets/img/timeline-2.png)
 
 ## Predictions and dataset
 
