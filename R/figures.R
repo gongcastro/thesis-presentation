@@ -1067,7 +1067,7 @@ tibble::tribble(
     axis.title.y = element_blank()
   )
 
-ggsave("assets/img/cognate-proportion.png", width = 6, height = 4)
+ggsave("assets/img/cognate-proportion.png", width = 7, height = 4)
 
 # Study 1: posterior coefficients ----
 

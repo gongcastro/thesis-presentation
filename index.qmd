@@ -594,14 +594,13 @@ Mani and Plunkett (2010, 2011)
 
 ::: columns
 :::: {.column}
-![](assets/img/mani-2.jpeg){width="80%"}
+![](assets/img/mani-2.jpg){width="80%"}
 ::::
 :::: {.column}
-:::::: incremental
+::::: incremental
 * Chance-level target looking in related trials
 * Prime-Target phonological **interference**
 * **Implicit naming** of prime pictures
-::::::
 :::::
 ::::
 :::
