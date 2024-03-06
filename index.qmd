@@ -66,7 +66,6 @@ Lexical representations
 * In the last five years, we have explored the initial lexicon through the lens of a particular case of language learning: bilingual infants
 * The foundations of a lexicon are laid by the first form-meaning mappings at 6 months
 * Two sources of evidence: inter-modal experimental paradigms and parental reports
-* The internal workings of this initial lexicon are still unclear
 
 :::
 
@@ -77,7 +76,12 @@ Vocabulary size norms for 51,800 monolingual children learning 35 distinct langu
 
 ::: notes
 
-Vocabulary size grows non-linearly during the second year of life
+* Data from Worbank, a database that collects CDI responses from thousands of children learning a viriety of languages
+* Here I show normative data for a large sample of CDI administrations
+* Until 18 months, vocabulary size grows steadily from 0 to approx. 100 words
+* From 18 months on, infants acquire new words at an increasingly faster rate, and know on average around 400 words
+* Infants' second year of life is critical for lexical development
+* This is the age range we will focus on in the present dissertation
 
 :::
 
@@ -127,6 +131,14 @@ Split into two languages
 ::::
 :::
 
+::: notes
+- There are reasons to think that, a priori, bilingual infants should lag behind their monolingual peers in lexical development
+- I highlight three reasons.
+- First, bilinguals face a more complex linguistic environment, as they have two learn two partially overlapping codes instead of one (two grammar systems, two sets of words, two phoneme inventories, etc.)
+- Second, they do so while facing a reduced linguistic input, relative to monolinguals. Because their input is split into two languages, they are exposed to a lower degree to each language than monolinguals.
+- Third, bilinguals face increased referential ambiguity. They not only need to learn word-referent associations like monolinguals, they often have to associate more than one label per referent, one in each language
+:::
+
 ## Bilinguals face additional challenges, but do not lag behind
 
 ::: box
@@ -148,12 +160,13 @@ Split into two languages
 :::
 
 ::: notes
-
-1. Two grammatical systems, two phoneme inventories, two sets of word-forms
-2. Lower quantitative, relative to monolinguals
-3. Two sets of words for the same referents
-4. Bilinguals keep up with monolinguals (language discrimination, grammar, lexicon)
-
+- Despite these challenges, bilinguals reach most of their language acquisition milestones at equivalent ages as monolinguals
+- This is specially true for lexical development
+- For instance, I highlight this study by Hoff et al. (2012), in which they collected English and Spanish CDI administrations for a cohort of English monolinguals and English/Spanish bilingual children living in Florida.
+- Both groups were matched across many demographic variables, like SES
+- When the authors compared monolingual and bilingual vocabulary sizes in each language separately, they observed that English monolinguals knew more English words on average than bilinguals.
+- But when English and Spanish vocabulary sizes were combine into a measure of total vocabulary size, monolinguals and bilinguals' trajectories of vocabulary growth were equivalent.
+- This begs the question: *How do bilinguals keep up with monolinguals despite facing a more challenging lingusitic environment*?
 :::
 
 ## Lexical similarity modulates vocabulary growth in bilinguals
@@ -179,9 +192,30 @@ Split into two languages
 
 Stronger effect in the additional language (e.g., Dutch, Mandarin)
 
+::: notes
+- Recent studies have suggested that bilinguals might exploit the lexical similarity between their languages to boost the vocabulary growth.
+- In an influential monograph published in 2019, Floccia et al. collected vocabulary data from a large sample of bilingual 2-year-olds in the UK.
+- These children were learning English and an additional language, out of a diverse sample of 13 other languages from different typological families, linguistic groups, or that followed different grammatical systems.
+- Most children were English-dominant, but were exposed to the additional language in verying degrees
+- The authors calculated a measure of lexical similarity for each pair of languages.
+- For each language pair, they calculated the average phonological similarity between the translation equivalents included in the English vocabulary checklists and in each of the other additional languages
+- This measure was included as a predictor in a model that estimated participants' vocabulary size in each of their languages
+- This index of lexical similarity turned out to be positively related with children's vocabulary size in their additional language
+- For instance, English-Dutch bilinguals (learning two lexically similar languages) knew more Dutch words than Enlgish-Mandaring (low similarity languages) knew in Mandarin
+- Overall, these results pointed to lexical similarity as a possible facilitator of word acquisition
+:::
+
 ## Lexical similarity modulates vocabulary acquisition in bilinguals
 
 ![](assets/img/similarity.png)
+
+::: notes
+- Such a facilitation effect would have important consequences for some populations of bilinguals.
+- For instance, most infants in Catalunya learn Catalan and Spanish simulataneously.
+- The languages share a high lexical similarity.
+- In fact when using the method to calculate lexical similarity than in Floccia et al., we find that Catlaan and Spanish share around double as much similarity than English and Dutch, the pair of languages with the highest similarity included in the study
+
+:::
 
 ## A cognate facilitation in lexical acquisition?
 
@@ -208,9 +242,29 @@ Some evidence that cognates **acquired earlier** than non-cognates [@mitchell202
 **What *mechanisms* support a cognate facilitation during word acquisition?**
 :::
 
+::: notes
+- What makes two languages lexically similar is mostly the presence of *cognates*, or form-similar translation equivalents.
+- *Cognates* are words that belong to two different languages, but share an equivalent meaning and are phonologically or orthographically similar
+- A clear example of a cognate in Catalan and Spanish is *gat*-*gato* [cat]
+- A clear example of a non-cognate is *gos*-*perro* [dog]
+- There is some recent evidence that cognates are acquired earlier than non-cognates
+- This would explain the facilitation effect of lexical similarity found by Floccia et al.
+- But what are the mechanisms behind such a cognate facilitation effect?
+:::
+
 ## Lexical access is language non-selective in bilinguals
 
 ![](assets/img/lexicon.png){ width="150%" }
+
+::: notes
+- Current explanations of this effect stem from the language non-selective account of the bilingual lexicon
+- This account states that during language comprehension and production, lexical representations from both languages are activated, even during monolingual situations
+- For instance, when a Catalan-Spanish bilingual hears the Catalan word *cotxe*, not only the lexical representation of *cotxze* is activated, but also that of other phonologically related words in Catalan and Spanish
+- There is extensive evidence in adults that this activation, which also percolates to semantic representations, influences the dynamics of word comprehension and production.
+- There is some evidence of such parallel activation in infants.
+- It has been suggested that this parallel activation of representations in both languages may facilitate the acquisition of cognates in infants, given that they are more strongly co-activated, given their higher similarity, compared to non-cognates.
+- But this effect still lacks a mechanistic account
+:::
 
 ## The present dissertation
 
@@ -238,7 +292,11 @@ Some evidence that cognates **acquired earlier** than non-cognates [@mitchell202
 :::
 :::
 
-
+::: notes
+- This has been the aim of the present dissertation
+- In Study 1, we present and test the predictions of a mechanistic account of the cognate facilitation effect in bilingual word acquisition
+- In Study 2, we test of the core predictions of the mode: that the initial bilingual lexicon operates in a language-non selective fashion
+:::
 
 # Study 1 {.inverse}
 
@@ -247,15 +305,11 @@ Some evidence that cognates **acquired earlier** than non-cognates [@mitchell202
 ## **A**ccumulator **M**odel of **B**ilingual **L**exical **A**cquisition (**AMBLA**)
 
 ::: box
-
 1. **Accumulation** of information about **form-meaning mappings**:
 
 <span style="color:#a80035;">**Learning instances**</span>: Exposure to a word-form that results in the accumulation of information about its meaning
-
 :::: fragment
-
 2. <span style="color:#00a857;">**Age of acquisition**</span>: The infant accumulates a <span style="color:#0040a8;">**threshold**</span> amount of learning instances for a word-form
-
 ::::
 :::
 
@@ -272,6 +326,16 @@ $$
 {\color{myred}\text{Learning instances}_{ij}} &= \text{Age}_i \cdot \text{Freq}_j \\
 \end{aligned}
 $$
+
+::: notes
+- I present here the *Accumulator Model of Bilingual Lexical Acquisition* or AMBLA
+- This is an *accumulator* model, in that it assumes that infants learn words by gradually accumulating information about word-referent mappings.
+- Information is collected by the child in the form of *learning instances*
+- We define learning instances as exposure to tokens of the word that result in the successful accumulation of information about their meaning
+- We assume that an infant acquires a word when they have accumulated some threshold amount of learning instances with
+- The age at which this occurs is the acge of acquisition of the word
+- The rate at which an infant accumulates learning instances is a function of two variables: they age (older infants will have accumulated more learning instance than younger infants), and the lexical frequency of the words (infants will accumulate learning instances faster for more frequent words than for less frequent words)
+:::
 
 ## AMBLA: Simulating *monolingual* word acquisition
 
@@ -298,6 +362,14 @@ $$
 ::::
 :::
 
+::: notes
+- I will illustrate how AMBLA works with some simulations
+- I will now simulate how a Catalan monolingual child (exposed 100% of the time to Catalan) acquires the Catalan word *gos*
+- For illustration purposes, I have fixed some parameters: I assume that the threshold of learning instances for word acquisition is 300
+- I also assume that infants encounter the word *gos* around 50 times per month, as drawn from a Poisson probabilistic distribution in each month
+- In this particular simulation, the infant has acquired the word *gos* at 26 months
+:::
+
 ## AMBLA: Simulating *monolingual* word acquisition
 
 ::: columns
@@ -320,6 +392,9 @@ $$
 ::::
 :::
 
+::: notes
+- If we simulate this acquisition trajectory 50 times, we find that, on average, a Catalan monolingual will acquire the word at 24 months of age 
+:::
 
 ## AMBLA: Simulating *bilingual* word acquisition
 
@@ -342,6 +417,11 @@ $$
 \text{Learning instances}_{ij} &= \text{Age}_i \cdot \text{Freq}_j \cdot {\color{myred}\text{Exposure}_{ij}}\\
 \end{aligned}
 $$
+
+::: notes
+- To extend this model to the bilingual case, we need to account for the fact that bilinguals' lingusitic input is split into two languages
+- Now the rate of accumulation of learning instances is also a function of the childs' exposue to the language that a word belongs to
+:::
 
 ## AMBLA: Simulating *bilingual* word acquisition
 
@@ -373,6 +453,18 @@ $$
 ::::
 :::
 
+
+::: notes
+- As I did before I will now simulate how a Catalan/Spanish bilingual child might acquire the Catalan and Spanish words *gos* and *perro*
+- For illustration purposes, I will assume that this bilingual is Catalan-dominant, as they are exposed to 60% of the time to Catalan, and 40% of the time to Spanish
+- Everything else remains the same
+- I will also show the trajectory of acquisition for the monlingual child for reference
+- As we can see, the bilingual child acquires the Catalan word first, and the Spanish word later
+- Overall, the bilingual child acquires both words than the Catalan monolingual acquires the Catalan word
+- This is the result of the bilingual child's dual language exposure
+:::
+
+
 ## AMBLA: Simulating *bilingual* word acquisition
 
 ::: columns
@@ -401,6 +493,13 @@ $$
 ::::
 ::: 
 
+::: notes
+- If carry out this simulation 50 times, we can see that on average, the bilingual child acquires both words at later ages than the monolingual child
+- This difference is specially large for the acquisition of the word in the lower-exposure language
+- But this model does not include any kind of cognate facilitation effect
+- I will now illustrate how we have implemented this effect, and I will show some simulations of the acquisition of a cognate word
+:::
+
 
 ## AMBLA: Simulating a *cognate facilitation*
 
@@ -424,7 +523,17 @@ $$
 \end{aligned}
 $$
 
-
+::: notes
+- Following the language non-selective account of the bilingual lexicon, we assume that infants co-activate translation equivalents in both languages, even in monolingual situations
+- The strength of this co-activation is a function of the phonological similarity between both word-forms
+- During language exposure cognate words will be more strongly co-activated than non-cognate words
+- As a result of this co-activation, when an infant encounters a given word-form in their speech inpt, they may not only accumulate a learning instance for such word, but also for its translation equivalent
+- The degree to which the translation accumulates this additional learning instance is a function of its phonological similarity between both word-forms
+- This is expressed in the model by adding a new term to the learning instance accumulator
+- This term adds the number of learning isntances that the translation eequivalent of the word has acquired, weighted by the phonological simlarity between them
+- This phonological similarity is measured using Levenshtein distance between both phonological transcriptions
+- As a result, identical cognates will accumulate cross-lingusitic learning isntances with every exposure to either translation, while words with no phonological similarity will not benefit from any additional learning instances
+:::
 
 ## AMBLA: Simulating a *cognate facilitation*
 
@@ -453,6 +562,13 @@ $$
 ::::
 :::
 
+::: notes
+- Let's visualise this with more simulations
+- I've simulated the acquisition of the cognate words *gat* and *gato* in Catalan and Spanish by the same monolingual and bilingual children
+- These words share 75% phonological similarity, so we would expect both words to accumulate learning instances faster now
+- As we can see, the bilingual now acquires the Catalan and Spanish words at a more similar age than the Catalan monolingual does with the Catalan word
+- This difference is specially large in Spanish, the lower-exposure language
+:::
 
 ## AMBLA: Simulating a *cognate facilitation*
 
@@ -482,6 +598,11 @@ $$
 ::::
 :::
 
+::: notes
+- If we carry out this simulation 50 times, we confirm that a cognateness effect, as implemented in AMBLA, predicts a closer age of acquisition for both words
+- The word in the lower-exposure language (Spanish in this case), benefits more strongly from its cognate status, as it receives additional learning instances from its more frequent translation more often
+:::
+
 ---
 
 ### Predictions
@@ -491,6 +612,11 @@ $$
 2. Cognateness facilitation stronger in the **lower-exposure language**
 :::
 
+::: notes
+- In summary, the AMBLA model generates two predictions
+- First, that bilinguals acquire cognates earlier than non-cognates
+- That this facilitation effect is larger in the lower exposure language, compared to the higher-exposure language
+:::
 ---
 
 ### Predictions
