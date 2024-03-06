@@ -584,7 +584,7 @@ Methodological pitfalls: "Bilingual" task
 Mani and Plunkett (2010, 2011)
 :::
 
-![](assets/img/mani-design.png){width="80%"}
+![](assets/img/mani-design-1.png){width="80%"}
 
 ## Implicit naming task
 
@@ -594,10 +594,9 @@ Mani and Plunkett (2010, 2011)
 
 ::: columns
 :::: {.column}
-![](assets/img/mani-2.png){width="80%"}
+![](assets/img/mani-2.jpeg){width="80%"}
 ::::
 :::: {.column}
-::::: fragment
 :::::: incremental
 * Chance-level target looking in related trials
 * Prime-Target phonological **interference**
@@ -607,30 +606,36 @@ Mani and Plunkett (2010, 2011)
 ::::
 :::
 
+## Implicit naming task
+
+![](assets/img/mani-design-2.png){width="80%"}
+
 ## Study 2: Design
 
-![](assets/img/hypotheses.png)
+![](assets/img/design-1.png)
 
 ## Study 2: Design
 
-Extending the task to test cross-language priming in bilinguals.
+![](assets/img/design-2.png)
 
-::: columns
-:::: {.column width="30%"}
-Change in order of  trial timecourse:
+## Study 2: Design
 
-<br>
+![](assets/img/design-3.png)
+
+## Study 2: Design
 
 **Auditory label *before* target-distractor images**
 
-Length of Catalan and Spanish words
+- Length of Catalan and Spanish words
+- Temporal proximity of prime and target labels
 
-Temporal proximity of prime and target labels
-::::
-:::: {.column width="70%"}
-![](assets/img/s2-design-barcelona.png)
-::::
-:::
+## Study 2: Design
+
+![](assets/img/design-4.png)
+
+## Study 2: Design
+
+![](assets/videos/design.mp4){ width="90%"}
 
 ## Data collection timeline
 
