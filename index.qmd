@@ -305,11 +305,15 @@ Some evidence that cognates **acquired earlier** than non-cognates [@mitchell202
 ## **A**ccumulator **M**odel of **B**ilingual **L**exical **A**cquisition (**AMBLA**)
 
 ::: box
+
 1. **Accumulation** of information about **form-meaning mappings**:
 
 <span style="color:#a80035;">**Learning instances**</span>: Exposure to a word-form that results in the accumulation of information about its meaning
+
 :::: fragment
+
 2. <span style="color:#00a857;">**Age of acquisition**</span>: The infant accumulates a <span style="color:#0040a8;">**threshold**</span> amount of learning instances for a word-form
+
 ::::
 :::
 

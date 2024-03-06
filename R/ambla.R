@@ -1011,7 +1011,7 @@ ggsave("assets/img/ambla-all-c.png",
 # animations -------------------------------------------------------------------
 
 # single, mon
-iter_id <- 1
+iter_id <- 25
 
 eli_data_plot <- eli_df |>
   filter(
@@ -1120,7 +1120,7 @@ eli_gif <- animate(eli_plot,
 anim_save("assets/gif/ambla-eli-single-mon.gif", eli_gif)
 
 # simulations all (no facilitation) ----
-iter_id <- 1
+iter_id <- 25
 
 eli_data_plot <- eli_df |>
   filter(
@@ -1231,7 +1231,7 @@ anim_save("assets/gif/ambla-eli-single.gif", eli_gif)
 
 # animations (all, facilitation) -----------
 
-iter_id <- 1
+iter_id <- 25
 
 eli_data_plot <- eli_df |>
   filter(
