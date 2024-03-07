@@ -229,7 +229,7 @@ Stronger effect in the additional language (e.g., Dutch, Mandarin)
 ::::
 :::: {.column}
 :::::  fragment
-Some evidence that cognates **acquired earlier** than non-cognates [@mitchell2023cognates; @bosch2014first]
+Some evidence that cognates **acquired earlier** than non-cognates [@mitchell2023cognates; @bosch2014first; @tan2023role]
 :::::
 ::::
 ::: 
@@ -562,7 +562,9 @@ $$
 $$
 ::::
 :::: {.column width="60%"}
+::::: fragment
 ![](assets/gif/ambla-single-c.gif)
+:::::
 ::::
 :::
 
@@ -651,9 +653,9 @@ $$
 
 ## Results: Comprehension
 
-Ordinal, multilevel (Bayesian) regression model
+366 participants (12-32 mo), 436 administrations $\times$ 604 noun words
 
-366 children (12-32 mo), 436 administrations $\times$ 604 noun words
+Ordinal, multilevel (Bayesian) regression model
 
 $p(\text{Comprehension}, \text{Production}) \sim \text{Exposure}_{ij} \cdot \text{Cognateness}_j$
 
@@ -663,9 +665,9 @@ $p(\text{Comprehension}, \text{Production}) \sim \text{Exposure}_{ij} \cdot \tex
 
 ## Results: Production
 
-Ordinal, multilevel (Bayesian) regression model
+366 participants (12-32 mo), 436 administrations $\times$ 604 noun words
 
-366 children (12-32 mo), 436 administrations $\times$ 604 noun words
+Ordinal, multilevel (Bayesian) regression model
 
 $p(\text{Comprehension}, \text{Production}) \sim \text{Exposure}_{ij} \cdot \text{Cognateness}_j$
 
@@ -766,13 +768,6 @@ Mani and Plunkett (2010, 2011)
 
 ![](assets/videos/design.mp4){ width="90%"}
 
-## Data collection timeline
-
-![](assets/img/timeline-1.png)
-
-## Data collection timeline
-
-![](assets/img/timeline-2.png)
 
 ## Predictions and dataset
 
@@ -795,28 +790,14 @@ If **language non-selectivity**, **stronger interference** in cognate vs. non-co
 ::::
 :::
 
-::: columns
-:::: {.column width="50%"}
-::::: fragment
-**79 English monolinguals**
 
-> 89 sessions
-:::::
-::::
-:::: {.column width="50%"}
-::::: fragment
-**77 Catalan/Spanish monolinguals**
+## Data collection timeline
 
-> 107 sessions
+![](assets/img/timeline-1.png)
 
-**78 Catalan/Spanish bilinguals**
+## Data collection timeline
 
-> 133 sessions 
-:::::
-::::
-:::
-
----
+![](assets/img/timeline-2.png)
 
 ## Experiment 1: Results, Bayesian GAMMs
 
@@ -825,6 +806,8 @@ If **language non-selectivity**, **stronger interference** in cognate vs. non-co
 ::::: box
 English monolinguals
 :::::
+
+> 79 participants, 89 sessions
 
 **No evidence of phonological priming**
 
@@ -842,6 +825,9 @@ Related trials $\approx$ Unrelated trials
 ::::: box
 Catalan/Spanish monolinguals
 :::::
+
+> 77 participants, 107 sessions
+
 **No evidence of phonological priming**
 
 Related trials $\approx$ Unrelated trials
@@ -859,6 +845,9 @@ Cognate trials $\approx$ Non-cognate trials
 ::::: box
 Catalan/Spanish bilinguals
 :::::
+
+> 78 participants, 133 sessions
+
 **No evidence of phonological priming**
 
 Related trials $\approx$ Unrelated trials
@@ -903,7 +892,6 @@ Candidate **mechanism** behind bilingual vocabulary growth
 **Language non-selectivity** in the initial lexicon: Pending testing
 
 
-
 ## Whats not in this dissertation
 
 ### Backward Semantic Inhinbition
@@ -939,9 +927,29 @@ Data collection ongoing
 
 --- 
 
-::: {.r-fit-text}
-Thanks!
+## Thank you!
+
+![](assets/img/upf.png)
+
+## Thank you!
+
+![](assets/img/oxford.png)
+
+## Thank you!
+
+![](assets/img/participants.jpg)
+
+## Thank you!
+
+::: columns
+:::: {.column}
+![](assets/img/elbakyan.gif)
+::::
+:::: {.column}
+![](assets/img/sci-hub.jpg)
+::::
 :::
+
 
 # Appendix
 
