@@ -38,8 +38,6 @@ options(
 set.seed(1234)
 ```
 
-
-
 ## The initial lexicon
 
 Average 20-year-old knows ~42,000 lemmas: **mental lexicon**
@@ -651,6 +649,15 @@ $$
 ::::
 :::
 
+::: notes
+- To test these predictions, we designed an online vocabulary questionnaire (the BVQ)
+- This questionnaire, which is inspired by the CDI, includes a language exposure survey, a demographic survey and two vocabulary checklists
+- One vocabulary checklist icludes words in Catalan, and the other includes their translations to Spanish
+- In each checklist, caregivers are presented with a list of words
+- Caregivers are asked to mark, for each word, whether their child can *understand* or *understand and say* it
+- The questionnaire is open-source, and is publicly available on GitHub
+:::
+
 ## Results: Comprehension
 
 366 participants (12-32 mo), 436 administrations $\times$ 604 noun words
@@ -663,6 +670,20 @@ $p(\text{Comprehension}, \text{Production}) \sim \text{Exposure}_{ij} \cdot \tex
 
 ![](assets/img/s1-predictions-comp.png)
 
+::: notes
+- We gathered 436 questionnaire administrations from 366 12-32 month-old infants learning Catalan and or Spanish in the Metropolitan Area of Barcelona
+- We modelled the probabiity that each child would understand or produce each of the words
+- We used on ordinal Bayesian multilevel model that included several predictors of interest
+- The critical predictors were the main effect of $Cognateness$, and its interaction with $Exposure$
+- First I am going to present the results for *comprehension*
+- In this figure I am showing the posterior predicted probability of comprehension across ages for three average word-forms
+- I am showing predictions for an identical cognate with 100% phonological similarity with its translation
+- I am also showing the predictions for a non-cognate with 50% similarity, and 0% similarity
+- Predictions are generated for word acquisition in the lower-exposure language (to the left) and for the higher-exposure language (to the right)
+- In the lower-exposure language, we observed a substantial facilitation effect of cognateness: the probability of acquisition grows faster for cognates
+- In the higher-exposure language, this effect was not observed
+:::
+
 ## Results: Production
 
 366 participants (12-32 mo), 436 administrations $\times$ 604 noun words
@@ -672,6 +693,12 @@ Ordinal, multilevel (Bayesian) regression model
 $p(\text{Comprehension}, \text{Production}) \sim \text{Exposure}_{ij} \cdot \text{Cognateness}_j$
 
 ![](assets/img/s1-predictions-prod.png)
+
+::: notes
+- We found similar results in Production
+- Participants were able to produce the words at later ages than in comprehension, as expected
+- We also observe a substantial facilitation effect of cognateness, only in the lower exposure language
+:::
 
 ## Discussion
 
@@ -697,9 +724,26 @@ Cross-language facilitation via co-activation of phonologically similar translat
 **Is language-non selectivity already present in the initial lexicon?**
 :::
 
+
+::: notes
+- In summary, we found an earlier acquisition of cognates than non-cognates, in line with the predictions of AMBLA
+- This effect was modulated by quantitative language-exposure
+- Only the acquisition of words from the lower-exposure language benefitted from their cognate status 
+- This cognate facilitation provides an candiate mechanism for the results in Floccia et al.
+- We presented a mechanistic account for this effect in the form of a model, the AMBLA model
+- In this model, we propose that the cognate facilitation effect is the result of a cross-language accumulation of learning instances, in line with the language non-selective account of the bilingual lexicon
+- One core assumption of this model is that bilingual infants activate phonological word-forms in both languages in parallel, even in monolingual situations
+- In Study 2, we tested the plausibility of this assumption
+:::
+
 # Study 2 {.inverse}
 
 Developmental trajectories of bilingual spoken word recognition
+
+::: notes
+- In this second study, we examined the language non-selectivity of the initial lexicon to test
+- We implemented a spoken word recognition paradigm
+:::
 
 ## Language non-selectivity in the initial lexicon
 
@@ -709,6 +753,12 @@ Some evidence in infants and children [e.g., @vonholzen2012language; @singh2014o
 
 Methodological pitfalls: "Bilingual" task
 
+::: notes
+- ALthough there is some evidence of language non-selectivity in the initial lexicon, most literature presents one methodological caveat
+- The experimental paradigms used frequently present participants with words from both languages, even within the same trial
+- This may be introducing bilinguals in a bilingual context in which the baseline activation of lexical representations in both languages is increased
+- This may lead to cross-language interactions that may not be the result of the experimental manipulation of interest (e.g., priming), but rather from such overall higher activation
+:::
 
 ## Implicit naming task
 
