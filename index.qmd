@@ -62,7 +62,7 @@ Lexical representations
 
 * The average English 20-year-old knows around 42,000 words
 * The collection of words that an adult knows is known as the *mental lexicon*
-* The *mental lexicon* is formed by *lexical representations*, each embedding phonological, conceptual, and grammatical information about words
+* The *mental lexicon* is formed by *lexical representations*, each embedding phonological, conceptual, and grammatical information about known words
 * In the last five years, we have explored the initial lexicon through the lens of a particular case of language learning: bilingual infants
 * The foundations of a lexicon are laid by the first form-meaning mappings at 6 months
 * Two sources of evidence: inter-modal experimental paradigms and parental reports
@@ -772,46 +772,39 @@ Candidate **mechanism** behind bilingual vocabulary growth
 
 **Language non-selectivity** in the initial lexicon: Pending testing
 
-## Theoretical contributions
 
-### Whats not in this dissertation
 
-* `semantic-inhibition`: Data collection ongoing
-* `translation-elicitation`: In preparation
+## Whats not in this dissertation
 
-## Methodological contributions
+### Backward Semantic Inhinbition
 
-::: columns
-:::: {.column width="50%"}
-**Methods**
+Data collection ongoing
 
-* Sample size (***N*** = XX)
-* **Bayesian modelling**: Quantifying uncertainty, estabilising statistical inference
+## Whats not in this dissertation
 
-::::
-:::: {.column width="50%"}
-::::: fragment
-**Software**
+### Translation Elicitation
 
-Barcelona Vocabulary Questionnaire (**BVQ**) 
-
-> bvq {{< fa brands r-project >}} package + {{< fa brands github >}}
-
-:::::
-::::: fragment
 **Levenshtein distance** as a valid measure of word-level effects of phonological similarity
 
 > jtracer {{< fa brands r-project >}} package
-:::::
-::::
-:::
+
+![](assets/img/translation-elicitation.png)
+
+## Methodological contributions
+
+* Sample size (***N*** > 400)
+* **Bayesian modelling**: Quantifying uncertainty, estabilising statistical inference
+* Barcelona Vocabulary Questionnaire (**BVQ**) 
+
+> bvq {{< fa brands r-project >}} package + {{< fa brands github >}}
+
 
 ## Future steps
 
 ::: incremental
 - The impact of cognateness in spoken word recognition: *Re-analysing data from Study 2*
-- Disentangling lexical similarity from **phonemic overlap**: Basque, Greek
-- Bilingualism and concept lexicalisation: **Backward Semantic Inhibition**
+- More language pairs (lower overall similarity)
+- Train AMBLA model on vocabulary data
 :::
 
 --- 
