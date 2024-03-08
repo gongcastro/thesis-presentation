@@ -944,19 +944,39 @@ Candidate **mechanism** behind bilingual vocabulary growth
 
 ## Whats not in this dissertation
 
-### Backward Semantic Inhinbition
+::: columns
+:::: {.column}
+::: box
+Backward Semantic Inhibition
+:::
+The emergence of inhibitory links in the initial lexicon
+
+Vocabulary growth through the lens of bilingualism
 
 Data collection ongoing
+::::
+:::: {.column}
+![](assets/img/poster-1.png){ width="80%"}
+::::
+:::
 
 ## Whats not in this dissertation
 
-### Translation Elicitation
-
+::: columns
+:::: {.column width="40%"}
+::::: box
+**Translation Elicitation**
+:::::
 **Levenshtein distance** as a valid measure of word-level effects of phonological similarity
 
-> jtracer {{< fa brands r-project >}} package
+Monolingual participants listening to a non-native language
 
+> jtracer {{< fa brands r-project >}} package
+::::
+:::: {.column}
 ![](assets/img/translation-elicitation.png)
+::::
+:::
 
 ## Methodological contributions
 
