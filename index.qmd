@@ -227,7 +227,7 @@ Stronger effect in the additional language (e.g., Dutch, Mandarin)
 ::::
 :::: {.column}
 :::::  fragment
-Some evidence that cognates **acquired earlier** than non-cognates [@mitchell2023cognates; @bosch2014first; @tan2023role]
+Some evidence that cognates **acquired earlier** than non-cognates [@mitchell2023cognates; @bosch2014first; @tan2024role; @siow2022effect]
 :::::
 ::::
 ::: 
@@ -949,13 +949,47 @@ Candidate **mechanism** behind bilingual vocabulary growth
 
 **Language non-selectivity** in the initial lexicon: Pending testing
 
+---
+
+## Discussion
+
+::: columns
+:::: {.column}
+::::: box
+Discussion
+:::::
+
+::::: incremental
+
+- Cognateness facilitation effect [@siow2022effect; @mitchell2023cognates; @tan2024role]
+- Candidate explanation for Floccia et al. (2018) and Hoff et al. (2012)
+- Standard Model of Language Acquisition [@kachergis2022standard]
+
+:::::
+::::
+:::: {.column}
+::::: fragment
+:::::: box
+Future steps
+::::::
+:::::: incremental
+
+- The impact of cognateness in spoken word recognition: *Re-analysing data from Study 2*
+- More language pairs (lower overall similarity)
+- Train AMBLA model on vocabulary data
+
+::::::
+:::::
+::::
+:::
+
 
 ## Whats not in this dissertation
 
 ::: columns
 :::: {.column}
 ::: box
-Backward Semantic Inhibition
+**Backward Semantic Inhibition**
 :::
 The emergence of inhibitory links in the initial lexicon
 
@@ -995,13 +1029,6 @@ Monolingual participants listening to a non-native language
 > bvq {{< fa brands r-project >}} package + {{< fa brands github >}}
 
 
-## Future steps
-
-::: incremental
-- The impact of cognateness in spoken word recognition: *Re-analysing data from Study 2*
-- More language pairs (lower overall similarity)
-- Train AMBLA model on vocabulary data
-:::
 
 --- 
 
