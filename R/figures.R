@@ -348,7 +348,7 @@ fig_data |>
     panel.grid.major.y = element_blank()
   )
 
-ggsave("assets/img/s1-predictions-comp.png", width = 8, height = 3)
+ggsave("assets/img/s1-predictions-comp.png", width = 8, height = 2.90)
 
 fig_data |>
   filter(.category == "Production") |>
@@ -418,8 +418,7 @@ fig_data |>
     panel.border = element_blank(),
     panel.grid.major.y = element_blank()
   )
-
-ggsave("assets/img/s1-predictions-prod.png", width = 8, height = 3)
+ggsave("assets/img/s1-predictions-prod.png", width = 8, height = 2.90)
 
 # Study 2: Exp. 1 predictions --------------------------------------------------
 

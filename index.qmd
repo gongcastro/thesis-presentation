@@ -427,8 +427,6 @@ $$
 
 ## AMBLA: Simulating *bilingual* word acquisition
 
-**Parameters**:
-
 ::: columns
 :::: {.column width="40%"}
 Catalan monolingual child
@@ -441,6 +439,8 @@ Catalan/Spanish bilingual child
 
 - <span style="background:#FF9E1F;color:black;">/'pe.ro/ (Spanish), 40%</span>
 
+**Parameters**:
+
 $$
 \begin{aligned}
 \text{Threshold} = 300 \\
@@ -450,7 +450,7 @@ $$
 ::::
 :::: {.column width="60%"}
 ::::: fragment
-![](assets/gif/ambla-eli-single.gif){width="100%"}
+![](assets/gif/ambla-eli-single.gif){width="93%"}
 :::::
 ::::
 :::
@@ -551,6 +551,8 @@ Catalan/Spanish bilingual child
 
 - <span style="background:#FF9E1F;color:black;">/'ga.to/ (Spanish), 40%</span>
 
+**Parameters**:
+
 $$
 \begin{aligned}
 \text{Threshold} = 300 \\
@@ -589,6 +591,8 @@ Catalan/Spanish bilingual child:
 
 - <span style="background:#FF9E1F;color:black;">/'ga.to/ (Spanish), 40%</span>
 
+**Parameters**:
+
 $$
 \begin{aligned}
 \text{Threshold} = 300 \\
@@ -625,8 +629,10 @@ $$
 
 ### Predictions
 
+::: box
 1. Cognates acquired **earlier** than non-cognates
 2. Cognateness facilitation stronger in the **lower-exposure language**
+:::
 
 ### Barcelona Vocabulary Questionnaire (BVQ)
 
@@ -805,10 +811,13 @@ Mani and Plunkett (2010, 2011)
 
 ## Study 2: Design
 
-**Auditory label *before* target-distractor images**
+Cross-language priming effects are short-lived
 
-- Length of Catalan and Spanish words
-- Temporal proximity of prime and target labels
+Change in design:
+
+> Auditory label *before* target-distractor images**
+
+Increased temporal proximity of prime and target labels
 
 ## Study 2: Design
 
@@ -817,7 +826,6 @@ Mani and Plunkett (2010, 2011)
 ## Study 2: Design
 
 ![](assets/videos/design.mp4){ width="90%"}
-
 
 ## Predictions and dataset
 
