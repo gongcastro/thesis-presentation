@@ -746,6 +746,11 @@ Cross-language facilitation via co-activation of phonologically similar translat
 
 Developmental trajectories of bilingual spoken word recognition
 
+<br>
+
+![](assets/img/logo-upf.png){width="25%"}
+![](assets/img/oxford-logo.png){width="25%"}
+
 ::: notes
 - In this second study, we examined the language non-selectivity of the initial lexicon to test
 - We implemented a spoken word recognition paradigm
@@ -753,14 +758,20 @@ Developmental trajectories of bilingual spoken word recognition
 
 ## Language non-selectivity in the initial lexicon
 
+<br><br>
+
 Some evidence in infants and children [e.g., @vonholzen2012language; @singh2014one]
 
 . . .
 
 Methodological pitfalls: "Bilingual" task
 
+. . .
+
+One language is task relevant, the other is covertly activated
+
 ::: notes
-- ALthough there is some evidence of language non-selectivity in the initial lexicon, most literature presents one methodological caveat
+- Although there is some evidence of language non-selectivity in the initial lexicon, most literature presents one methodological caveat
 - The experimental paradigms used frequently present participants with words from both languages, even within the same trial
 - This may be introducing bilinguals in a bilingual context in which the baseline activation of lexical representations in both languages is increased
 - This may lead to cross-language interactions that may not be the result of the experimental manipulation of interest (e.g., priming), but rather from such overall higher activation
@@ -815,9 +826,9 @@ Cross-language priming effects are short-lived
 
 Change in design:
 
-> Auditory label *before* target-distractor images**
+> Auditory label *before* target-distractor images
 
-Increased temporal proximity of prime and target labels
+Increased temporal proximity of prime and target
 
 ## Study 2: Design
 
@@ -827,7 +838,11 @@ Increased temporal proximity of prime and target labels
 
 ![](assets/videos/design.mp4){ width="90%"}
 
-## Predictions and dataset
+## Data collection timeline
+
+![](assets/img/timeline-1.png)
+
+## Predictions
 
 ::: columns
 :::: {.column width="50%"}
@@ -849,13 +864,12 @@ If **language non-selectivity**, **stronger interference** in cognate vs. non-co
 :::
 
 
-## Data collection timeline
 
-![](assets/img/timeline-1.png)
 
 ## Data collection timeline
 
 ![](assets/img/timeline-2.png)
+
 
 ## Experiment 1: Results, Bayesian GAMMs
 
