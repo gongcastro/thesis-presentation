@@ -397,7 +397,6 @@ fig_data |>
   scale_x_continuous(breaks = seq(0, 50, 5)) +
   theme_ambla() +
   theme(
-    axis.title.x = element_blank(),
     axis.title.y = ggtext::element_markdown(),
     legend.position = "top",
     legend.box = "horizontal",

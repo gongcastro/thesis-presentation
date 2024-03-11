@@ -863,9 +863,6 @@ If **language non-selectivity**, **stronger interference** in cognate vs. non-co
 ::::
 :::
 
-
-
-
 ## Data collection timeline
 
 ![](assets/img/timeline-2.png)
