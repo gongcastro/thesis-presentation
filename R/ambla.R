@@ -83,99 +83,6 @@ generate_aoa <- function(eli, threshold = 500, .by = NULL) {
 }
 
 
-# cumulative learning instances plot -------------------------------------------
-
-generate_figure <- function(...) {
-  # simulate data ---------------
-  eli_df <- generate_eli(threshold = 500, ...) |>
-    dplyr::filter(!(hypothesis == "H1" & grepl("Non-cognate", te)))
-
-  aoa_df <- generate_aoa(eli_df, threshold = 500) |>
-    mutate(across(aoa, lst(min, max)), .by = c(te, language)) |>
-    dplyr::filter(!(hypothesis == "H1" & grepl("Non-cognate", te)))
-
-  img <- c(
-    cat = here::here("_assets", "img", "diagram-cat.png"),
-    dog = here::here("_assets", "img", "diagram-dog.png"),
-  ) |>
-    purrr::map(magick::image_read) |>
-    purrr::map(\(x) magick::image_ggplot(x, interpolate = FALSE))
-
-  plot <- eli_df |>
-    ggplot(aes(age, eli,
-      colour = language,
-      linetype = hypothesis,
-      shape = hypothesis
-    )) +
-    geom_segment(
-      data = aoa_df,
-      aes(
-        x = aoa,
-        xend = aoa,
-        y = 0,
-        yend = threshold
-      ),
-      linewidth = 3 / 4
-    ) +
-    geom_hline(yintercept = aoa_df$threshold) +
-    geom_line(linewidth = 1) +
-    geom_point(
-      data = aoa_df,
-      stroke = 0.75,
-      aes(x = aoa, y = threshold),
-      size = 2.25
-    ) +
-    labs(
-      x = "Age (months)",
-      y = "Learning instances",
-      colour = "Language (exposure)",
-      shape = "Hypothesis",
-      linetype = "Hypothesis"
-    ) +
-    scale_y_continuous(labels = function(x) format(x, big.mark = ",")) +
-    theme_ggdist() +
-    theme(
-      panel.background = element_rect(fill = NA),
-      legend.key.width = unit(1.5, "cm"),
-      legend.position = "bottom",
-      legend.margin = margin(c(0, 0, 0, 0)),
-      legend.justification = c(0, 1),
-      legend.title = element_text(size = 9),
-      legend.text = element_text(size = 8),
-      strip.background = element_rect(fill = "grey90", colour = "grey90"),
-      strip.text = ggtext::element_markdown(),
-      panel.grid = element_blank(),
-      panel.grid.major.y = element_line(
-        colour = "grey",
-        linetype = "dotted"
-      ),
-      panel.grid.minor.y = element_line(
-        colour = "grey",
-        linetype = "dotted"
-      )
-    ) +
-    inset_element(img$cat,
-      on_top = FALSE, ignore_tag = TRUE,
-      left = -0.25, bottom = 0.50, right = 0.5, top = 1
-    ) +
-    inset_element(img$dog,
-      on_top = FALSE, ignore_tag = TRUE,
-      left = 0.25, bottom = 0.50, right = 1, top = 1
-    ) +
-    scale_x_continuous(breaks = seq(
-      min(eli_df$age),
-      max(eli_df$age), 4
-    )) +
-    theme(
-      panel.grid = element_blank(),
-      plot.background = element_rect(
-        fill = "white",
-        colour = NA
-      )
-    )
-  return(plot)
-}
-
 # ggplot theme
 theme_ambla <- function() {
   theme(
@@ -217,13 +124,6 @@ te_labels <- c(
   "Non-cognate: /'gos/ (Catalan) /'pe.ro/ (Spanish)",
   "Cognate: /'gat/ (Catalan), /'ga.to/ (Spanish)"
 )
-
-img <- c(
-  cat = here::here("assets", "img", "diagram-cat.png"),
-  dog = here::here("assets", "img", "diagram-dog.png")
-) |>
-  purrr::map(magick::image_read) |>
-  purrr::map(\(x) magick::image_ggplot(x, interpolate = FALSE))
 
 # parameters
 threshold <- 300
